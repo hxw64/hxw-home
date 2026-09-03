@@ -7,6 +7,7 @@
   --blue:#4A90E2;
   --green:#2FA36B;
   --purple:#8B5CF6;
+  --pink:#FF6B8A;
   --grad:linear-gradient(135deg,#FF7A59,#FF5E62);
   --radius:16px;
   --shadow:0 4px 16px rgba(0,0,0,.06);
@@ -153,3 +154,29 @@ footer p{margin:4px 0}
   .card{padding:22px}
   .hero{padding-top:40px}
 }
+.card.board{border-left-color:var(--pink)}
+.card.board h2{color:var(--pink)}
+.msg-form{display:flex;flex-direction:column;gap:12px;margin-top:6px}
+.msg-form label{font-weight:700}
+.msg-form input,
+.msg-form textarea{font:inherit;padding:12px 14px;border:1px solid #e4d8c8;border-radius:10px;background:#fffdf9;color:var(--text)}
+.msg-form input:focus,
+.msg-form textarea:focus{outline:none;border-color:var(--pink);box-shadow:0 0 0 3px rgba(255,107,138,.15)}
+.msg-form textarea{resize:vertical}
+.anon-wrap{display:flex;align-items:center;gap:10px;cursor:pointer;font-weight:700}
+.anon-wrap input{position:absolute;opacity:0;width:0;height:0}
+.switch{width:48px;height:26px;background:#ddd;border-radius:999px;position:relative;transition:background .2s;flex:none}
+.switch::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;background:#fff;border-radius:50%;transition:transform .2s}
+.anon-wrap input:checked + .switch{background:var(--pink)}
+.anon-wrap input:checked + .switch::after{transform:translateX(22px)}
+.anon-wrap input:focus-visible + .switch{box-shadow:0 0 0 3px rgba(255,107,138,.3)}
+.msg-form .btn{align-self:flex-start}
+.msg-list{list-style:none;margin:18px 0 0;padding:0;display:flex;flex-direction:column;gap:10px}
+.msg-item{background:#fff7f9;border:1px solid #ffe3ea;border-radius:10px;padding:12px 14px}
+.msg-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:4px}
+.msg-name{font-weight:700;color:var(--pink)}
+.msg-time{color:#999;font-size:13px}
+.msg-body{margin:0;white-space:pre-wrap;word-break:break-word}
+.msg-empty{color:#aaa;text-align:center;padding:10px 0}
+.clear-btn{margin-top:14px;background:none;border:none;color:#999;cursor:pointer;font-size:14px;text-decoration:underline;padding:0}
+.clear-btn:hover{color:var(--pink)}

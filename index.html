@@ -46,6 +46,22 @@
       <p><a class="email-line" href="mailto:xinwei_he@tju.edu.cn"><span data-i18n="emailLabel">邮箱：</span>xinwei_he@tju.edu.cn</a></p>
       <a class="btn btn-primary" href="mailto:xinwei_he@tju.edu.cn" data-i18n="sendEmailBtn">发邮件给我</a>
     </section>
+    <section class="card board" id="board">
+      <h2 data-i18n="boardTitle">留言板</h2>      <form id="msgForm" class="msg-form" autocomplete="off">
+        <label for="msgNick" data-i18n="nickLabel">昵称（可留空）</label>
+        <input id="msgNick" type="text" maxlength="20" data-i18n-placeholder="nickPlaceholder" placeholder="匿名" />
+        <label for="msgText" data-i18n="msgLabel">留言</label>
+        <textarea id="msgText" rows="3" maxlength="500" required data-i18n-placeholder="msgPlaceholder" placeholder="写点什么…"></textarea>
+        <label class="anon-wrap">
+          <input id="msgAnon" type="checkbox" />
+          <span class="switch" aria-hidden="true"></span>
+          <span data-i18n="anonLabel">匿名</span>
+        </label>
+        <button class="btn btn-primary" type="submit" data-i18n="sendBtn">发送</button>
+      </form>
+      <ul id="msgList" class="msg-list"></ul>
+      <button id="msgClear" class="clear-btn" type="button" data-i18n="clearBtn">清空留言</button>
+    </section>
   </main>
 
   <footer>
