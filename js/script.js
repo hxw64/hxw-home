@@ -22,6 +22,18 @@
       qSkill: '你的特长',
       qHobby: '你的爱好',
       qContact: '怎么联系你',
+      feedbackLink: '留言反馈',
+      feedbackTitle: '反馈',
+      feedbackIntro: '你的意见会帮我改进这个主页',
+      feedbackRating: '评分（可选）',
+      feedbackText: '反馈内容',
+      feedbackTextPlaceholder: '说说你的想法…',
+      feedbackContact: '联系方式（可选）',
+      feedbackSubmit: '提交',
+      feedbackCancel: '取消',
+      feedbackClose: '关闭',
+      feedbackSoon: '反馈通道正在接入，敬请期待',
+      feedbackEmpty: '请先填写内容',
       aboutTitle: '关于我',
       aboutText1: '我是何欣蔚，天津大学智能医学工程专业本科生',
       aboutText2: '我喜欢探索新鲜事物，也喜欢音乐',
@@ -77,6 +89,18 @@
       qSkill: 'Your skills',
       qHobby: 'Your hobbies',
       qContact: 'How to contact you',
+      feedbackLink: 'Feedback',
+      feedbackTitle: 'Feedback',
+      feedbackIntro: 'Your feedback helps me improve this page',
+      feedbackRating: 'Rating (optional)',
+      feedbackText: 'Your feedback',
+      feedbackTextPlaceholder: 'Tell me what you think...',
+      feedbackContact: 'Contact (optional)',
+      feedbackSubmit: 'Submit',
+      feedbackCancel: 'Cancel',
+      feedbackClose: 'Close',
+      feedbackSoon: 'The feedback channel is coming soon',
+      feedbackEmpty: 'Please fill in your feedback first',
       aboutTitle: 'About Me',
       aboutText1: 'I am He Xinwei, an undergraduate in Intelligent Medical Engineering at Tianjin University',
       aboutText2: 'I like exploring new things and I love music',
@@ -614,7 +638,7 @@
     }
 
     window.addEventListener('wheel', function (e) {
-      if (e.ctrlKey || animating) { return; }
+      if (e.ctrlKey || animating || document.documentElement.classList.contains('feedback-open')) { return; }
       var node = e.target;
       if (node && node.closest && node.closest('.chat-log')) { return; }
       var atTop = window.pageYOffset <= 4;
@@ -624,7 +648,7 @@
     }, { passive: false });
 
     window.addEventListener('keydown', function (e) {
-      if (animating) { return; }
+      if (animating || document.documentElement.classList.contains('feedback-open')) { return; }
       var atTop = window.pageYOffset <= 4;
       var atBottom = (window.innerHeight + window.pageYOffset) >= (document.documentElement.scrollHeight - 4);
       var nextKey = (e.key === 'ArrowDown' || e.key === 'PageDown');
@@ -751,6 +775,81 @@
 
     agentGreeting = addBubble(t('agentHello'), 'bot');
   }
+  function submitFeedback(data) {
+    /* V3：这里改成提交到后台（Supabase / 腾讯云） */
+    showToast(t('feedbackSoon'), 'success');
+    return true;
+  }
+
+  function initFeedback() {
+    var modal = document.getElementById('feedbackModal');
+    var openBtn = document.getElementById('feedbackOpen');
+    var closeBtn = document.getElementById('feedbackClose');
+    var cancelBtn = document.getElementById('feedbackCancel');
+    var form = document.getElementById('feedbackForm');
+    var textArea = document.getElementById('feedbackText');
+    var contact = document.getElementById('feedbackContact');
+    var ratingRow = document.getElementById('ratingRow');
+    if (!modal || !openBtn) { return; }
+
+    var lastFocus = null;
+    var score = 0;
+
+    var openModal = function () {
+      lastFocus = document.activeElement;
+      modal.removeAttribute('hidden');
+      document.documentElement.classList.add('feedback-open');
+      if (textArea) { textArea.focus(); }
+    };
+    var closeModal = function () {
+      modal.setAttribute('hidden', '');
+      document.documentElement.classList.remove('feedback-open');
+      if (lastFocus && lastFocus.focus) { lastFocus.focus(); }
+    };
+
+    openBtn.addEventListener('click', openModal);
+    if (closeBtn) { closeBtn.addEventListener('click', closeModal); }
+    if (cancelBtn) { cancelBtn.addEventListener('click', closeModal); }
+    modal.addEventListener('click', function (e) {
+      if (e.target && e.target.getAttribute && e.target.getAttribute('data-close')) { closeModal(); }
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !modal.hasAttribute('hidden')) { closeModal(); }
+    });
+
+    if (ratingRow) {
+      ratingRow.addEventListener('click', function (e) {
+        var btn = e.target.closest ? e.target.closest('.rating-dot') : null;
+        if (!btn) { return; }
+        var value = parseInt(btn.getAttribute('data-score'), 10) || 0;
+        score = (score === value) ? 0 : value;
+        var dots = ratingRow.querySelectorAll('.rating-dot');
+        for (var i = 0; i < dots.length; i++) {
+          dots[i].classList.toggle('is-on', i < score);
+        }
+      });
+    }
+
+    if (form) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var text = textArea ? textArea.value.trim() : '';
+        if (!text) { showToast(t('feedbackEmpty'), 'error'); return; }
+        submitFeedback({
+          score: score,
+          text: text,
+          contact: contact ? contact.value.trim() : ''
+        });
+        form.reset();
+        score = 0;
+        if (ratingRow) {
+          var dots2 = ratingRow.querySelectorAll('.rating-dot');
+          for (var k = 0; k < dots2.length; k++) { dots2[k].classList.remove('is-on'); }
+        }
+        closeModal();
+      });
+    }
+  }
   var initial = detectLang();
   initBoard();
   applyLang(initial);
@@ -758,6 +857,7 @@
   initPointerEffects();
   var pager = initPager();
   initAgent(pager);
+  initFeedback();
 
   var toggle = document.getElementById('langToggle');
   if (toggle) {

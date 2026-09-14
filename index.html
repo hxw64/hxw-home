@@ -149,8 +149,37 @@
   <footer>
     <p>© 2026 何欣蔚 · He Xinwei</p>
     <p data-i18n="footerNote">本网站为本地静态页面，不收集任何信息</p>
+    <p><button id="feedbackOpen" class="footer-link" type="button" data-i18n="feedbackLink">留言反馈</button></p>
   </footer>
 
+  <div id="feedbackModal" class="feedback-modal" hidden>
+    <div class="feedback-backdrop" data-close="1"></div>
+    <div class="feedback-dialog" role="dialog" aria-modal="true" aria-labelledby="feedbackTitle">
+      <button id="feedbackClose" class="feedback-close" type="button" aria-label="关闭" data-i18n-aria="feedbackClose">×</button>
+      <h2 id="feedbackTitle" data-i18n="feedbackTitle">反馈</h2>
+      <p class="sub-text" data-i18n="feedbackIntro">你的意见会帮我改进这个主页</p>
+      <form id="feedbackForm" class="feedback-form" novalidate>
+        <fieldset class="rating">
+          <legend data-i18n="feedbackRating">评分（可选）</legend>
+          <div class="rating-row" id="ratingRow">
+            <button type="button" class="rating-dot" data-score="1">1</button>
+            <button type="button" class="rating-dot" data-score="2">2</button>
+            <button type="button" class="rating-dot" data-score="3">3</button>
+            <button type="button" class="rating-dot" data-score="4">4</button>
+            <button type="button" class="rating-dot" data-score="5">5</button>
+          </div>
+        </fieldset>
+        <label for="feedbackText" data-i18n="feedbackText">反馈内容</label>
+        <textarea id="feedbackText" rows="4" maxlength="500" data-i18n-placeholder="feedbackTextPlaceholder" placeholder="说说你的想法…"></textarea>
+        <label for="feedbackContact" data-i18n="feedbackContact">联系方式（可选）</label>
+        <input id="feedbackContact" type="text" maxlength="60" />
+        <div class="feedback-actions">
+          <button id="feedbackCancel" class="chip" type="button" data-i18n="feedbackCancel">取消</button>
+          <button class="btn btn-primary" type="submit" data-i18n="feedbackSubmit">提交</button>
+        </div>
+      </form>
+    </div>
+  </div>
   <button id="agentBall" class="agent-ball" type="button" aria-label="数字分身" data-i18n-aria="agentTitle">
     <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-8 8H9l-4 3v-4.6A8 8 0 1 1 21 12z"/><circle cx="9.2" cy="12" r="1"/><circle cx="12.6" cy="12" r="1"/><circle cx="16" cy="12" r="1"/></svg>
   </button>
