@@ -10,6 +10,18 @@
       navProjects: '项目',
       navContact: '联系',
       nextPage: '下一页',
+      navTwin: '数字分身',
+      agentTitle: '数字分身',
+      agentIntro: '你可以问我关于我的问题，我在本地回答，不会联网',
+      agentHello: '你好，我是何欣蔚的数字分身，问我点什么吧',
+      agentFallback: '这个问题我还不太会，可以问我：你是谁 / 学校专业 / 特长 / 爱好 / 项目 / 联系方式',
+      chatPlaceholder: '问我点什么…',
+      chatSend: '发送',
+      qWho: '你是谁',
+      qStudy: '学校和专业',
+      qSkill: '你的特长',
+      qHobby: '你的爱好',
+      qContact: '怎么联系你',
       aboutTitle: '关于我',
       aboutText1: '我是何欣蔚，天津大学智能医学工程专业本科生',
       aboutText2: '我喜欢探索新鲜事物，也喜欢音乐',
@@ -53,6 +65,18 @@
       navProjects: 'Projects',
       navContact: 'Contact',
       nextPage: 'Next',
+      navTwin: 'Digital Twin',
+      agentTitle: 'Digital Twin',
+      agentIntro: 'Ask me about Xinwei. I answer locally and I am not connected to the internet',
+      agentHello: 'Hi, I am the digital twin of He Xinwei. Ask me anything',
+      agentFallback: 'I am not sure about that yet. You can ask: who are you / school / skills / hobbies / projects / contact',
+      chatPlaceholder: 'Ask me something...',
+      chatSend: 'Send',
+      qWho: 'Who are you',
+      qStudy: 'School and major',
+      qSkill: 'Your skills',
+      qHobby: 'Your hobbies',
+      qContact: 'How to contact you',
       aboutTitle: 'About Me',
       aboutText1: 'I am He Xinwei, an undergraduate in Intelligent Medical Engineering at Tianjin University',
       aboutText2: 'I like exploring new things and I love music',
@@ -319,6 +343,7 @@
       btn.setAttribute('aria-label', lang === 'zh' ? 'Switch to English' : 'Switch to Chinese');
     }
     renderBoard();
+    if (agentGreeting) { agentGreeting.textContent = dict[lang].agentHello; }
   }
   function initBoard() {
     var form = document.getElementById('msgForm');
@@ -404,7 +429,7 @@
     var MAX_TILT = 3;
     var PERSPECTIVE = 1100;
     var EASE = 0.12;
-    var cards = document.querySelectorAll('.card');
+    var cards = document.querySelectorAll('.card:not(.agent)');
 
     var bindCard = function (card) {
       var targetX = 0;
@@ -466,40 +491,59 @@
     for (var i = 0; i < cards.length; i++) { bindCard(cards[i]); }
   }
   function initPager() {
-    var page1 = document.getElementById('page1');
-    var page2 = document.getElementById('page2');
-    var page3 = document.getElementById('page3');
-    var nextWrap = document.querySelector('.page-next');
-    var next1 = document.getElementById('nextPage');
-    var next2 = document.getElementById('nextPage2');
+    var ids = ['page1', 'page2', 'page3', 'page4'];
     var pages = [];
-    if (page1) { pages.push(page1); }
-    if (page2) { pages.push(page2); }
-    if (page3) { pages.push(page3); }
-    if (pages.length < 2) { return; }
+    for (var p = 0; p < ids.length; p++) {
+      var el = document.getElementById(ids[p]);
+      if (el) { pages.push(el); }
+    }
+    if (pages.length < 2) { return null; }
 
+    var arrows = document.querySelectorAll('.page-next');
     var motionOK = !reduceMotion && document.documentElement.classList.contains('js-motion');
 
+    document.documentElement.setAttribute('data-page', pages[0].id);
+
+    var indexOfId = function (id) {
+      for (var i = 0; i < pages.length; i++) {
+        if (pages[i].id === id) { return i; }
+      }
+      return -1;
+    };
+
     if (!motionOK) {
-      if (next1 && page2) { next1.addEventListener('click', function () { page2.scrollIntoView(); }); }
-      if (next2 && page3) { next2.addEventListener('click', function () { page3.scrollIntoView(); }); }
-      return;
+      for (var a = 0; a < arrows.length; a++) {
+        (function (arrow) {
+          arrow.addEventListener('click', function () {
+            var t = indexOfId(arrow.getAttribute('data-target'));
+            if (t > -1) { pages[t].scrollIntoView(); }
+          });
+        })(arrows[a]);
+      }
+      var heroArrow = document.getElementById('nextPage');
+      if (heroArrow) {
+        heroArrow.addEventListener('click', function () {
+          var to2 = indexOfId('page2');
+          if (to2 > -1) { pages[to2].scrollIntoView(); }
+        });
+      }
+      return null;
     }
 
-    var i2 = pages.indexOf(page2);
-    var i3 = pages.indexOf(page3);
     var idx = 0;
     var memo = {};
     var animating = false;
 
-    var setWrap = function (i) {
-      if (!nextWrap) { return; }
-      if (i === i2) { nextWrap.classList.add('is-active'); }
-      else { nextWrap.classList.remove('is-active'); }
+    var setArrow = function (i) {
+      var nextId = pages[i + 1] ? pages[i + 1].id : '';
+      for (var a2 = 0; a2 < arrows.length; a2++) {
+        var on = nextId !== '' && arrows[a2].getAttribute('data-target') === nextId;
+        arrows[a2].classList.toggle('is-active', on);
+      }
     };
 
     var swap = function (to) {
-      if (animating || to < 0 || to === idx || !pages[to]) { return; }
+      if (animating || to < 0 || to >= pages.length || to === idx) { return; }
       animating = true;
       memo[idx] = window.pageYOffset;
       var from = pages[idx];
@@ -508,7 +552,8 @@
       var finish = function () {
         if (from) { from.classList.remove('is-active', 'is-entered', 'is-leaving', 'is-armed'); }
         target.classList.add('is-active');
-        setWrap(to);
+        setArrow(to);
+        document.documentElement.setAttribute('data-page', target.id);
         window.scrollTo(0, memo[to] || 0);
         window.requestAnimationFrame(function () {
           window.requestAnimationFrame(function () {
@@ -528,8 +573,20 @@
       }
     };
 
-    if (next1 && i2 > -1) { next1.addEventListener('click', function () { swap(i2); }); }
-    if (next2 && i3 > -1) { next2.addEventListener('click', function () { swap(i3); }); }
+    for (var a3 = 0; a3 < arrows.length; a3++) {
+      (function (arrow) {
+        arrow.addEventListener('click', function () {
+          swap(indexOfId(arrow.getAttribute('data-target')));
+        });
+      })(arrows[a3]);
+    }
+
+    var heroArrow2 = document.getElementById('nextPage');
+    if (heroArrow2) {
+      heroArrow2.addEventListener('click', function () { swap(indexOfId('page2')); });
+    }
+
+    setArrow(0);
 
     var navLinks = document.querySelectorAll('.nav a[href^="#"], .brand[href^="#"]');
     for (var n = 0; n < navLinks.length; n++) {
@@ -540,15 +597,15 @@
           if (idx !== 0) { e.preventDefault(); swap(0); }
           return;
         }
-        var el = document.querySelector(href);
-        if (!el) { return; }
+        var target = document.querySelector(href);
+        if (!target) { return; }
         for (var t = 0; t < pages.length; t++) {
-          if (pages[t].contains(el)) {
+          if (pages[t].contains(target)) {
             if (t !== idx) {
               e.preventDefault();
               memo[t] = 0;
               swap(t);
-              window.setTimeout(function () { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 760);
+              window.setTimeout(function () { target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 760);
             }
             return;
           }
@@ -558,14 +615,12 @@
 
     window.addEventListener('wheel', function (e) {
       if (e.ctrlKey || animating) { return; }
+      var node = e.target;
+      if (node && node.closest && node.closest('.chat-log')) { return; }
       var atTop = window.pageYOffset <= 4;
       var atBottom = (window.innerHeight + window.pageYOffset) >= (document.documentElement.scrollHeight - 4);
-      if (e.deltaY > 0) {
-        if (idx === 0 && i2 > -1) { e.preventDefault(); swap(i2); }
-        else if (idx === i2 && i3 > -1 && atBottom) { e.preventDefault(); swap(i3); }
-      } else if (e.deltaY < 0) {
-        if (idx > 0 && atTop) { e.preventDefault(); swap(idx - 1); }
-      }
+      if (e.deltaY > 0 && atBottom) { e.preventDefault(); swap(idx + 1); }
+      else if (e.deltaY < 0 && atTop) { e.preventDefault(); swap(idx - 1); }
     }, { passive: false });
 
     window.addEventListener('keydown', function (e) {
@@ -574,17 +629,135 @@
       var atBottom = (window.innerHeight + window.pageYOffset) >= (document.documentElement.scrollHeight - 4);
       var nextKey = (e.key === 'ArrowDown' || e.key === 'PageDown');
       var prevKey = (e.key === 'ArrowUp' || e.key === 'PageUp');
-      if (nextKey && idx === 0 && i2 > -1) { e.preventDefault(); swap(i2); }
-      else if (nextKey && idx === i2 && i3 > -1 && atBottom) { e.preventDefault(); swap(i3); }
-      else if (prevKey && idx > 0 && atTop) { e.preventDefault(); swap(idx - 1); }
+      if (nextKey && atBottom) { e.preventDefault(); swap(idx + 1); }
+      else if (prevKey && atTop) { e.preventDefault(); swap(idx - 1); }
     });
+
+    return { swap: swap, index: function () { return idx; }, pages: pages };
+  }
+
+  var agentQA = {
+    zh: [
+      { keys: ['你是谁', '介绍一下', '自我介绍', '名字', '谁'], a: '我是何欣蔚，天津大学智能医学工程专业本科生' },
+      { keys: ['学校', '专业', '天津大学', '学什么', '就读'], a: '我在天津大学读智能医学工程' },
+      { keys: ['特长', '技能', '会什么', '二胡', '篆刻'], a: '我的特长是二胡和篆刻' },
+      { keys: ['爱好', '兴趣', '喜欢什么', '音乐', '小狗', '狗'], a: '我喜欢探索新鲜事物，也喜欢音乐，还特别偏爱小狗' },
+      { keys: ['项目', '作品', '做过什么'], a: '项目案例正在整理中，会陆续分享课程项目与设计探索' },
+      { keys: ['联系', '邮箱', '邮件', '怎么找'], a: '可以发邮件到 xinwei_he@tju.edu.cn' },
+      { keys: ['留言', '留言板'], a: '第三屏是留言板，欢迎留言' },
+      { keys: ['你好', '您好', '嗨', '在吗'], a: '你好，我是何欣蔚的数字分身，问点你感兴趣的' }
+    ],
+    en: [
+      { keys: ['who are you', 'your name', 'introduce', 'who'], a: 'I am He Xinwei, an undergraduate in Intelligent Medical Engineering at Tianjin University' },
+      { keys: ['school', 'major', 'university', 'study'], a: 'I study Intelligent Medical Engineering at Tianjin University' },
+      { keys: ['skill', 'specialty', 'erhu', 'seal'], a: 'My specialties are the erhu and seal carving' },
+      { keys: ['hobby', 'interest', 'music', 'dog'], a: 'I like exploring new things and music, and I am especially fond of dogs' },
+      { keys: ['project', 'work', 'portfolio'], a: 'Project cases are being organized and will be shared soon' },
+      { keys: ['contact', 'email', 'reach'], a: 'You can email me at xinwei_he@tju.edu.cn' },
+      { keys: ['message', 'board', 'comment'], a: 'The third screen has a message board' },
+      { keys: ['hello', 'hey', 'hi there'], a: 'Hi, I am the digital twin of He Xinwei. Ask me what you like' }
+    ]
+  };
+
+  function getAnswer(text) {
+    var q = String(text || '').toLowerCase();
+    var list = agentQA[current] || agentQA.zh;
+    for (var i = 0; i < list.length; i++) {
+      var item = list[i];
+      for (var k = 0; k < item.keys.length; k++) {
+        if (q.indexOf(item.keys[k].toLowerCase()) > -1) { return item.a; }
+      }
+    }
+    return t('agentFallback');
+  }
+
+  var agentGreeting = null;
+
+  function initAgent(pager) {
+    var log = document.getElementById('chatLog');
+    var form = document.getElementById('chatForm');
+    var input = document.getElementById('chatInput');
+    var quick = document.getElementById('chatQuick');
+    var ball = document.getElementById('agentBall');
+    if (!log) { return; }
+
+    var index4 = -1;
+    if (pager && pager.pages) {
+      for (var i = 0; i < pager.pages.length; i++) {
+        if (pager.pages[i].id === 'page4') { index4 = i; }
+      }
+    }
+
+    if (ball && pager && index4 > -1) {
+      ball.addEventListener('click', function () { pager.swap(index4); });
+    }
+
+    var addBubble = function (text, who) {
+      var li = document.createElement('li');
+      li.className = 'chat-item ' + (who === 'me' ? 'chat-me' : 'chat-bot');
+      var bubble = document.createElement('div');
+      bubble.className = 'chat-bubble';
+      bubble.textContent = text;
+      li.appendChild(bubble);
+      log.appendChild(li);
+      log.scrollTop = log.scrollHeight;
+      return bubble;
+    };
+
+    var typeOut = function (bubble, text) {
+      if (reduceMotion) { bubble.textContent = text; return; }
+      var i = 0;
+      bubble.textContent = '';
+      var timer = window.setInterval(function () {
+        i += 1;
+        bubble.textContent = text.slice(0, i);
+        log.scrollTop = log.scrollHeight;
+        if (i >= text.length) { window.clearInterval(timer); }
+      }, 28);
+    };
+
+    var respond = function (text) {
+      var bubble = addBubble('···', 'bot');
+      bubble.classList.add('chat-typing');
+      window.setTimeout(function () {
+        bubble.classList.remove('chat-typing');
+        typeOut(bubble, getAnswer(text));
+      }, reduceMotion ? 0 : 500);
+    };
+
+    var send = function (text) {
+      var value = String(text || '').trim();
+      if (!value) { return; }
+      addBubble(value, 'me');
+      respond(value);
+      if (input) { input.value = ''; }
+    };
+
+    if (form) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        send(input ? input.value : '');
+      });
+    }
+
+    if (quick) {
+      quick.addEventListener('click', function (e) {
+        var btn = e.target.closest ? e.target.closest('.chip') : null;
+        if (!btn) { return; }
+        var key = btn.getAttribute('data-i18n');
+        if (key) { send(t(key)); }
+      });
+    }
+
+    agentGreeting = addBubble(t('agentHello'), 'bot');
   }
   var initial = detectLang();
   initBoard();
   applyLang(initial);
   initTheme();
   initPointerEffects();
-  initPager();
+  var pager = initPager();
+  initAgent(pager);
 
   var toggle = document.getElementById('langToggle');
   if (toggle) {
