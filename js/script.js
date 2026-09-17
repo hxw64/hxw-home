@@ -208,6 +208,13 @@
     }
   };
 
+  var relKeys = {
+    classmate: 'relClassmate',
+    friend: 'relFriend',
+    family: 'relFamily',
+    teacher: 'relTeacher',
+    other: 'relOther'
+  };
   var STORE_KEY = 'site_messages';
   var THEME_KEY = 'theme';
   var LIGHT_KEY = 'lang';
