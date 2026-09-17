@@ -69,13 +69,13 @@ body{
   align-items:center;
   gap:18px;
   min-height:64px;
-  padding:0 24px;
+  padding:0 32px;
   background:var(--topbar-bg);
   border-bottom:1px solid var(--border);
   backdrop-filter:blur(6px);
 }
-.brand{font-size:19px;font-weight:700;color:var(--text);text-decoration:none}
-.nav{display:flex;gap:18px;margin-left:auto}
+.brand{font-size:28px;font-weight:700;color:var(--text);text-decoration:none}
+.nav{display:flex;gap:22px;margin-left:auto}
 .nav a{color:var(--muted);font-size:15px;font-weight:500;text-decoration:none;transition:color .2s}
 .nav a:hover,.nav a:focus-visible{color:var(--coral);outline:none}
 .lang-btn{
@@ -717,9 +717,6 @@ html.feedback-open{overflow:hidden}
   .feedback-dialog{padding:22px 18px;max-height:88vh}
 }
 /* ---------- 自定义鼠标 ---------- */
-html.custom-cursor *{cursor:none}
-html.custom-cursor input,
-html.custom-cursor textarea{cursor:text}
 .cursor-dot,
 .cursor-ring{
   position:fixed;
@@ -730,27 +727,20 @@ html.custom-cursor textarea{cursor:text}
   opacity:0;
   will-change:transform;
 }
-.cursor-dot{
-  width:5px;
-  height:5px;
-  margin:-2.5px 0 0 -2.5px;
-  border-radius:50%;
-  background:var(--coral);
-  transition:opacity 200ms ease;
-}
 .cursor-ring{
   width:26px;
   height:26px;
   margin:-13px 0 0 -13px;
-  border:1px solid var(--coral);
+  border:1px solid rgba(255,107,87,.45);
   border-radius:50%;
   transition:width 180ms ease,height 180ms ease,margin 180ms ease,background-color 220ms ease,border-color 220ms ease,opacity 200ms ease;
 }
 .cursor-ring.is-hover{
-  width:42px;
-  height:42px;
-  margin:-21px 0 0 -21px;
-  background:rgba(255,107,87,.10);
+  width:46px;
+  height:46px;
+  margin:-23px 0 0 -23px;
+  border-width:1.5px;
+  background:rgba(255,107,87,.12);
 }
 html.cursor-on .cursor-dot,
 html.cursor-on .cursor-ring{opacity:1}
@@ -779,4 +769,13 @@ html.cursor-on .cursor-ring{opacity:1}
 @media (max-height:760px){
   .page-3,
   .page-4{padding-top:105px}
+}
+/* ---------- 导航名字加大 ---------- */
+@media (max-width:640px){
+  .brand{font-size:23px}
+}
+/* ---------- 导航间距加大 ---------- */
+@media (max-width:640px){
+  .topbar{padding:0 20px}
+  .nav{gap:18px}
 }

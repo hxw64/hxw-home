@@ -464,9 +464,8 @@
       var hovering = false;
 
       var draw = function () {
-      dot.style.transform = 'translate(' + x + 'px,' + y + 'px)';
-      rx += (x - rx) * 0.42;
-      ry += (y - ry) * 0.42;
+      rx += (x - rx) * 0.16;
+      ry += (y - ry) * 0.16;
       ring.style.transform = 'translate(' + rx + 'px,' + ry + 'px) scale(' + (pressed ? 0.9 : 1) + ')';
       if (Math.abs(x - rx) < 0.2 && Math.abs(y - ry) < 0.2) {
         rx = x;
@@ -855,11 +854,8 @@
     var finePointer = !!(window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches);
     if (!finePointer || reduceMotion) { return; }
 
-    var dot = document.createElement('div');
-    dot.className = 'cursor-dot';
     var ring = document.createElement('div');
     ring.className = 'cursor-ring';
-    document.body.appendChild(dot);
     document.body.appendChild(ring);
 
     var x = window.innerWidth / 2;
@@ -871,9 +867,8 @@
     var running = false;
 
     var draw = function () {
-      dot.style.transform = 'translate(' + x + 'px,' + y + 'px)';
-      rx += (x - rx) * 0.42;
-      ry += (y - ry) * 0.42;
+      rx += (x - rx) * 0.16;
+      ry += (y - ry) * 0.16;
       ring.style.transform = 'translate(' + rx + 'px,' + ry + 'px) scale(' + (pressed ? 0.9 : 1) + ')';
       if (Math.abs(x - rx) < 0.2 && Math.abs(y - ry) < 0.2) {
         rx = x;
@@ -899,7 +894,6 @@
         started = true;
         rx = x;
         ry = y;
-        document.documentElement.classList.add('custom-cursor');
         document.documentElement.classList.add('cursor-on');
       }
     });
@@ -914,7 +908,7 @@
 
     document.addEventListener('pointerover', function (e) {
       var node = e.target;
-      var hit = node && node.closest ? node.closest('a, button, .chip, input, textarea, [role="option"]') : null;
+      var hit = node && node.closest ? node.closest('a, button, .chip, input, textarea, .avatar, .card, [role="option"]') : null;
       ring.classList.toggle('is-hover', !!hit);
     });
   }
