@@ -43,7 +43,8 @@
       feedbackSending: '提交中…',
       feedbackSent: '已收到，谢谢你的反馈',
       feedbackError: '提交失败，请稍后再试',
-      boardError: '留言加载失败，请刷新重试',
+      boardError: '留言加载失败',
+      retry: '重试',
       aboutTitle: '关于我',
       aboutText1: '我是何欣蔚，天津大学智能医学工程专业本科生',
       aboutText2: '我喜欢探索新鲜事物，也喜欢音乐',
@@ -144,7 +145,8 @@
       feedbackSending: 'Sending...',
       feedbackSent: 'Thank you for your feedback',
       feedbackError: 'Submit failed, please try again later',
-      boardError: 'Could not load messages, please refresh',
+      boardError: 'Could not load messages',
+      retry: 'Retry',
       aboutTitle: 'About Me',
       aboutText1: 'I am He Xinwei, an undergraduate in Intelligent Medical Engineering at Tianjin University',
       aboutText2: 'I like exploring new things and I love music',
@@ -531,7 +533,13 @@
       ul.textContent = '';
       var err = document.createElement('li');
       err.className = 'msg-empty';
-      err.textContent = t('boardError');
+      err.textContent = t('boardError') + ' ';
+      var retryBtn = document.createElement('button');
+      retryBtn.type = 'button';
+      retryBtn.className = 'clear-btn';
+      retryBtn.textContent = t('retry');
+      retryBtn.addEventListener('click', function () { renderBoard(); });
+      err.appendChild(retryBtn);
       ul.appendChild(err);
     });
   }
