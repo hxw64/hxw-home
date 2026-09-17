@@ -15,6 +15,8 @@
       agentIntro: '你可以问我关于我的问题',
       agentHello: '你好，我是何欣蔚的数字分身，问我点什么吧',
       agentFallback: '这个问题我还不太会，可以问我：你是谁 / 学校专业 / 特长 / 爱好 / 项目 / 联系方式',
+      agentOffline: '我暂时答不上来，可以邮件联系我',
+      agentLimit: '问得有点快，稍等一下再问我',
       chatPlaceholder: '问我点什么…',
       chatSend: '发送',
       agentPrivacyNote: '隐私说明：这里的对话只在你的设备上进行，不会上传、也不会保存',
@@ -117,6 +119,8 @@
       agentIntro: 'You can ask me about myself',
       agentHello: 'Hi, I am the digital twin of He Xinwei. Ask me anything',
       agentFallback: 'I am not sure about that yet. You can ask: who are you / school / skills / hobbies / projects / contact',
+      agentOffline: 'I cannot answer that right now, feel free to email me',
+      agentLimit: 'A bit too fast, please ask again in a moment',
       chatPlaceholder: 'Ask me something...',
       chatSend: 'Send',
       agentPrivacyNote: 'Privacy: this chat runs only on your device. Nothing is uploaded or saved',
@@ -1106,7 +1110,7 @@
     ]
   };
 
-  function getAnswer(text) {
+  function localAnswer(text) {
     var q = String(text || '').toLowerCase();
     var list = agentQA[current] || agentQA.zh;
     for (var i = 0; i < list.length; i++) {
@@ -1115,7 +1119,28 @@
         if (q.indexOf(item.keys[k].toLowerCase()) > -1) { return item.a; }
       }
     }
-    return t('agentFallback');
+    return null;
+  }
+
+  var AGENT_ENDPOINT = SUPABASE_URL + '/functions/v1/ask-agent';
+
+  function askModel(text) {
+    return fetch(AGENT_ENDPOINT, {
+      method: 'POST',
+      headers: {
+        apikey: SUPABASE_KEY,
+        Authorization: 'Bearer ' + SUPABASE_KEY,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ question: String(text).slice(0, 200), lang: current })
+    }).then(function (res) {
+      if (res.status === 429) { throw new Error('rate'); }
+      if (!res.ok) { throw new Error('HTTP ' + res.status); }
+      return res.json();
+    }).then(function (data) {
+      if (!data || !data.answer) { throw new Error('empty'); }
+      return String(data.answer).trim();
+    });
   }
 
   var agentGreeting = null;
@@ -1166,10 +1191,33 @@
     var respond = function (text) {
       var bubble = addBubble('···', 'bot');
       bubble.classList.add('chat-typing');
-      window.setTimeout(function () {
+
+      var local = localAnswer(text);
+      if (local) {
+        window.setTimeout(function () {
+          bubble.classList.remove('chat-typing');
+          typeOut(bubble, local);
+        }, reduceMotion ? 0 : 400);
+        return;
+      }
+
+      var finished = false;
+      var guard = null;
+      var show = function (answer) {
+        if (finished) { return; }
+        finished = true;
+        if (guard) { window.clearTimeout(guard); }
         bubble.classList.remove('chat-typing');
-        typeOut(bubble, getAnswer(text));
-      }, reduceMotion ? 0 : 500);
+        typeOut(bubble, answer);
+      };
+      guard = window.setTimeout(function () { show(t('agentOffline')); }, 20000);
+
+      askModel(text).then(function (answer) {
+        show(answer);
+      }).catch(function (err) {
+        if (err && err.message === 'rate') { show(t('agentLimit')); }
+        else { show(t('agentOffline')); }
+      });
     };
 
     var send = function (text) {
