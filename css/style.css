@@ -957,3 +957,14 @@ html{-webkit-tap-highlight-color:transparent}
 button,a,input,textarea,label,summary{-webkit-tap-highlight-color:transparent}
 a:focus:not(:focus-visible),
 button:focus:not(:focus-visible){outline:none}
+/* ---------- 颜色选项：更好看、间距更一致 ---------- */
+.msg-more{gap:16px}
+.color-row{gap:12px;margin-top:10px}
+.color-dot{
+  width:30px;
+  height:30px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.35);
+}
+.color-dot[aria-pressed="true"]{
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 0 0 2px var(--card),0 0 0 4px currentColor;
+}
