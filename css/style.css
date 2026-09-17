@@ -978,3 +978,35 @@ button:focus:not(:focus-visible){outline:none}
   .page-1,.page-2,.page-3,.page-4{transition-duration:420ms}
   html.js-motion .page.is-active.is-leaving{transition-duration:240ms}
 }
+/* ---------- 留言气泡：马赛克铺满 ---------- */
+.msg-list{
+  display:grid;
+  grid-template-columns:1fr;
+  grid-auto-rows:1px;
+  grid-auto-flow:dense;
+  column-gap:12px;
+  row-gap:0;
+  align-items:start;
+  min-height:280px;
+}
+.msg-list .msg-item{
+  width:100%;
+  max-width:none;
+  margin:0;
+  box-sizing:border-box;
+}
+.msg-list .msg-empty{grid-column:1 / -1}
+@media (min-width:640px){
+  .msg-list{grid-template-columns:repeat(2,1fr)}
+}
+@media (min-width:900px){
+  .msg-list{grid-template-columns:repeat(3,1fr)}
+}
+@media (max-width:639px){
+  .msg-list{display:flex;flex-direction:column;gap:12px;min-height:0}
+  .msg-list .msg-item{width:auto}
+  .msg-list .msg-item.msg-w-sm{width:72%;align-self:flex-start}
+  .msg-list .msg-item.msg-w-md{width:88%;align-self:flex-start}
+  .msg-list .msg-item.msg-w-lg{width:100%;align-self:stretch}
+  .msg-list .msg-item.msg-right{align-self:flex-end}
+}

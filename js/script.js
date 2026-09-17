@@ -487,6 +487,48 @@
   function sendMessage(data) {
     return apiFetch('messages', { method: 'POST', prefer: 'return=minimal', body: data });
   }
+  function layoutBoard() {
+    var ul = document.getElementById('msgList');
+    if (!ul) { return; }
+    var items = ul.querySelectorAll('.msg-item');
+    if (!items.length) { return; }
+    if (ul.offsetHeight === 0) { return; }
+    var isDesk = !!(window.matchMedia && window.matchMedia('(min-width: 640px)').matches);
+    var isWide = !!(window.matchMedia && window.matchMedia('(min-width: 900px)').matches);
+    var cols = isWide ? 3 : (isDesk ? 2 : 1);
+    var rowH = 1;
+    for (var i = 0; i < items.length; i++) {
+      var el = items[i];
+      el.style.gridRowEnd = '';
+      el.style.gridColumn = '';
+      el.classList.remove('msg-w-sm', 'msg-w-md', 'msg-w-lg', 'msg-right');
+      var len = parseInt(el.getAttribute('data-len') || '0', 10);
+      if (!isDesk) {
+        if (len <= 12) { el.classList.add('msg-w-sm'); }
+        else if (len <= 40) { el.classList.add('msg-w-md'); }
+        else { el.classList.add('msg-w-lg'); }
+        if (i % 2 === 1) { el.classList.add('msg-right'); }
+        continue;
+      }
+      if (cols > 1 && el.getAttribute('data-wide') === '1') {
+        el.style.gridColumn = 'span 2';
+      }
+      var h = el.offsetHeight;
+      var rows = Math.max(1, Math.ceil(h / rowH));
+      el.style.gridRowEnd = 'span ' + rows;
+    }
+  }
+
+  function initBoardLayout() {
+    var timer = null;
+    window.addEventListener('resize', function () {
+      if (timer) { window.clearTimeout(timer); }
+      timer = window.setTimeout(function () { timer = null; layoutBoard(); }, 150);
+    });
+    if (document.fonts && document.fonts.ready && document.fonts.ready.then) {
+      document.fonts.ready.then(function () { layoutBoard(); });
+    }
+  }
   function renderBoard() {
     var ul = document.getElementById('msgList');
     if (!ul) { return; }
@@ -505,6 +547,12 @@
         var li = document.createElement('li');
         var tone = palette.indexOf(m.color) > -1 ? m.color : 'coral';
         li.className = 'msg-item color-' + tone;
+        var rawText = String(m.content || '');
+        li.setAttribute('data-len', String(rawText.length));
+        var idStr = String(m.id || '');
+        var hash = 0;
+        for (var hi = 0; hi < idStr.length; hi++) { hash = (hash * 31 + idStr.charCodeAt(hi)) % 997; }
+        li.setAttribute('data-wide', (hash % 3 === 0) ? '1' : '0');
         var head = document.createElement('div');
         head.className = 'msg-head';
         var name = document.createElement('span');
@@ -536,6 +584,7 @@
         li.appendChild(body);
         ul.appendChild(li);
       }
+      layoutBoard();
     }).catch(function () {
       ul.textContent = '';
       var err = document.createElement('li');
@@ -855,6 +904,10 @@
       var finish = function () {
         if (from) { from.classList.remove('is-active', 'is-entered', 'is-leaving', 'is-leaving-down', 'is-armed', 'is-armed-down', 'is-up'); }
         target.classList.add('is-active');
+        if (target.id === 'page3') {
+          layoutBoard();
+          window.setTimeout(layoutBoard, 700);
+        }
         var allArrows = document.querySelectorAll('.page-next');
         for (var ai = 0; ai < allArrows.length; ai++) { allArrows[ai].classList.remove('is-pulling'); }
         setArrow(to);
@@ -1321,6 +1374,7 @@
   }
   var initial = detectLang();
   initBoard();
+  initBoardLayout();
   applyLang(initial);
   initTheme();
   initPointerEffects();
