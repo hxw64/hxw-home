@@ -464,23 +464,24 @@
       var hovering = false;
 
       var draw = function () {
-        currentX += (targetX - currentX) * EASE;
-        currentY += (targetY - currentY) * EASE;
-        var settled = Math.abs(targetX - currentX) < 0.01 && Math.abs(targetY - currentY) < 0.01;
-        if (settled) {
-          currentX = targetX;
-          currentY = targetY;
-        }
-        if (!hovering && Math.abs(currentX) < 0.01 && Math.abs(currentY) < 0.01) {
-          card.style.transform = '';
-          card.classList.remove('is-tilting');
-          rafId = null;
-          return;
-        }
-        card.style.transform = 'perspective(' + PERSPECTIVE + 'px) rotateX(' + currentX.toFixed(3) + 'deg) rotateY(' + currentY.toFixed(3) + 'deg)';
-        if (settled) { rafId = null; return; }
-        rafId = window.requestAnimationFrame(draw);
-      };
+      dot.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+      rx += (x - rx) * 0.42;
+      ry += (y - ry) * 0.42;
+      ring.style.transform = 'translate(' + rx + 'px,' + ry + 'px) scale(' + (pressed ? 0.9 : 1) + ')';
+      if (Math.abs(x - rx) < 0.2 && Math.abs(y - ry) < 0.2) {
+        rx = x;
+        ry = y;
+        running = false;
+        return;
+      }
+      window.requestAnimationFrame(draw);
+    };
+    var start = function () {
+      if (!running) {
+        running = true;
+        window.requestAnimationFrame(draw);
+      }
+    };;
 
       var start = function () {
         if (rafId === null) { rafId = window.requestAnimationFrame(draw); }
@@ -850,6 +851,73 @@
       });
     }
   }
+  function initCursor() {
+    var finePointer = !!(window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches);
+    if (!finePointer || reduceMotion) { return; }
+
+    var dot = document.createElement('div');
+    dot.className = 'cursor-dot';
+    var ring = document.createElement('div');
+    ring.className = 'cursor-ring';
+    document.body.appendChild(dot);
+    document.body.appendChild(ring);
+
+    var x = window.innerWidth / 2;
+    var y = window.innerHeight / 2;
+    var rx = x;
+    var ry = y;
+    var pressed = false;
+    var started = false;
+    var running = false;
+
+    var draw = function () {
+      dot.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+      rx += (x - rx) * 0.42;
+      ry += (y - ry) * 0.42;
+      ring.style.transform = 'translate(' + rx + 'px,' + ry + 'px) scale(' + (pressed ? 0.9 : 1) + ')';
+      if (Math.abs(x - rx) < 0.2 && Math.abs(y - ry) < 0.2) {
+        rx = x;
+        ry = y;
+        running = false;
+        return;
+      }
+      window.requestAnimationFrame(draw);
+    };
+    var start = function () {
+      if (!running) {
+        running = true;
+        window.requestAnimationFrame(draw);
+      }
+    };
+
+    window.addEventListener('pointermove', function (e) {
+      if (e.pointerType === 'touch') { return; }
+      x = e.clientX;
+      y = e.clientY;
+      start();
+      if (!started) {
+        started = true;
+        rx = x;
+        ry = y;
+        document.documentElement.classList.add('custom-cursor');
+        document.documentElement.classList.add('cursor-on');
+      }
+    });
+    window.addEventListener('pointerleave', function () {
+      document.documentElement.classList.remove('cursor-on');
+    });
+    window.addEventListener('blur', function () {
+      document.documentElement.classList.remove('cursor-on');
+    });
+    window.addEventListener('pointerdown', function () { pressed = true; start(); });
+    window.addEventListener('pointerup', function () { pressed = false; start(); });
+
+    document.addEventListener('pointerover', function (e) {
+      var node = e.target;
+      var hit = node && node.closest ? node.closest('a, button, .chip, input, textarea, [role="option"]') : null;
+      ring.classList.toggle('is-hover', !!hit);
+    });
+  }
   var initial = detectLang();
   initBoard();
   applyLang(initial);
@@ -858,6 +926,7 @@
   var pager = initPager();
   initAgent(pager);
   initFeedback();
+  initCursor();
 
   var toggle = document.getElementById('langToggle');
   if (toggle) {

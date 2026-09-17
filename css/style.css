@@ -301,7 +301,7 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:3px solid 
   body,.topbar,.card,.email-line,.tag-list li,.msg-form input,.msg-form textarea,.msg-item,.theme-btn,.theme-menu,.theme-menu li{transition:none}
 }
 /* ---------- 深色模式细化 ---------- */
-html{scroll-padding-top:88px}
+html{scroll-padding-top:105px}
 main,
 #top,
 section{scroll-margin-top:88px}
@@ -715,4 +715,68 @@ html.feedback-open{overflow:hidden}
 @media (max-width:640px){
   .feedback-modal{padding:16px}
   .feedback-dialog{padding:22px 18px;max-height:88vh}
+}
+/* ---------- 自定义鼠标 ---------- */
+html.custom-cursor *{cursor:none}
+html.custom-cursor input,
+html.custom-cursor textarea{cursor:text}
+.cursor-dot,
+.cursor-ring{
+  position:fixed;
+  left:0;
+  top:0;
+  pointer-events:none;
+  z-index:70;
+  opacity:0;
+  will-change:transform;
+}
+.cursor-dot{
+  width:5px;
+  height:5px;
+  margin:-2.5px 0 0 -2.5px;
+  border-radius:50%;
+  background:var(--coral);
+  transition:opacity 200ms ease;
+}
+.cursor-ring{
+  width:26px;
+  height:26px;
+  margin:-13px 0 0 -13px;
+  border:1px solid var(--coral);
+  border-radius:50%;
+  transition:width 180ms ease,height 180ms ease,margin 180ms ease,background-color 220ms ease,border-color 220ms ease,opacity 200ms ease;
+}
+.cursor-ring.is-hover{
+  width:42px;
+  height:42px;
+  margin:-21px 0 0 -21px;
+  background:rgba(255,107,87,.10);
+}
+html.cursor-on .cursor-dot,
+html.cursor-on .cursor-ring{opacity:1}
+@media (prefers-reduced-motion: reduce){
+  .cursor-dot,
+  .cursor-ring{transition:none}
+}
+/* ---------- 留言板与数字分身整体下移 ---------- */
+.page-3,
+.page-4{padding-top:118px}
+@media (max-width:640px){
+  .page-3,
+  .page-4{padding-top:56px}
+}
+@media (max-height:700px){
+  .page-3,
+  .page-4{padding-top:40px}
+}
+/* ---------- 留言板与数字分身再往下移 ---------- */
+.page-3,
+.page-4{padding-top:185px}
+@media (max-width:640px){
+  .page-3,
+  .page-4{padding-top:118px}
+}
+@media (max-height:760px){
+  .page-3,
+  .page-4{padding-top:105px}
 }
