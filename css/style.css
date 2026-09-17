@@ -951,3 +951,9 @@ html.js-motion .page.is-active.is-up.is-entered{opacity:1;transform:translateY(0
 /* ---------- 与我的关系：与其他栏一致 ---------- */
 .msg-rel{border:none;padding:0;margin:0}
 .msg-rel legend{padding:0;font-weight:600}
+/* ---------- 手机端点击不出现蓝色方块 ---------- */
+*{-webkit-tap-highlight-color:transparent}
+html{-webkit-tap-highlight-color:transparent}
+button,a,input,textarea,label,summary{-webkit-tap-highlight-color:transparent}
+a:focus:not(:focus-visible),
+button:focus:not(:focus-visible){outline:none}
