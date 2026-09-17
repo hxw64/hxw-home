@@ -106,7 +106,10 @@
       <section class="card board" id="board">
         <h2 data-i18n="boardTitle">留言板</h2>
         <ul id="msgList" class="msg-list"></ul>
-        <button id="msgClear" class="clear-btn" type="button" data-i18n="clearBtn">清空留言</button>
+        <div id="adminBar" class="admin-bar" hidden>
+          <button id="adminClear" class="clear-btn" type="button" data-i18n="adminClear">清空留言板</button>
+          <button id="adminSignOut" class="clear-btn" type="button" data-i18n="adminSignOut">退出管理</button>
+        </div>
         <form id="msgForm" class="msg-form" autocomplete="off" novalidate>
           <label for="msgText" data-i18n="msgLabel">留言</label>
           <textarea id="msgText" rows="3" maxlength="500" required data-i18n-placeholder="msgPlaceholder" placeholder="写点什么…"></textarea>
@@ -172,7 +175,7 @@
 
   <footer>
     <p>© 2026 何欣蔚</p>
-    <p><button id="feedbackOpen" class="footer-link" type="button" data-i18n="feedbackLink">留言反馈</button></p>
+    <p><button id="feedbackOpen" class="footer-link" type="button" data-i18n="feedbackLink">留言反馈</button> · <button id="adminOpen" class="footer-link" type="button" data-i18n="adminOpen">管理</button></p>
   </footer>
 
   <div id="feedbackModal" class="feedback-modal" hidden>
@@ -208,6 +211,24 @@
         <div class="feedback-actions">
           <button id="feedbackCancel" class="chip" type="button" data-i18n="feedbackCancel">取消</button>
           <button class="btn btn-primary" type="submit" data-i18n="feedbackSubmit">提交</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div id="adminModal" class="feedback-modal" hidden>
+    <div class="feedback-backdrop" data-admin-close="1"></div>
+    <div class="feedback-dialog" role="dialog" aria-modal="true" aria-labelledby="adminTitle">
+      <button id="adminClose" class="feedback-close" type="button" aria-label="关闭" data-i18n-aria="feedbackClose">×</button>
+      <h2 id="adminTitle" data-i18n="adminTitle">管理员登录</h2>
+      <p class="sub-text" data-i18n="adminIntro">只有管理员可以隐藏或清空留言</p>
+      <form id="adminForm" class="feedback-form" novalidate>
+        <label for="adminEmail" data-i18n="adminEmail">邮箱</label>
+        <input id="adminEmail" type="email" maxlength="80" autocomplete="username" />
+        <label for="adminPass" data-i18n="adminPass">密码</label>
+        <input id="adminPass" type="password" maxlength="80" autocomplete="current-password" />
+        <div class="feedback-actions">
+          <button id="adminCancel" class="chip" type="button" data-i18n="feedbackCancel">取消</button>
+          <button class="btn btn-primary" type="submit" data-i18n="adminLogin">登录</button>
         </div>
       </form>
     </div>

@@ -77,6 +77,18 @@
       relFamily: '家人',
       relTeacher: '老师',
       relOther: '其他',
+      adminOpen: '管理',
+      adminTitle: '管理员登录',
+      adminIntro: '只有管理员可以隐藏或清空留言',
+      adminEmail: '邮箱',
+      adminPass: '密码',
+      adminLogin: '登录',
+      adminClear: '清空留言板',
+      adminSignOut: '退出管理',
+      adminHide: '隐藏',
+      adminAuthFail: '登录失败，请检查邮箱和密码',
+      adminSignedIn: '已进入管理模式',
+      adminClearConfirm: '确定清空所有留言吗？',
       sendBtn: '发送',
       clearBtn: '清空留言',
       anonymousName: '匿名',
@@ -166,6 +178,18 @@
       relFamily: 'Family',
       relTeacher: 'Teacher',
       relOther: 'Other',
+      adminOpen: 'Admin',
+      adminTitle: 'Admin sign in',
+      adminIntro: 'Only the admin can hide or clear messages',
+      adminEmail: 'Email',
+      adminPass: 'Password',
+      adminLogin: 'Sign in',
+      adminClear: 'Clear all messages',
+      adminSignOut: 'Sign out',
+      adminHide: 'Hide',
+      adminAuthFail: 'Sign in failed. Check email and password',
+      adminSignedIn: 'Admin mode on',
+      adminClearConfirm: 'Clear all messages?',
       sendBtn: 'Send',
       clearBtn: 'Clear messages',
       anonymousName: 'Anonymous',
@@ -193,11 +217,120 @@
   var SUPABASE_URL = 'https://nntyiphwrxwxffiqwqle.supabase.co';
   var SUPABASE_KEY = 'sb_publishable_D6bM1TurtNQgilXkBbZdbg_ldDxZzSW';
 
+  var adminToken = null;
+  var ADMIN_KEY = 'admin_token';
+  try { adminToken = sessionStorage.getItem(ADMIN_KEY); } catch (e) { adminToken = null; }
+
+  function updateAdminUI() {
+    var bar = document.getElementById('adminBar');
+    if (!bar) { return; }
+    if (adminToken) { bar.removeAttribute('hidden'); }
+    else { bar.setAttribute('hidden', ''); }
+  }
+
+  function adminSignIn(email, password) {
+    return fetch(SUPABASE_URL + '/auth/v1/token?grant_type=password', {
+      method: 'POST',
+      headers: { apikey: SUPABASE_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, password: password })
+    }).then(function (res) {
+      if (!res.ok) { throw new Error('auth'); }
+      return res.json();
+    }).then(function (data) {
+      adminToken = data.access_token;
+      try { sessionStorage.setItem(ADMIN_KEY, adminToken); } catch (e) {}
+      updateAdminUI();
+      return true;
+    });
+  }
+
+  function adminSignOut() {
+    adminToken = null;
+    try { sessionStorage.removeItem(ADMIN_KEY); } catch (e) {}
+    updateAdminUI();
+    return renderBoard();
+  }
+
+  function hideMessage(id) {
+    return apiFetch('messages?id=eq.' + encodeURIComponent(id), {
+      method: 'PATCH',
+      prefer: 'return=minimal',
+      body: { is_visible: false }
+    }).then(function () { return renderBoard(); });
+  }
+
+  function clearAllMessages() {
+    return apiFetch('messages?id=not.is.null', {
+      method: 'DELETE',
+      prefer: 'return=minimal'
+    }).then(function () { return renderBoard(); });
+  }
+
+  function initAdmin() {
+    var modal = document.getElementById('adminModal');
+    var openBtn = document.getElementById('adminOpen');
+    var closeBtn = document.getElementById('adminClose');
+    var cancelBtn = document.getElementById('adminCancel');
+    var form = document.getElementById('adminForm');
+    var email = document.getElementById('adminEmail');
+    var pass = document.getElementById('adminPass');
+    var clearBtn = document.getElementById('adminClear');
+    var outBtn = document.getElementById('adminSignOut');
+    var list = document.getElementById('msgList');
+    if (!modal || !openBtn) { return; }
+
+    updateAdminUI();
+
+    var openModal = function () { modal.removeAttribute('hidden'); if (email) { email.focus(); } };
+    var closeModal = function () { modal.setAttribute('hidden', ''); };
+
+    openBtn.addEventListener('click', openModal);
+    if (closeBtn) { closeBtn.addEventListener('click', closeModal); }
+    if (cancelBtn) { cancelBtn.addEventListener('click', closeModal); }
+    modal.addEventListener('click', function (e) {
+      if (e.target && e.target.getAttribute && e.target.getAttribute('data-admin-close')) { closeModal(); }
+    });
+
+    if (form) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var em = email ? email.value.trim() : '';
+        var pw = pass ? pass.value : '';
+        if (!em || !pw) { showToast(t('adminAuthFail'), 'error'); return; }
+        adminSignIn(em, pw).then(function () {
+          if (pass) { pass.value = ''; }
+          closeModal();
+          showToast(t('adminSignedIn'), 'success');
+          return renderBoard();
+        }).catch(function () {
+          showToast(t('adminAuthFail'), 'error');
+        });
+      });
+    }
+
+    if (outBtn) { outBtn.addEventListener('click', function () { adminSignOut(); }); }
+
+    if (clearBtn) {
+      clearBtn.addEventListener('click', function () {
+        if (!adminToken) { return; }
+        if (!window.confirm(t('adminClearConfirm'))) { return; }
+        clearAllMessages().catch(function () { showToast(t('msgError'), 'error'); });
+      });
+    }
+
+    if (list) {
+      list.addEventListener('click', function (e) {
+        var btn = e.target.closest ? e.target.closest('.msg-admin') : null;
+        if (!btn || !adminToken) { return; }
+        hideMessage(btn.getAttribute('data-id')).catch(function () { showToast(t('msgError'), 'error'); });
+      });
+    }
+  }
   function apiFetch(path, options) {
     var opts = options || {};
     var headers = {
       apikey: SUPABASE_KEY,
-      Authorization: 'Bearer ' + SUPABASE_KEY,
+      Authorization: 'Bearer ' + (adminToken || SUPABASE_KEY),
       'Content-Type': 'application/json'
     };
     if (opts.prefer) { headers.Prefer = opts.prefer; }
@@ -379,6 +512,14 @@
           head.appendChild(relTag);
         }
         head.appendChild(time);
+        if (adminToken && m.id) {
+          var hideBtn = document.createElement('button');
+          hideBtn.type = 'button';
+          hideBtn.className = 'msg-admin';
+          hideBtn.setAttribute('data-id', m.id);
+          hideBtn.textContent = t('adminHide');
+          head.appendChild(hideBtn);
+        }
         var body = document.createElement('p');
         body.className = 'msg-body';
         body.textContent = String(m.content || '');
@@ -1124,6 +1265,7 @@
   var pager = initPager();
   initAgent(pager);
   initFeedback();
+  initAdmin();
   initCursor();
 
   var toggle = document.getElementById('langToggle');

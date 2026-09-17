@@ -925,3 +925,29 @@ html.js-motion .page.is-active.is-up.is-entered{opacity:1;transform:translateY(0
 .rel-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
 .rel-chip.is-on{background:var(--coral);border-color:var(--coral);color:#fff}
 .msg-rel-tag{color:var(--faint);font-size:12px;margin-left:6px}
+/* ---------- 管理员模式 ---------- */
+.admin-bar{display:flex;gap:14px;align-items:center;margin:0 0 16px}
+.admin-bar[hidden]{display:none}
+.msg-admin{
+  margin-left:auto;
+  padding:0;
+  border:none;
+  background:none;
+  color:var(--faint);
+  font:inherit;
+  font-size:12px;
+  text-decoration:underline;
+  cursor:pointer;
+}
+.msg-admin:hover,
+.msg-admin:focus-visible{color:var(--coral);outline:none}
+/* ---------- 颜色选项：透明度和气泡一致 ---------- */
+.color-dot{border-width:1px;border-style:solid}
+.color-dot[data-color="coral"]{background:rgba(255,107,87,.14);border-color:rgba(255,107,87,.34);color:#FF6B57}
+.color-dot[data-color="amber"]{background:rgba(232,145,45,.15);border-color:rgba(232,145,45,.34);color:#E8912D}
+.color-dot[data-color="sky"]{background:rgba(74,144,226,.14);border-color:rgba(74,144,226,.34);color:#4A90E2}
+.color-dot[data-color="mint"]{background:rgba(47,163,107,.14);border-color:rgba(47,163,107,.34);color:#2FA36B}
+.color-dot[data-color="lilac"]{background:rgba(139,92,246,.14);border-color:rgba(139,92,246,.34);color:#8B5CF6}
+/* ---------- 与我的关系：与其他栏一致 ---------- */
+.msg-rel{border:none;padding:0;margin:0}
+.msg-rel legend{padding:0;font-weight:600}
