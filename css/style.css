@@ -244,7 +244,7 @@ h1{margin:0 0 8px;font-size:36px;font-weight:700}
 .msg-empty{color:var(--faint);text-align:center;padding:10px 0}
 .clear-btn{margin-top:14px;padding:0;background:none;border:none;color:var(--faint);font-size:14px;text-decoration:underline;cursor:pointer}
 .clear-btn:hover{color:var(--coral-dark)}
-footer{text-align:center;color:var(--faint);font-size:14px;font-weight:400;padding:16px 20px 30px}
+footer{text-align:center;color:var(--faint);font-size:15px;font-weight:400;padding:14px 20px 26px}
 footer p{margin:4px 0}
 .toast-wrap{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);display:flex;flex-direction:column;gap:8px;z-index:60;pointer-events:none}
 .toast{
@@ -392,8 +392,11 @@ body{overflow-x:clip}
 .next-btn:focus-visible{background:var(--coral);color:#fff}
 .next-btn:focus-visible{outline:3px solid var(--coral);outline-offset:3px}
 .next-btn svg{width:22px;height:22px}
-.next-icon{animation:next-float 1.8s ease-in-out infinite}
-@keyframes next-float{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
+.next-btn{animation:arrow-breathe 2.6s ease-in-out infinite}
+@keyframes arrow-breathe{
+  0%,100%{transform:translateY(0) scale(1);opacity:.92}
+  50%{transform:translateY(4px) scale(1.03);opacity:1}
+}
 
 /* ---------- 分页：第二屏淡入上滑 ---------- */
 .page-2{transition:opacity 300ms ease,transform 300ms ease}
@@ -407,7 +410,7 @@ html.js-motion .page-2.is-entered{opacity:1;transform:translateY(0)}
   .page-1 .tagline{font-size:18px;margin:0 auto 34px}
 }
 @media (prefers-reduced-motion: reduce){
-  .next-icon{animation:none}
+  .next-btn{animation:none}
   .page-2{transition:none}
 }
 /* 柔光置于内容之下，整页可见 */
@@ -779,3 +782,146 @@ html.cursor-on .cursor-ring{opacity:1}
   .topbar{padding:0 20px}
   .nav{gap:18px}
 }
+/* ---------- 留言板上移 + 页脚独立成屏 ---------- */
+.page-3,
+.page-4{min-height:calc(100vh - 64px);box-sizing:border-box}
+.page-3{padding-top:120px}
+@media (max-width:640px){
+  .page-3{padding-top:88px}
+}
+@media (max-height:760px){
+  .page-3{padding-top:80px}
+}
+footer{padding-bottom:34px}
+/* ---------- 只显示圆环，不显示系统箭头 ---------- */
+/* ---------- 文字输入时隐藏圆环 ---------- */
+html.cursor-text .cursor-ring{opacity:0}
+
+/* ---------- 隐私备注 ---------- */
+.privacy-note{margin:14px 0 0;color:var(--faint);font-size:13px;line-height:1.7}
+
+
+/* ---------- 向上翻页：更温柔、无弹性 ---------- */
+html.js-motion .page.is-active.is-armed-down{
+  opacity:1;
+  transform:translateY(6px);
+  transition:transform 520ms cubic-bezier(.25,.1,.25,1);
+}
+html.js-motion .page.is-active.is-leaving-down{
+  opacity:0;
+  transform:translateY(34px);
+  transition:opacity 420ms cubic-bezier(.25,.1,.25,1),transform 420ms cubic-bezier(.25,.1,.25,1);
+}
+html.js-motion .page.is-up{
+  transition:opacity 620ms cubic-bezier(.25,.1,.25,1),transform 720ms cubic-bezier(.22,.61,.36,1);
+}
+html.js-motion .page.is-active.is-up:not(.is-entered){opacity:0;transform:translateY(56px)}
+html.js-motion .page.is-active.is-up.is-entered{opacity:1;transform:translateY(0)}
+/* ---------- 箭头：随翻页位移 ---------- */
+.page-next{transition:opacity 320ms ease,transform 320ms ease}
+.page-next.is-pulling{opacity:0;transform:translateY(10px)}
+.page-next.is-arriving{opacity:0;transform:translateY(12px)}
+
+/* ---------- 反馈：设备选择 ---------- */
+.device-group{border:none;padding:0;margin:0}
+.device-group legend{padding:0;font-weight:600;font-size:15px}
+.device-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.device-chip.is-on{background:var(--coral);border-color:var(--coral);color:#fff}
+
+/* ---------- 评分改为星形 ---------- */
+.rating-dot{font-size:19px;line-height:1;color:var(--faint)}
+.rating-dot.is-on{background:rgba(255,107,87,.12);border-color:var(--coral);color:var(--coral)}
+
+/* ---------- 评分星星：无圆圈、更大 ---------- */
+.rating-row{gap:4px}
+.rating-dot{
+  width:auto;
+  height:auto;
+  padding:4px 2px;
+  border:none;
+  border-radius:0;
+  background:none;
+  color:var(--faint);
+  font-size:32px;
+  line-height:1;
+  cursor:pointer;
+}
+.rating-dot:hover{color:var(--coral);border:none;background:none}
+.rating-dot.is-on{background:none;border:none;color:var(--coral)}
+.rating-dot:focus-visible{outline:2px solid var(--coral);outline-offset:2px;border-radius:4px}
+/* ---------- 留言改为聊天气泡 ---------- */
+.msg-list{align-items:flex-start}
+.msg-item{
+  max-width:78%;
+  border-radius:14px 14px 14px 4px;
+  padding:10px 14px;
+  box-shadow:0 1px 2px rgba(0,0,0,.04);
+}
+.msg-head{gap:8px;margin-bottom:2px}
+.msg-name{font-size:14px}
+.msg-time{font-size:12px}
+.msg-body{font-size:16px}
+.msg-empty{width:100%}
+@media (max-width:640px){
+  .msg-item{max-width:88%}
+}
+/* ---------- 留言气泡：更圆润 + 自选颜色 ---------- */
+.msg-item{
+  border-radius:20px 20px 20px 6px;
+  background:var(--bubble-bg,var(--msg-bg));
+  border:1px solid var(--bubble-border,var(--msg-border));
+}
+.msg-item.color-coral{--bubble-bg:rgba(255,107,87,.14);--bubble-border:rgba(255,107,87,.34)}
+.msg-item.color-amber{--bubble-bg:rgba(232,145,45,.15);--bubble-border:rgba(232,145,45,.34)}
+.msg-item.color-sky{--bubble-bg:rgba(74,144,226,.14);--bubble-border:rgba(74,144,226,.34)}
+.msg-item.color-mint{--bubble-bg:rgba(47,163,107,.14);--bubble-border:rgba(47,163,107,.34)}
+.msg-item.color-lilac{--bubble-bg:rgba(139,92,246,.14);--bubble-border:rgba(139,92,246,.34)}
+
+.msg-color{border:none;padding:0;margin:0}
+.msg-color legend{padding:0;font-weight:600}
+.color-row{display:flex;gap:10px;margin-top:8px}
+.color-dot{
+  width:26px;
+  height:26px;
+  padding:0;
+  border:2px solid transparent;
+  border-radius:50%;
+  cursor:pointer;
+  transition:transform 180ms ease,border-color 180ms ease;
+}
+.color-dot:hover{transform:scale(1.08)}
+.color-dot[aria-pressed="true"]{transform:scale(1.08)}
+.color-dot:focus-visible{outline:2px solid var(--coral);outline-offset:2px}
+.color-dot[data-color="coral"]{background:#FF6B57}
+.color-dot[data-color="amber"]{background:#E8912D}
+.color-dot[data-color="sky"]{background:#4A90E2}
+.color-dot[data-color="mint"]{background:#2FA36B}
+.color-dot[data-color="lilac"]{background:#8B5CF6}
+/* ---------- 颜色选项：同色光环，无黑框 ---------- */
+.color-dot{
+  border:none;
+  box-shadow:0 0 0 0 transparent;
+  transition:transform 180ms ease,box-shadow 200ms ease;
+}
+.color-dot:hover{transform:scale(1.1)}
+.color-dot[aria-pressed="true"]{
+  transform:scale(1.12);
+  box-shadow:0 0 0 2px var(--card),0 0 0 4px currentColor;
+}
+.color-dot[data-color="coral"]{background:#FF6B57;color:#FF6B57}
+.color-dot[data-color="amber"]{background:#E8912D;color:#E8912D}
+.color-dot[data-color="sky"]{background:#4A90E2;color:#4A90E2}
+.color-dot[data-color="mint"]{background:#2FA36B;color:#2FA36B}
+.color-dot[data-color="lilac"]{background:#8B5CF6;color:#8B5CF6}
+.color-dot:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+/* ---------- 留言板：先留言后输入 ---------- */
+.board #msgList{margin:0 0 6px}
+.board .clear-btn{margin:0 0 16px}
+.board .msg-form{margin-top:4px}
+.msg-more{display:flex;flex-direction:column;gap:10px;padding-top:4px}
+.msg-more[hidden]{display:none}
+.msg-more.is-open{animation:msg-more-in 260ms ease-out}
+@keyframes msg-more-in{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+.rel-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.rel-chip.is-on{background:var(--coral);border-color:var(--coral);color:#fff}
+.msg-rel-tag{color:var(--faint);font-size:12px;margin-left:6px}

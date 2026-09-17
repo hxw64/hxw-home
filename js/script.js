@@ -17,6 +17,7 @@
       agentFallback: '这个问题我还不太会，可以问我：你是谁 / 学校专业 / 特长 / 爱好 / 项目 / 联系方式',
       chatPlaceholder: '问我点什么…',
       chatSend: '发送',
+      agentPrivacyNote: '隐私说明：这里的对话只在你的设备上进行，不会上传、也不会保存',
       qWho: '你是谁',
       qStudy: '学校和专业',
       qSkill: '你的特长',
@@ -26,6 +27,11 @@
       feedbackTitle: '反馈',
       feedbackIntro: '你的意见会帮我改进这个主页',
       feedbackRating: '评分（可选）',
+      feedbackDevice: '使用设备',
+      deviceDesktop: '电脑',
+      deviceTablet: '平板',
+      deviceMobile: '手机',
+      deviceOther: '其他',
       feedbackText: '反馈内容',
       feedbackTextPlaceholder: '说说你的想法…',
       feedbackContact: '联系方式（可选）',
@@ -34,6 +40,10 @@
       feedbackClose: '关闭',
       feedbackSoon: '反馈通道正在接入，敬请期待',
       feedbackEmpty: '请先填写内容',
+      feedbackSending: '提交中…',
+      feedbackSent: '已收到，谢谢你的反馈',
+      feedbackError: '提交失败，请稍后再试',
+      boardError: '留言加载失败，请刷新重试',
       aboutTitle: '关于我',
       aboutText1: '我是何欣蔚，天津大学智能医学工程专业本科生',
       aboutText2: '我喜欢探索新鲜事物，也喜欢音乐',
@@ -55,6 +65,18 @@
       msgLabel: '留言',
       msgPlaceholder: '写点什么…',
       anonLabel: '匿名',
+      msgColorLabel: '气泡颜色',
+      colorCoral: '珊瑚红',
+      colorAmber: '暖橙',
+      colorSky: '天蓝',
+      colorMint: '薄荷绿',
+      colorLilac: '淡紫',
+      relLabel: '与我的关系',
+      relClassmate: '同学',
+      relFriend: '朋友',
+      relFamily: '家人',
+      relTeacher: '老师',
+      relOther: '其他',
       sendBtn: '发送',
       clearBtn: '清空留言',
       anonymousName: '匿名',
@@ -67,7 +89,7 @@
       themeSystem: '跟随系统',
       themeLight: '浅色模式',
       themeDark: '深色模式',
-      footerNote: '本网站为本地静态页面，不收集任何信息'
+      footerNote: '反馈与留言会发送到 Supabase，仅用于改进这个主页'
     },
     en: {
       tagline: 'Chase the Zenith Light.',
@@ -84,6 +106,7 @@
       agentFallback: 'I am not sure about that yet. You can ask: who are you / school / skills / hobbies / projects / contact',
       chatPlaceholder: 'Ask me something...',
       chatSend: 'Send',
+      agentPrivacyNote: 'Privacy: this chat runs only on your device. Nothing is uploaded or saved',
       qWho: 'Who are you',
       qStudy: 'School and major',
       qSkill: 'Your skills',
@@ -93,6 +116,11 @@
       feedbackTitle: 'Feedback',
       feedbackIntro: 'Your feedback helps me improve this page',
       feedbackRating: 'Rating (optional)',
+      feedbackDevice: 'Your device',
+      deviceDesktop: 'Desktop',
+      deviceTablet: 'Tablet',
+      deviceMobile: 'Mobile',
+      deviceOther: 'Other',
       feedbackText: 'Your feedback',
       feedbackTextPlaceholder: 'Tell me what you think...',
       feedbackContact: 'Contact (optional)',
@@ -101,6 +129,10 @@
       feedbackClose: 'Close',
       feedbackSoon: 'The feedback channel is coming soon',
       feedbackEmpty: 'Please fill in your feedback first',
+      feedbackSending: 'Sending...',
+      feedbackSent: 'Thank you for your feedback',
+      feedbackError: 'Submit failed, please try again later',
+      boardError: 'Could not load messages, please refresh',
       aboutTitle: 'About Me',
       aboutText1: 'I am He Xinwei, an undergraduate in Intelligent Medical Engineering at Tianjin University',
       aboutText2: 'I like exploring new things and I love music',
@@ -122,6 +154,18 @@
       msgLabel: 'Message',
       msgPlaceholder: 'Write something...',
       anonLabel: 'Anonymous',
+      msgColorLabel: 'Bubble color',
+      colorCoral: 'Coral',
+      colorAmber: 'Amber',
+      colorSky: 'Sky blue',
+      colorMint: 'Mint',
+      colorLilac: 'Lilac',
+      relLabel: 'Relation to me',
+      relClassmate: 'Classmate',
+      relFriend: 'Friend',
+      relFamily: 'Family',
+      relTeacher: 'Teacher',
+      relOther: 'Other',
       sendBtn: 'Send',
       clearBtn: 'Clear messages',
       anonymousName: 'Anonymous',
@@ -134,7 +178,7 @@
       themeSystem: 'System',
       themeLight: 'Light',
       themeDark: 'Dark',
-      footerNote: 'This is a local static page. No information is collected'
+      footerNote: 'Feedback and messages are sent to Supabase and used only to improve this page'
     }
   };
 
@@ -145,6 +189,47 @@
   var themeMode = 'system';
   var themeMenuOpen = false;
   var reduceMotion = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+  var SUPABASE_URL = 'https://nntyiphwrxwxffiqwqle.supabase.co';
+  var SUPABASE_KEY = 'sb_publishable_D6bM1TurtNQgilXkBbZdbg_ldDxZzSW';
+
+  function apiFetch(path, options) {
+    var opts = options || {};
+    var headers = {
+      apikey: SUPABASE_KEY,
+      Authorization: 'Bearer ' + SUPABASE_KEY,
+      'Content-Type': 'application/json'
+    };
+    if (opts.prefer) { headers.Prefer = opts.prefer; }
+    return fetch(SUPABASE_URL + '/rest/v1/' + path, {
+      method: opts.method || 'GET',
+      headers: headers,
+      body: opts.body ? JSON.stringify(opts.body) : undefined
+    }).then(function (res) {
+      if (!res.ok) {
+        return res.text().then(function (txt) {
+          throw new Error('HTTP ' + res.status + ' ' + txt);
+        });
+      }
+      var ct = res.headers.get('content-type') || '';
+      if (ct.indexOf('application/json') > -1) { return res.json(); }
+      return true;
+    });
+  }
+
+  function deviceLabel() {
+    var ua = navigator.userAgent || '';
+    var os = /Windows/i.test(ua) ? 'Windows'
+      : /Macintosh|Mac OS X/i.test(ua) ? 'macOS'
+      : /Android/i.test(ua) ? 'Android'
+      : /iPhone|iPad|iPod/i.test(ua) ? 'iOS'
+      : /Linux/i.test(ua) ? 'Linux' : '其他';
+    var br = /Edg\//i.test(ua) ? 'Edge'
+      : /Chrome\//i.test(ua) ? 'Chrome'
+      : /Firefox\//i.test(ua) ? 'Firefox'
+      : /Safari\//i.test(ua) ? 'Safari' : '浏览器';
+    return os + ' · ' + br;
+  }
 
   function getSavedLang() {
     try { return localStorage.getItem(LIGHT_KEY); } catch (e) { return null; }
@@ -255,50 +340,59 @@
     }
   }
   function loadMessages() {
-    try {
-      var raw = localStorage.getItem(STORE_KEY);
-      if (raw) { return JSON.parse(raw); }
-    } catch (e) {}
-    return [];
+    return apiFetch('messages?select=*&is_visible=eq.true&order=created_at.desc&limit=50');
   }
-  function saveMessages(list) {
-    try { localStorage.setItem(STORE_KEY, JSON.stringify(list)); return true; } catch (e) { return false; }
+  function sendMessage(data) {
+    return apiFetch('messages', { method: 'POST', prefer: 'return=minimal', body: data });
   }
   function renderBoard() {
     var ul = document.getElementById('msgList');
     if (!ul) { return; }
-    var list = loadMessages();
-    ul.textContent = '';
-    if (list.length === 0) {
-      var empty = document.createElement('li');
-      empty.className = 'msg-empty';
-      empty.textContent = t('emptyMsg');
-      ul.appendChild(empty);
-    } else {
+    return loadMessages().then(function (list) {
+      ul.textContent = '';
+      if (!list || list.length === 0) {
+        var empty = document.createElement('li');
+        empty.className = 'msg-empty';
+        empty.textContent = t('emptyMsg');
+        ul.appendChild(empty);
+        return;
+      }
+      var palette = ['coral', 'amber', 'sky', 'mint', 'lilac'];
       for (var i = 0; i < list.length; i++) {
         var m = list[i];
         var li = document.createElement('li');
-        li.className = 'msg-item';
+        var tone = palette.indexOf(m.color) > -1 ? m.color : 'coral';
+        li.className = 'msg-item color-' + tone;
         var head = document.createElement('div');
         head.className = 'msg-head';
         var name = document.createElement('span');
         name.className = 'msg-name';
-        name.textContent = (m.n && String(m.n).trim()) ? String(m.n).trim() : t('anonymousName');
+        name.textContent = (m.nickname && String(m.nickname).trim()) ? String(m.nickname).trim() : t('anonymousName');
         var time = document.createElement('time');
         time.className = 'msg-time';
-        time.textContent = new Date(m.t).toLocaleString();
+        time.textContent = (m.created_at ? new Date(m.created_at) : new Date()).toLocaleString();
         head.appendChild(name);
+        if (m.relation && relKeys[m.relation]) {
+          var relTag = document.createElement('span');
+          relTag.className = 'msg-rel-tag';
+          relTag.textContent = t(relKeys[m.relation]);
+          head.appendChild(relTag);
+        }
         head.appendChild(time);
         var body = document.createElement('p');
         body.className = 'msg-body';
-        body.textContent = String(m.m);
+        body.textContent = String(m.content || '');
         li.appendChild(head);
         li.appendChild(body);
         ul.appendChild(li);
       }
-    }
-    var clear = document.getElementById('msgClear');
-    if (clear) { clear.style.display = list.length ? 'inline-block' : 'none'; }
+    }).catch(function () {
+      ul.textContent = '';
+      var err = document.createElement('li');
+      err.className = 'msg-empty';
+      err.textContent = t('boardError');
+      ul.appendChild(err);
+    });
   }
   function showToast(message, type) {
     var wrap = document.querySelector('.toast-wrap');
@@ -373,11 +467,59 @@
     var form = document.getElementById('msgForm');
     var anonBox = document.getElementById('msgAnon');
     var nickInput = document.getElementById('msgNick');
+    var colorRow = document.getElementById('colorRow');
+    var msgColor = 'coral';
+    var more = document.getElementById('msgMore');
+    var relRow = document.getElementById('relRow');
+    var textInput = document.getElementById('msgText');
+    var msgRel = '';
+
     if (anonBox && nickInput) {
-      anonBox.addEventListener('change', function () {
-        nickInput.disabled = anonBox.checked;
+      anonBox.addEventListener('change', function () { nickInput.disabled = anonBox.checked; });
+    }
+
+    var openMore = function () {
+      if (!more || !more.hidden) { return; }
+      more.hidden = false;
+      more.classList.add('is-open');
+      window.setTimeout(function () { more.classList.remove('is-open'); }, 300);
+    };
+    if (textInput) {
+      textInput.addEventListener('focus', openMore);
+      textInput.addEventListener('input', openMore);
+      textInput.addEventListener('blur', function () {
+        window.setTimeout(function () {
+          if (!more) { return; }
+          var active = document.activeElement;
+          if (active && more.contains(active)) { return; }
+          if (textInput.value.trim() === '') { more.hidden = true; }
+        }, 160);
       });
     }
+    if (relRow) {
+      relRow.addEventListener('click', function (e) {
+        var chip = e.target.closest ? e.target.closest('.rel-chip') : null;
+        if (!chip) { return; }
+        var value = chip.getAttribute('data-rel') || '';
+        msgRel = (msgRel === value) ? '' : value;
+        var chips = relRow.querySelectorAll('.rel-chip');
+        for (var i = 0; i < chips.length; i++) {
+          chips[i].classList.toggle('is-on', chips[i].getAttribute('data-rel') === msgRel);
+        }
+      });
+    }
+    if (colorRow) {
+      colorRow.addEventListener('click', function (e) {
+        var dot = e.target.closest ? e.target.closest('.color-dot') : null;
+        if (!dot) { return; }
+        msgColor = dot.getAttribute('data-color') || 'coral';
+        var dots = colorRow.querySelectorAll('.color-dot');
+        for (var i = 0; i < dots.length; i++) {
+          dots[i].setAttribute('aria-pressed', dots[i] === dot ? 'true' : 'false');
+        }
+      });
+    }
+
     if (form) {
       form.addEventListener('submit', function (e) {
         e.preventDefault();
@@ -386,42 +528,37 @@
         var textArea = document.getElementById('msgText');
         var text = textArea ? textArea.value.trim() : '';
         if (!text) { showToast(t('msgEmpty'), 'error'); return; }
-        if (submitBtn) {
-          submitBtn.disabled = true;
-          submitBtn.textContent = t('msgSending');
-        }
-        window.setTimeout(function () {
-          var list = loadMessages();
-          list.push({ n: nick, m: text, t: Date.now() });
-          if (saveMessages(list)) {
-            renderBoard();
-            form.reset();
-            if (anonBox && nickInput) { nickInput.disabled = anonBox.checked; }
-            showToast(t('msgSent'), 'success');
-          } else {
-            showToast(t('msgError'), 'error');
+        if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = t('msgSending'); }
+        sendMessage({ nickname: nick, content: text, color: msgColor, relation: msgRel }).catch(function (err) {
+          var emsg = String((err && err.message) || '');
+          if (emsg.indexOf('color') > -1 || emsg.indexOf('relation') > -1) {
+            return sendMessage({ nickname: nick, content: text });
           }
-          if (submitBtn) {
-            submitBtn.disabled = false;
-            submitBtn.textContent = t('sendBtn');
+          throw err;
+        }).then(function () {
+          form.reset();
+          msgRel = '';
+          if (relRow) {
+            var relChips = relRow.querySelectorAll('.rel-chip');
+            for (var rc = 0; rc < relChips.length; rc++) { relChips[rc].classList.remove('is-on'); }
           }
-        }, 240);
-      });
-    }
-    var clear = document.getElementById('msgClear');
-    if (clear) {
-      clear.addEventListener('click', function () {
-        var ok = window.confirm(current === 'zh' ? '确定清空所有留言吗' : 'Clear all messages?');
-        if (ok) { saveMessages([]); renderBoard(); }
+          if (more) { more.hidden = true; }
+          if (anonBox && nickInput) { nickInput.disabled = anonBox.checked; }
+          return renderBoard();
+        }).then(function () {
+          showToast(t('msgSent'), 'success');
+        }).catch(function () {
+          showToast(t('msgError'), 'error');
+        }).then(function () {
+          if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = t('sendBtn'); }
+        });
       });
     }
   }
-
   function initPointerEffects() {
     var finePointer = !!(window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches);
     if (!finePointer || reduceMotion) { return; }
 
-    /* 全页柔光跟随 */
     var glow = document.createElement('div');
     glow.className = 'hero-glow';
     glow.setAttribute('aria-hidden', 'true');
@@ -442,14 +579,9 @@
       glow.classList.add('is-on');
       if (glowRaf === null) { glowRaf = window.requestAnimationFrame(drawGlow); }
     });
-    document.addEventListener('pointerleave', function () {
-      glow.classList.remove('is-on');
-    });
-    window.addEventListener('blur', function () {
-      glow.classList.remove('is-on');
-    });
+    document.addEventListener('pointerleave', function () { glow.classList.remove('is-on'); });
+    window.addEventListener('blur', function () { glow.classList.remove('is-on'); });
 
-    /* 卡片轻倾斜（平滑跟随，回正自然） */
     var MAX_TILT = 3;
     var PERSPECTIVE = 1100;
     var EASE = 0.12;
@@ -464,36 +596,27 @@
       var hovering = false;
 
       var draw = function () {
-      rx += (x - rx) * 0.16;
-      ry += (y - ry) * 0.16;
-      ring.style.transform = 'translate(' + rx + 'px,' + ry + 'px) scale(' + (pressed ? 0.9 : 1) + ')';
-      if (Math.abs(x - rx) < 0.2 && Math.abs(y - ry) < 0.2) {
-        rx = x;
-        ry = y;
-        running = false;
-        return;
-      }
-      window.requestAnimationFrame(draw);
-    };
-    var start = function () {
-      if (!running) {
-        running = true;
-        window.requestAnimationFrame(draw);
-      }
-    };;
+        currentX += (targetX - currentX) * EASE;
+        currentY += (targetY - currentY) * EASE;
+        var settled = Math.abs(targetX - currentX) < 0.01 && Math.abs(targetY - currentY) < 0.01;
+        if (settled) { currentX = targetX; currentY = targetY; }
+        if (!hovering && Math.abs(currentX) < 0.01 && Math.abs(currentY) < 0.01) {
+          card.style.transform = '';
+          card.classList.remove('is-tilting');
+          rafId = null;
+          return;
+        }
+        card.style.transform = 'perspective(' + PERSPECTIVE + 'px) rotateX(' + currentX.toFixed(3) + 'deg) rotateY(' + currentY.toFixed(3) + 'deg)';
+        if (settled) { rafId = null; return; }
+        rafId = window.requestAnimationFrame(draw);
+      };
 
       var start = function () {
         if (rafId === null) { rafId = window.requestAnimationFrame(draw); }
       };
 
       card.classList.add('is-tiltable');
-
-      card.addEventListener('pointerenter', function () {
-        hovering = true;
-        card.classList.add('is-tilting');
-        start();
-      });
-
+      card.addEventListener('pointerenter', function () { hovering = true; card.classList.add('is-tilting'); start(); });
       card.addEventListener('pointermove', function (e) {
         var rect = card.getBoundingClientRect();
         var px = (e.clientX - rect.left) / rect.width - 0.5;
@@ -503,13 +626,7 @@
         hovering = true;
         start();
       });
-
-      card.addEventListener('pointerleave', function () {
-        hovering = false;
-        targetX = 0;
-        targetY = 0;
-        start();
-      });
+      card.addEventListener('pointerleave', function () { hovering = false; targetX = 0; targetY = 0; start(); });
     };
 
     for (var i = 0; i < cards.length; i++) { bindCard(cards[i]); }
@@ -527,6 +644,7 @@
     var motionOK = !reduceMotion && document.documentElement.classList.contains('js-motion');
 
     document.documentElement.setAttribute('data-page', pages[0].id);
+    window.scrollTo(0, 0);
 
     var indexOfId = function (id) {
       for (var i = 0; i < pages.length; i++) {
@@ -574,11 +692,25 @@
       var target = pages[to];
 
       var finish = function () {
-        if (from) { from.classList.remove('is-active', 'is-entered', 'is-leaving', 'is-armed'); }
+        if (from) { from.classList.remove('is-active', 'is-entered', 'is-leaving', 'is-leaving-down', 'is-armed', 'is-armed-down', 'is-up'); }
         target.classList.add('is-active');
+        var allArrows = document.querySelectorAll('.page-next');
+        for (var ai = 0; ai < allArrows.length; ai++) { allArrows[ai].classList.remove('is-pulling'); }
         setArrow(to);
+        var newArrow = document.querySelector('.page-next.is-active');
+        if (newArrow) {
+          newArrow.classList.add('is-arriving');
+          window.requestAnimationFrame(function () {
+            window.requestAnimationFrame(function () { newArrow.classList.remove('is-arriving'); });
+          });
+        }
         document.documentElement.setAttribute('data-page', target.id);
-        window.scrollTo(0, memo[to] || 0);
+        var footer = document.querySelector('footer');
+        var safeMax = footer ? Math.max(0, footer.offsetTop - window.innerHeight) : 0;
+        var activeArrow = document.querySelector('.page-next.is-active');
+        if (activeArrow) { safeMax = Math.min(safeMax, Math.max(0, activeArrow.offsetTop - window.innerHeight)); }
+        var targetPos = to === 0 ? 0 : (memo[to] || 0);
+        window.scrollTo(0, Math.min(targetPos, safeMax));
         window.requestAnimationFrame(function () {
           window.requestAnimationFrame(function () {
             target.classList.add('is-entered');
@@ -589,9 +721,13 @@
       };
 
       if (from) {
-        from.classList.add('is-armed');
-        window.setTimeout(function () { from.classList.add('is-leaving'); }, 120);
-        window.setTimeout(finish, 460);
+        var down = to > idx;
+        target.classList.toggle('is-up', !down);
+        var oldArrow = document.querySelector('.page-next.is-active');
+        if (oldArrow) { oldArrow.classList.add('is-pulling'); }
+        from.classList.add(down ? 'is-armed' : 'is-armed-down');
+        window.setTimeout(function () { from.classList.add(down ? 'is-leaving' : 'is-leaving-down'); }, 140);
+        window.setTimeout(finish, 560);
       } else {
         finish();
       }
@@ -637,14 +773,45 @@
       });
     }
 
+    var wheelAccum = 0;
+    var wheelAt = 0;
+
     window.addEventListener('wheel', function (e) {
       if (e.ctrlKey || animating || document.documentElement.classList.contains('feedback-open')) { return; }
       var node = e.target;
       if (node && node.closest && node.closest('.chat-log')) { return; }
       var atTop = window.pageYOffset <= 4;
       var atBottom = (window.innerHeight + window.pageYOffset) >= (document.documentElement.scrollHeight - 4);
-      if (e.deltaY > 0 && atBottom) { e.preventDefault(); swap(idx + 1); }
-      else if (e.deltaY < 0 && atTop) { e.preventDefault(); swap(idx - 1); }
+      var delta = e.deltaY * (e.deltaMode === 1 ? 16 : (e.deltaMode === 2 ? window.innerHeight : 1));
+      var absDelta = Math.abs(delta);
+
+      /* 向上：立即翻页，和以前一样 */
+      if (delta < 0 && atTop) {
+        e.preventDefault();
+        wheelAccum = 0;
+        wheelAt = 0;
+        swap(idx - 1);
+        return;
+      }
+
+      /* 向下到底：快速立即，慢速需要累积（方便点反馈） */
+      if (!(delta > 0 && atBottom)) { wheelAccum = 0; wheelAt = 0; return; }
+      e.preventDefault();
+      if (absDelta >= 50) {
+        wheelAccum = 0;
+        wheelAt = 0;
+        swap(idx + 1);
+        return;
+      }
+      var now = Date.now();
+      if (now - wheelAt > 400) { wheelAccum = 0; }
+      wheelAt = now;
+      wheelAccum += absDelta;
+      if (wheelAccum >= 160) {
+        wheelAccum = 0;
+        wheelAt = 0;
+        swap(idx + 1);
+      }
     }, { passive: false });
 
     window.addEventListener('keydown', function (e) {
@@ -776,11 +943,17 @@
     agentGreeting = addBubble(t('agentHello'), 'bot');
   }
   function submitFeedback(data) {
-    /* V3：这里改成提交到后台（Supabase / 腾讯云） */
-    showToast(t('feedbackSoon'), 'success');
-    return true;
+    return apiFetch('feedback', {
+      method: 'POST',
+      prefer: 'return=minimal',
+      body: {
+        rating: data.score || null,
+        device: data.device || deviceLabel(),
+        content: data.text,
+        contact: data.contact || null
+      }
+    });
   }
-
   function initFeedback() {
     var modal = document.getElementById('feedbackModal');
     var openBtn = document.getElementById('feedbackOpen');
@@ -790,10 +963,12 @@
     var textArea = document.getElementById('feedbackText');
     var contact = document.getElementById('feedbackContact');
     var ratingRow = document.getElementById('ratingRow');
+    var deviceRow = document.getElementById('deviceRow');
     if (!modal || !openBtn) { return; }
 
     var lastFocus = null;
     var score = 0;
+    var device = '';
 
     var openModal = function () {
       lastFocus = document.activeElement;
@@ -830,23 +1005,50 @@
       });
     }
 
+    if (deviceRow) {
+      deviceRow.addEventListener('click', function (e) {
+        var chip = e.target.closest ? e.target.closest('.device-chip') : null;
+        if (!chip) { return; }
+        var value = chip.getAttribute('data-device') || '';
+        device = (device === value) ? '' : value;
+        var chips = deviceRow.querySelectorAll('.device-chip');
+        for (var i = 0; i < chips.length; i++) {
+          chips[i].classList.toggle('is-on', chips[i].getAttribute('data-device') === device);
+        }
+      });
+    }
+
     if (form) {
       form.addEventListener('submit', function (e) {
         e.preventDefault();
+        var submitBtn = form.querySelector('button[type="submit"]');
         var text = textArea ? textArea.value.trim() : '';
         if (!text) { showToast(t('feedbackEmpty'), 'error'); return; }
+        if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = t('feedbackSending'); }
         submitFeedback({
           score: score,
+          device: device,
           text: text,
           contact: contact ? contact.value.trim() : ''
+        }).then(function () {
+          showToast(t('feedbackSent'), 'success');
+          form.reset();
+          score = 0;
+          device = '';
+          if (deviceRow) {
+            var chips2 = deviceRow.querySelectorAll('.device-chip');
+            for (var d = 0; d < chips2.length; d++) { chips2[d].classList.remove('is-on'); }
+          }
+          if (ratingRow) {
+            var dots2 = ratingRow.querySelectorAll('.rating-dot');
+            for (var k = 0; k < dots2.length; k++) { dots2[k].classList.remove('is-on'); }
+          }
+          closeModal();
+        }).catch(function () {
+          showToast(t('feedbackError'), 'error');
+        }).then(function () {
+          if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = t('feedbackSubmit'); }
         });
-        form.reset();
-        score = 0;
-        if (ratingRow) {
-          var dots2 = ratingRow.querySelectorAll('.rating-dot');
-          for (var k = 0; k < dots2.length; k++) { dots2[k].classList.remove('is-on'); }
-        }
-        closeModal();
       });
     }
   }
@@ -908,8 +1110,10 @@
 
     document.addEventListener('pointerover', function (e) {
       var node = e.target;
-      var hit = node && node.closest ? node.closest('a, button, .chip, input, textarea, .avatar, .card, [role="option"]') : null;
+      var textField = node && node.closest ? node.closest('input, textarea, [contenteditable="true"]') : null;
+      var hit = node && node.closest ? node.closest('a, button, .chip, .avatar, .card, [role="option"]') : null;
       ring.classList.toggle('is-hover', !!hit);
+      document.documentElement.classList.toggle('cursor-text', !!textField);
     });
   }
   var initial = detectLang();
