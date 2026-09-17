@@ -965,6 +965,48 @@
       else if (prevKey && atTop) { e.preventDefault(); swap(idx - 1); }
     });
 
+    var canScroll = function (node, dir) {
+      var el = node;
+      while (el && el !== document.body && el !== document.documentElement) {
+        var style = window.getComputedStyle ? window.getComputedStyle(el) : null;
+        var oy = style ? style.overflowY : '';
+        if ((oy === 'auto' || oy === 'scroll') && el.scrollHeight > el.clientHeight + 1) {
+          if (dir > 0 ? (el.scrollTop + el.clientHeight < el.scrollHeight - 1) : (el.scrollTop > 1)) { return true; }
+        }
+        el = el.parentElement;
+      }
+      return false;
+    };
+
+    var touchStartX = 0;
+    var touchStartY = 0;
+    var touchNode = null;
+    var touching = false;
+
+    window.addEventListener('touchstart', function (e) {
+      if (animating || e.touches.length !== 1) { touching = false; return; }
+      touching = true;
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      touchNode = e.target;
+    }, { passive: true });
+
+    window.addEventListener('touchend', function (e) {
+      if (!touching || animating) { return; }
+      touching = false;
+      var t = e.changedTouches && e.changedTouches[0];
+      if (!t) { return; }
+      var dx = t.clientX - touchStartX;
+      var dy = t.clientY - touchStartY;
+      if (Math.abs(dy) < 50 || Math.abs(dy) < Math.abs(dx) * 1.2) { return; }
+      var atTop = window.pageYOffset <= 4;
+      var atBottom = (window.innerHeight + window.pageYOffset) >= (document.documentElement.scrollHeight - 4);
+      if (dy < 0) {
+        if (atBottom && !canScroll(touchNode, 1)) { swap(idx + 1); }
+      } else {
+        if (atTop && !canScroll(touchNode, -1)) { swap(idx - 1); }
+      }
+    }, { passive: true });
     return { swap: swap, index: function () { return idx; }, pages: pages };
   }
 
