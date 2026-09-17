@@ -816,6 +816,11 @@
     var idx = 0;
     var memo = {};
     var animating = false;
+    var isMobile = !!(window.matchMedia && window.matchMedia('(max-width: 640px)').matches);
+    var leadDelay = isMobile ? 80 : 140;
+    var leadTime = isMobile ? 360 : 560;
+    var unlockTime = isMobile ? 560 : 820;
+    var touchSlack = isMobile ? 70 : 4;
 
     var setArrow = function (i) {
       var nextId = pages[i + 1] ? pages[i + 1].id : '';
@@ -855,7 +860,7 @@
         window.requestAnimationFrame(function () {
           window.requestAnimationFrame(function () {
             target.classList.add('is-entered');
-            window.setTimeout(function () { animating = false; }, 760);
+            window.setTimeout(function () { animating = false; }, unlockTime);
           });
         });
         idx = to;
@@ -867,8 +872,8 @@
         var oldArrow = document.querySelector('.page-next.is-active');
         if (oldArrow) { oldArrow.classList.add('is-pulling'); }
         from.classList.add(down ? 'is-armed' : 'is-armed-down');
-        window.setTimeout(function () { from.classList.add(down ? 'is-leaving' : 'is-leaving-down'); }, 140);
-        window.setTimeout(finish, 560);
+        window.setTimeout(function () { from.classList.add(down ? 'is-leaving' : 'is-leaving-down'); }, leadDelay);
+        window.setTimeout(finish, leadTime);
       } else {
         finish();
       }
@@ -998,9 +1003,9 @@
       if (!t) { return; }
       var dx = t.clientX - touchStartX;
       var dy = t.clientY - touchStartY;
-      if (Math.abs(dy) < 50 || Math.abs(dy) < Math.abs(dx) * 1.2) { return; }
-      var atTop = window.pageYOffset <= 4;
-      var atBottom = (window.innerHeight + window.pageYOffset) >= (document.documentElement.scrollHeight - 4);
+      if (Math.abs(dy) < 30 || Math.abs(dy) < Math.abs(dx) * 1.1) { return; }
+      var atTop = window.pageYOffset <= touchSlack;
+      var atBottom = (window.innerHeight + window.pageYOffset) >= (document.documentElement.scrollHeight - touchSlack);
       if (dy < 0) {
         if (atBottom && !canScroll(touchNode, 1)) { swap(idx + 1); }
       } else {
