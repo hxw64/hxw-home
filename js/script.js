@@ -1224,7 +1224,7 @@
         bubble.classList.remove('chat-typing');
         typeOut(bubble, answer);
       };
-      guard = window.setTimeout(function () { show(t('agentOffline')); }, 20000);
+      guard = window.setTimeout(function () { show(t('agentOffline')); }, 30000);
 
       askModel(text).then(function (answer) {
         show(answer);
