@@ -518,7 +518,10 @@
     return apiFetch('messages?select=*&is_visible=eq.true&order=created_at.desc&limit=50');
   }
   function sendMessage(data) {
-    return edgeFetch('post-message', data);
+    return edgeFetch('post-message', data).catch(function (err) {
+      if (err && err.message === 'rate') { throw err; }
+      return apiFetch('messages', { method: 'POST', prefer: 'return=minimal', body: data });
+    });
   }
   function layoutBoard() {
     var ul = document.getElementById('msgList');
