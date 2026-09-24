@@ -100,6 +100,7 @@
       msgSent: '已发送，谢谢你的留言',
       msgError: '发送失败，请重试',
       msgEmpty: '请先填写留言',
+      msgLimit: '发送太频繁，请稍后再试',
       themeLabel: '主题',
       themeSystem: '跟随系统',
       themeLight: '浅色模式',
@@ -204,6 +205,7 @@
       msgSent: 'Sent. Thank you for your message',
       msgError: 'Failed to send. Please try again',
       msgEmpty: 'Please write a message first',
+      msgLimit: 'Too many messages. Please try again later',
       themeLabel: 'Theme',
       themeSystem: 'System',
       themeLight: 'Light',
@@ -229,6 +231,8 @@
 
   var SUPABASE_URL = 'https://nntyiphwrxwxffiqwqle.supabase.co';
   var SUPABASE_KEY = 'sb_publishable_D6bM1TurtNQgilXkBbZdbg_ldDxZzSW';
+  var MESSAGE_COOLDOWN_MS = 10000;
+  var AGENT_COOLDOWN_MS = 5000;
 
   var adminToken = null;
   var ADMIN_KEY = 'admin_token';
@@ -363,6 +367,31 @@
     });
   }
 
+  function edgeFetch(name, body) {
+    return fetch(SUPABASE_URL + '/functions/v1/' + name, {
+      method: 'POST',
+      headers: {
+        apikey: SUPABASE_KEY,
+        Authorization: 'Bearer ' + SUPABASE_KEY,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    }).then(function (res) {
+      if (res.status === 429) {
+        var retry = Number(res.headers.get('retry-after') || 60);
+        var rateError = new Error('rate');
+        rateError.retryAfter = isFinite(retry) && retry > 0 ? retry : 60;
+        throw rateError;
+      }
+      if (!res.ok) {
+        return res.text().then(function (txt) {
+          throw new Error('HTTP ' + res.status + ' ' + txt);
+        });
+      }
+      return res.json();
+    });
+  }
+
   function deviceLabel() {
     var ua = navigator.userAgent || '';
     var os = /Windows/i.test(ua) ? 'Windows'
@@ -489,7 +518,7 @@
     return apiFetch('messages?select=*&is_visible=eq.true&order=created_at.desc&limit=50');
   }
   function sendMessage(data) {
-    return apiFetch('messages', { method: 'POST', prefer: 'return=minimal', body: data });
+    return edgeFetch('post-message', data);
   }
   function layoutBoard() {
     var ul = document.getElementById('msgList');
@@ -682,6 +711,8 @@
     var relRow = document.getElementById('relRow');
     var textInput = document.getElementById('msgText');
     var msgRel = '';
+    var messageSubmitting = false;
+    var messageAllowAt = 0;
 
     if (anonBox && nickInput) {
       anonBox.addEventListener('change', function () { nickInput.disabled = anonBox.checked; });
@@ -732,19 +763,18 @@
     if (form) {
       form.addEventListener('submit', function (e) {
         e.preventDefault();
+        if (messageSubmitting) { return; }
+        var now = Date.now();
+        if (now < messageAllowAt) { showToast(t('msgLimit'), 'error'); return; }
         var submitBtn = form.querySelector('button[type="submit"]');
         var nick = (anonBox && anonBox.checked) ? '' : (nickInput ? nickInput.value.trim() : '');
         var textArea = document.getElementById('msgText');
         var text = textArea ? textArea.value.trim() : '';
         if (!text) { showToast(t('msgEmpty'), 'error'); return; }
+        messageSubmitting = true;
+        messageAllowAt = now + MESSAGE_COOLDOWN_MS;
         if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = t('msgSending'); }
-        sendMessage({ nickname: nick, content: text, color: msgColor, relation: msgRel }).catch(function (err) {
-          var emsg = String((err && err.message) || '');
-          if (emsg.indexOf('color') > -1 || emsg.indexOf('relation') > -1) {
-            return sendMessage({ nickname: nick, content: text });
-          }
-          throw err;
-        }).then(function () {
+        sendMessage({ nickname: nick, content: text, color: msgColor, relation: msgRel }).then(function () {
           form.reset();
           msgRel = '';
           if (relRow) {
@@ -756,9 +786,15 @@
           return renderBoard();
         }).then(function () {
           showToast(t('msgSent'), 'success');
-        }).catch(function () {
-          showToast(t('msgError'), 'error');
+        }).catch(function (err) {
+          if (err && err.message === 'rate') {
+            messageAllowAt = Math.max(messageAllowAt, Date.now() + Number(err.retryAfter || 60) * 1000);
+            showToast(t('msgLimit'), 'error');
+          } else {
+            showToast(t('msgError'), 'error');
+          }
         }).then(function () {
+          messageSubmitting = false;
           if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = t('sendBtn'); }
         });
       });
@@ -1136,22 +1172,8 @@
     return null;
   }
 
-  var AGENT_ENDPOINT = SUPABASE_URL + '/functions/v1/ask-agent';
-
   function askModel(text) {
-    return fetch(AGENT_ENDPOINT, {
-      method: 'POST',
-      headers: {
-        apikey: SUPABASE_KEY,
-        Authorization: 'Bearer ' + SUPABASE_KEY,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ question: String(text).slice(0, 200), lang: current })
-    }).then(function (res) {
-      if (res.status === 429) { throw new Error('rate'); }
-      if (!res.ok) { throw new Error('HTTP ' + res.status); }
-      return res.json();
-    }).then(function (data) {
+    return edgeFetch('ask-agent', { question: String(text).slice(0, 60), lang: current }).then(function (data) {
       if (!data || !data.answer) { throw new Error('empty'); }
       return String(data.answer).trim();
     });
@@ -1202,7 +1224,19 @@
       }, 28);
     };
 
-    var respond = function (text) {
+    var agentBusy = false;
+    var agentAllowAt = 0;
+    var quickButtons = quick ? quick.querySelectorAll('.chip') : [];
+    var setAgentBusy = function (busy) {
+      agentBusy = busy;
+      if (form) {
+        var submitBtn = form.querySelector('button[type="submit"]');
+        if (submitBtn) { submitBtn.disabled = busy; }
+      }
+      for (var i = 0; i < quickButtons.length; i++) { quickButtons[i].disabled = busy; }
+    };
+
+    var respond = function (text, done) {
       var bubble = addBubble('···', 'bot');
       bubble.classList.add('chat-typing');
 
@@ -1211,6 +1245,7 @@
         window.setTimeout(function () {
           bubble.classList.remove('chat-typing');
           typeOut(bubble, local);
+          if (done) { done(); }
         }, reduceMotion ? 0 : 400);
         return;
       }
@@ -1223,22 +1258,31 @@
         if (guard) { window.clearTimeout(guard); }
         bubble.classList.remove('chat-typing');
         typeOut(bubble, answer);
+        if (done) { done(); }
       };
       guard = window.setTimeout(function () { show(t('agentOffline')); }, 30000);
 
       askModel(text).then(function (answer) {
         show(answer);
       }).catch(function (err) {
-        if (err && err.message === 'rate') { show(t('agentLimit')); }
-        else { show(t('agentOffline')); }
+        if (err && err.message === 'rate') {
+          agentAllowAt = Math.max(agentAllowAt, Date.now() + Number(err.retryAfter || 60) * 1000);
+          show(t('agentLimit'));
+        } else {
+          show(t('agentOffline'));
+        }
       });
     };
 
     var send = function (text) {
-      var value = String(text || '').trim();
-      if (!value) { return; }
+      var value = String(text || '').trim().slice(0, 60);
+      if (!value || agentBusy) { return; }
+      var now = Date.now();
+      if (now < agentAllowAt) { showToast(t('agentLimit'), 'error'); return; }
+      agentAllowAt = now + AGENT_COOLDOWN_MS;
+      setAgentBusy(true);
       addBubble(value, 'me');
-      respond(value);
+      respond(value, function () { setAgentBusy(false); });
       if (input) { input.value = ''; }
     };
 

@@ -1,7 +1,7 @@
 // Supabase Edge Function: ask-agent
 // 网页 → 本函数 → 火山方舟（豆包）。API Key 只存在服务端，不进网页。
 // 需要配置 Secrets：ARK_API_KEY、ARK_MODEL
-// 需要先执行 supabase/chat_rate.sql 建限流表
+// 需要先在 Supabase SQL Editor 执行 supabase/chat_rate.sql
 
 const CORS = {
   'Access-Control-Allow-Origin': '*',
@@ -35,10 +35,10 @@ const KNOWLEDGE = `
 联系方式：xinwei_he@tju.edu.cn
 `;
 
-function json(body: unknown, status = 200) {
+function json(body: unknown, status = 200, headers: Record<string, string> = {}) {
   return new Response(JSON.stringify(body), {
     status,
-    headers: { ...CORS, 'Content-Type': 'application/json' }
+    headers: { ...CORS, ...headers, 'Content-Type': 'application/json' }
   });
 }
 
@@ -46,6 +46,14 @@ async function sha256(text: string) {
   const data = new TextEncoder().encode(text);
   const buf = await crypto.subtle.digest('SHA-256', data);
   return Array.from(new Uint8Array(buf)).map((b) => b.toString(16).padStart(2, '0')).join('');
+}
+
+function clientIp(req: Request) {
+  const chain = (req.headers.get('x-forwarded-for') || '')
+    .split(',')
+    .map((part) => part.trim())
+    .filter(Boolean);
+  return chain[chain.length - 1] || req.headers.get('x-real-ip') || 'unknown';
 }
 
 Deno.serve(async (req: Request) => {
@@ -58,44 +66,41 @@ Deno.serve(async (req: Request) => {
   const ARK_MODEL = Deno.env.get('ARK_MODEL');
   if (!ARK_API_KEY || !ARK_MODEL) { return json({ error: 'not configured' }, 503); }
 
+  const contentLength = Number(req.headers.get('content-length') || 0);
+  if (contentLength > 4096) { return json({ error: 'payload too large' }, 413); }
+
   let payload: { question?: string; lang?: string } = {};
   try { payload = await req.json(); } catch { return json({ error: 'bad json' }, 400); }
 
-  const question = String(payload.question || '').trim().slice(0, 200);
-  const lang = payload.lang === 'en' ? 'en' : 'zh';
+  const question = String(payload.question || '').trim();
   if (!question) { return json({ error: 'empty' }, 400); }
+  if (question.length > 200) { return json({ error: 'too long' }, 400); }
+  const lang = payload.lang === 'en' ? 'en' : 'zh';
 
-  // ---- 限流：只存 IP 哈希和次数，不存聊天内容 ----
-  const ip = (req.headers.get('x-forwarded-for') || '').split(',')[0].trim() || 'unknown';
-  const ipHash = await sha256(ip + '|hexw-agent');
-  const now = new Date();
-  const minute = new Date(Math.floor(now.getTime() / 60000) * 60000).toISOString();
-  const dayAgo = new Date(now.getTime() - 24 * 3600 * 1000).toISOString();
+  // ---- 原子限流：只存 IP 哈希和次数，不存聊天内容 ----
+  const ip = clientIp(req);
+  const rateSalt = Deno.env.get('RATE_LIMIT_SALT') || SERVICE_KEY;
+  const ipHash = await sha256(`${ip}|ask-agent|${rateSalt}`);
   const adminHeaders = {
     apikey: SERVICE_KEY,
     Authorization: `Bearer ${SERVICE_KEY}`,
     'Content-Type': 'application/json'
   };
-
-  const minuteRows = await fetch(
-    `${SUPABASE_URL}/rest/v1/chat_rate?ip_hash=eq.${ipHash}&window_start=eq.${minute}&select=count`,
-    { headers: adminHeaders }
-  ).then((r) => r.json()).catch(() => []);
-  const minuteCount = Array.isArray(minuteRows) && minuteRows[0] ? Number(minuteRows[0].count) : 0;
-  if (minuteCount >= LIMIT_PER_MINUTE) { return json({ error: 'rate' }, 429); }
-
-  const dayRows = await fetch(
-    `${SUPABASE_URL}/rest/v1/chat_rate?ip_hash=eq.${ipHash}&window_start=gte.${dayAgo}&select=count`,
-    { headers: adminHeaders }
-  ).then((r) => r.json()).catch(() => []);
-  const dayCount = Array.isArray(dayRows) ? dayRows.reduce((s, r) => s + Number(r.count || 0), 0) : 0;
-  if (dayCount >= LIMIT_PER_DAY) { return json({ error: 'rate' }, 429); }
-
-  await fetch(`${SUPABASE_URL}/rest/v1/chat_rate`, {
+  const rateRes = await fetch(`${SUPABASE_URL}/rest/v1/rpc/consume_rate_limit`, {
     method: 'POST',
-    headers: { ...adminHeaders, Prefer: 'resolution=merge-duplicates,return=minimal' },
-    body: JSON.stringify({ ip_hash: ipHash, window_start: minute, count: minuteCount + 1 })
-  }).catch(() => {});
+    headers: adminHeaders,
+    body: JSON.stringify({
+      p_scope: 'ask-agent',
+      p_subject_hash: ipHash,
+      p_short_seconds: 60,
+      p_short_limit: LIMIT_PER_MINUTE,
+      p_long_seconds: 86400,
+      p_long_limit: LIMIT_PER_DAY
+    })
+  });
+  if (!rateRes.ok) { return json({ error: 'rate service' }, 503); }
+  const allowed = await rateRes.json().catch(() => false);
+  if (allowed !== true) { return json({ error: 'rate' }, 429, { 'Retry-After': '60' }); }
 
   // ---- 调用豆包 ----
   const rules = lang === 'en'
