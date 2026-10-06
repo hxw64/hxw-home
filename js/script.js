@@ -59,7 +59,72 @@
       tagSeal: '篆刻',
       projectsTitle: '学习与探索',
       projectsText: '学习记录正在整理中，将陆续分享课程实践与探索心得',
-      contactTitle: '联系我',
+      projectManage: '管理项目',
+      projectEditorTitle: '编辑项目',
+      projectNew: '新增项目',
+      projectList: '项目列表',
+      projectSelect: '选择左侧项目开始编辑',
+      projectPublishedLabel: '发布到主页',
+      projectSortLabel: '排序',
+      projectContentZh: '中文内容',
+      projectContentEn: 'English content',
+      projectTitle: '标题',
+      projectKicker: '副标题',
+      projectSummary: '简介',
+      projectTags: '标签',
+      projectContributions: '贡献亮点',
+      projectAddContribution: '添加',
+      projectReflection: '感悟',
+      projectImages: '项目图片',
+      projectImagesHint: '最多 6 张，JPEG / PNG / WebP，单张不超过 8 MB',
+      projectAddImages: '选择图片',
+      projectDelete: '删除项目',
+      projectSave: '保存项目',
+      projectViewDetail: '查看详情',
+      projectStaticKicker: '基于 Vibe Coding 构建',
+      projectStaticTitle: '何欣蔚个人主页',
+      projectStaticSummary: '一次通过 Vibe Coding（AI 辅助编程）独立完成的现代 Web 实践，从产品构思到工程落地均由我主导。',
+      projectIndependent: '独立开发',
+      projectTagsLabel: '项目标签',
+      projectHighlightsLabel: '贡献亮点',
+      projectDesign: '产品设计',
+      projectPrompt: 'Prompt 架构',
+      projectEngineering: '工程把控',
+      projectDetailContrib: '我做了什么',
+      projectDetailInsight: '感悟',
+      projectGallery: '项目图片',
+      projectCover: '封面',
+      projectNoImage: '暂无图片',
+      projectEmpty: '学习与探索内容正在整理中',
+      projectLoadError: '项目加载失败',
+      projectRetry: '重试',
+      projectEditorError: '项目管理加载失败',
+      projectSaved: '项目已保存',
+      projectSaveError: '保存失败，请重试',
+      projectDeleted: '项目已删除',
+      projectDeleteConfirm: '确定删除这个项目吗？图片也会一并删除。',
+      projectDeleteImageConfirm: '确定删除这张图片吗？',
+      projectTitleRequired: '请填写中文标题',
+      projectNeedSave: '请先保存项目再添加图片',
+      projectImageLimit: '每个项目最多 6 张图片',
+      projectFileType: '仅支持 JPEG、PNG 或 WebP',
+      projectFileTooLarge: '单张图片不能超过 8 MB',
+      projectUploading: '图片上传中…',
+      projectUploaded: '图片已上传',
+      projectUploadError: '图片上传失败',
+      projectImageDeleted: '图片已删除',
+      projectImageSaved: '图片信息已保存',
+      projectCoverSet: '已设为封面',
+      projectMoveUp: '上移',
+      projectMoveDown: '下移',
+      projectDeleteImage: '删除',
+      projectSetCover: '设为封面',
+      projectDraft: '草稿',
+      projectPublished: '已发布',
+      projectUntitled: '未命名项目',
+      projectNoProjects: '还没有项目',
+      projectAltZh: '中文替代文字',
+      projectAltEn: '英文替代文字',      contactTitle: '联系我',
       contactHint: '欢迎联系我',
       emailLabel: '邮箱：',
       sendEmailBtn: '发送邮件',
@@ -82,7 +147,7 @@
       relOther: '其他',
       adminOpen: '管理',
       adminTitle: '管理员登录',
-      adminIntro: '只有管理员可以隐藏或清空留言',
+      adminIntro: '登录后可以管理留言和项目内容',
       adminEmail: '邮箱',
       adminPass: '密码',
       adminLogin: '登录',
@@ -164,7 +229,72 @@
       tagSeal: 'Seal carving',
       projectsTitle: 'Learning & Exploration',
       projectsText: 'Learning notes are being organized. Coursework and exploration insights will be shared soon',
-      contactTitle: 'Contact Me',
+      projectManage: 'Manage Projects',
+      projectEditorTitle: 'Edit Project',
+      projectNew: 'New Project',
+      projectList: 'Projects',
+      projectSelect: 'Select a project to edit',
+      projectPublishedLabel: 'Published',
+      projectSortLabel: 'Sort order',
+      projectContentZh: '中文内容',
+      projectContentEn: 'English content',
+      projectTitle: 'Title',
+      projectKicker: 'Subtitle',
+      projectSummary: 'Summary',
+      projectTags: 'Tags',
+      projectContributions: 'Contributions',
+      projectAddContribution: 'Add',
+      projectReflection: 'Reflection',
+      projectImages: 'Project images',
+      projectImagesHint: 'Up to 6 images. JPEG / PNG / WebP, max 8 MB each',
+      projectAddImages: 'Choose images',
+      projectDelete: 'Delete project',
+      projectSave: 'Save project',
+      projectViewDetail: 'View details',
+      projectStaticKicker: 'Built with Vibe Coding',
+      projectStaticTitle: 'Xinwei He’s Personal Homepage',
+      projectStaticSummary: 'A modern web practice independently completed through Vibe Coding (AI-assisted programming), from product concept to engineering delivery.',
+      projectIndependent: 'Independent',
+      projectTagsLabel: 'Project tags',
+      projectHighlightsLabel: 'Contribution highlights',
+      projectDesign: 'Product Design',
+      projectPrompt: 'Prompt Architecture',
+      projectEngineering: 'Engineering Oversight',
+      projectDetailContrib: 'What I did',
+      projectDetailInsight: 'Reflection',
+      projectGallery: 'Project gallery',
+      projectCover: 'Cover',
+      projectNoImage: 'No images yet',
+      projectEmpty: 'Learning and exploration notes are being organized',
+      projectLoadError: 'Could not load projects',
+      projectRetry: 'Retry',
+      projectEditorError: 'Could not load project manager',
+      projectSaved: 'Project saved',
+      projectSaveError: 'Could not save project',
+      projectDeleted: 'Project deleted',
+      projectDeleteConfirm: 'Delete this project and all its images?',
+      projectDeleteImageConfirm: 'Delete this image?',
+      projectTitleRequired: 'Chinese title is required',
+      projectNeedSave: 'Save the project before adding images',
+      projectImageLimit: 'Up to 6 images per project',
+      projectFileType: 'Only JPEG, PNG, or WebP is supported',
+      projectFileTooLarge: 'Each image must be 8 MB or less',
+      projectUploading: 'Uploading image...',
+      projectUploaded: 'Image uploaded',
+      projectUploadError: 'Could not upload image',
+      projectImageDeleted: 'Image deleted',
+      projectImageSaved: 'Image details saved',
+      projectCoverSet: 'Cover updated',
+      projectMoveUp: 'Move up',
+      projectMoveDown: 'Move down',
+      projectDeleteImage: 'Delete',
+      projectSetCover: 'Set cover',
+      projectDraft: 'Draft',
+      projectPublished: 'Published',
+      projectUntitled: 'Untitled project',
+      projectNoProjects: 'No projects yet',
+      projectAltZh: 'Chinese alt text',
+      projectAltEn: 'English alt text',      contactTitle: 'Contact Me',
       contactHint: 'Feel free to contact me',
       emailLabel: 'Email: ',
       sendEmailBtn: 'Send Email',
@@ -187,7 +317,7 @@
       relOther: 'Other',
       adminOpen: 'Admin',
       adminTitle: 'Admin sign in',
-      adminIntro: 'Only the admin can hide or clear messages',
+      adminIntro: 'Sign in to manage messages and projects',
       adminEmail: 'Email',
       adminPass: 'Password',
       adminLogin: 'Sign in',
@@ -238,11 +368,54 @@
   var ADMIN_KEY = 'admin_token';
   try { adminToken = sessionStorage.getItem(ADMIN_KEY); } catch (e) { adminToken = null; }
 
+  var FALLBACK_PROJECTS = [
+    {
+      id: 'static',
+      sort_order: 1,
+      is_published: true,
+      kicker_zh: '基于 Vibe Coding 构建',
+      kicker_en: 'Built with Vibe Coding',
+      title_zh: '何欣蔚个人主页',
+      title_en: 'Xinwei He’s Personal Homepage',
+      summary_zh: '一次通过 Vibe Coding（AI 辅助编程）独立完成的现代 Web 实践，从产品构思到工程落地均由我主导。',
+      summary_en: 'A modern web practice independently completed through Vibe Coding (AI-assisted programming), from product concept to engineering delivery.',
+      highlights_zh: [
+        { label: '产品设计', text: '构思包括“数字分身”对话、动态留言板和暗黑模式在内的整体产品逻辑。' },
+        { label: 'Prompt 架构', text: '通过自然语言精准引导 AI 生成纯原生 HTML/CSS/JS 高质量代码，不依赖臃肿的前端框架。' },
+        { label: '工程把控', text: '审查并整合 AI 生成代码，确保语义化、无障碍访问（a11y）和响应式体验。' }
+      ],
+      highlights_en: [
+        { label: 'Product Design', text: 'Defined the overall product logic, including digital-twin conversations, a dynamic message board, and dark mode.' },
+        { label: 'Prompt Architecture', text: 'Used precise natural-language prompts to guide AI in generating high-quality vanilla HTML/CSS/JS without bulky frameworks.' },
+        { label: 'Engineering Oversight', text: 'Reviewed and integrated AI-generated code to ensure semantic markup, accessibility (a11y), and a responsive experience.' }
+      ],
+      reflection_zh: '比起成为“写程序的人”，Vibe Coding 让我更像一个“产品经理 + 架构师”。这个主页是我向 AI 时代迈出的第一步；未来，我希望把这种能力应用到智能医学工程的专业领域。',
+      reflection_en: 'More than being someone who writes programs, Vibe Coding made me feel more like a product manager and architect. This homepage is my first step into the age of AI; I hope to apply this capability to intelligent medical engineering.',
+      tags: ['Vibe Coding', 'HTML / CSS / JS', '独立开发'],
+      project_images: []
+    }
+  ];
+  var publicProjects = [];
+  var adminProjects = [];
+  var projectsReady = false;
+  var detailProject = null;
+  var detailReturnFocus = null;
+  var editorProjectId = null;
+  var editorImages = [];
+  var editorUploading = false;
+  var editorReturnFocus = null;
+
   function updateAdminUI() {
     var bar = document.getElementById('adminBar');
-    if (!bar) { return; }
-    if (adminToken) { bar.removeAttribute('hidden'); }
-    else { bar.setAttribute('hidden', ''); }
+    var adminNodes = document.querySelectorAll('[data-admin-only]');
+    for (var i = 0; i < adminNodes.length; i++) {
+      if (adminToken) { adminNodes[i].removeAttribute('hidden'); }
+      else { adminNodes[i].setAttribute('hidden', ''); }
+    }
+    if (bar) {
+      if (adminToken) { bar.removeAttribute('hidden'); }
+      else { bar.setAttribute('hidden', ''); }
+    }
   }
 
   function adminSignIn(email, password) {
@@ -264,7 +437,9 @@
   function adminSignOut() {
     adminToken = null;
     try { sessionStorage.removeItem(ADMIN_KEY); } catch (e) {}
+    closeProjectEditor();
     updateAdminUI();
+    renderProjects();
     return renderBoard();
   }
 
@@ -298,8 +473,8 @@
 
     updateAdminUI();
 
-    var openModal = function () { modal.removeAttribute('hidden'); if (email) { email.focus(); } };
-    var closeModal = function () { modal.setAttribute('hidden', ''); };
+    var openModal = function () { modal.removeAttribute('hidden'); syncModalLock(); if (email) { email.focus(); } };
+    var closeModal = function () { modal.setAttribute('hidden', ''); syncModalLock(); };
 
     openBtn.addEventListener('click', openModal);
     if (closeBtn) { closeBtn.addEventListener('click', closeModal); }
@@ -661,6 +836,612 @@
       window.setTimeout(function () { toast.remove(); }, 240);
     }, 2200);
   }
+  function escapeHtml(value) {
+    return String(value == null ? '' : value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+  function escapeAttr(value) { return escapeHtml(value); }
+  function projectField(project, base) {
+    var preferred = project[base + '_' + current];
+    var fallback = project[base + '_' + (current === 'zh' ? 'en' : 'zh')];
+    return preferred || fallback || '';
+  }
+  function projectHighlights(project) {
+    var preferred = project['highlights_' + current];
+    var fallback = project['highlights_' + (current === 'zh' ? 'en' : 'zh')];
+    return Array.isArray(preferred) && preferred.length ? preferred : (Array.isArray(fallback) ? fallback : []);
+  }
+  function projectImages(project) {
+    var list = project && Array.isArray(project.project_images) ? project.project_images.slice() : [];
+    list.sort(function (a, b) {
+      var ac = a && a.is_cover ? 1 : 0;
+      var bc = b && b.is_cover ? 1 : 0;
+      if (ac !== bc) { return bc - ac; }
+      return (Number(a && a.sort_order) || 0) - (Number(b && b.sort_order) || 0);
+    });
+    return list;
+  }
+  function projectCover(project) {
+    var images = projectImages(project);
+    for (var i = 0; i < images.length; i++) {
+      if (images[i].is_cover) { return images[i]; }
+    }
+    return images[0] || null;
+  }
+  function projectImageAlt(image, project) {
+    var fallback = projectField(project, 'title') || t('projectUntitled');
+    if (!image) { return fallback; }
+    return image['alt_' + current] || image['alt_' + (current === 'zh' ? 'en' : 'zh')] || fallback;
+  }
+  function projectImageUrl(path) {
+    var raw = String(path || '').trim();
+    if (!raw) { return ''; }
+    if (/^https?:\/\//i.test(raw)) { return raw; }
+    var safePath = raw.replace(/^\/+/, '').split('/').map(encodeURIComponent).join('/');
+    return SUPABASE_URL + '/storage/v1/object/public/project-images/' + safePath;
+  }
+  function displayProjectTag(tag) {
+    var value = String(tag || '').trim();
+    if (value === '独立开发' || /^independent$/i.test(value)) { return t('projectIndependent'); }
+    return value;
+  }
+  function syncModalLock() {
+    var ids = ['feedbackModal', 'adminModal', 'projectDetailModal', 'projectEditorModal'];
+    var open = false;
+    for (var i = 0; i < ids.length; i++) {
+      var node = document.getElementById(ids[i]);
+      if (node && !node.hasAttribute('hidden')) { open = true; break; }
+    }
+    var lightbox = document.getElementById('imageLightbox');
+    if (lightbox && !lightbox.hasAttribute('hidden')) { open = true; }
+    document.documentElement.classList.toggle('feedback-open', open);
+  }
+  function trapFocus(container, event) {
+    if (event.key !== 'Tab' || !container) { return; }
+    var nodes = container.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])');
+    var focusable = [];
+    for (var i = 0; i < nodes.length; i++) {
+      if (nodes[i].offsetParent !== null) { focusable.push(nodes[i]); }
+    }
+    if (!focusable.length) { return; }
+    var first = focusable[0];
+    var last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+    else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+  }
+  function loadPublicProjects() {
+    var list = document.getElementById('projectList');
+    if (!list) { return Promise.resolve(); }
+    return apiFetch('projects?select=*,project_images(*)&is_published=eq.true&order=sort_order.asc').then(function (rows) {
+      publicProjects = Array.isArray(rows) && rows.length ? rows : FALLBACK_PROJECTS.slice();
+      projectsReady = true;
+      renderProjects();
+    }).catch(function () {
+      publicProjects = FALLBACK_PROJECTS.slice();
+      projectsReady = true;
+      renderProjects();
+      var retry = document.createElement('button');
+      retry.type = 'button';
+      retry.className = 'project-retry';
+      retry.textContent = t('projectRetry');
+      retry.addEventListener('click', function () { loadPublicProjects(); });
+      list.appendChild(retry);
+    });
+  }
+  function renderProjectCover(project, index, lazy) {
+    var cover = projectCover(project);
+    var src = cover ? projectImageUrl(cover.storage_path) : '';
+    if (!src) {
+      return '<div class="project-cover-art" aria-hidden="true"><span>VIBE</span><strong>' + String(index + 1).padStart(2, '0') + '</strong></div>';
+    }
+    return '<div class="project-cover-art" aria-hidden="true"><span>VIBE</span><strong>' + String(index + 1).padStart(2, '0') + '</strong></div>' +
+      '<img class="js-project-image project-cover-image" src="' + escapeAttr(src) + '" alt="' + escapeAttr(projectImageAlt(cover, project)) + '"' + (lazy ? ' loading="lazy"' : '') + ' />';
+  }
+  function renderProjectEntry(project, index) {
+    var projectId = String(project.id || '');
+    var title = projectField(project, 'title') || t('projectUntitled');
+    var kicker = projectField(project, 'kicker');
+    var summary = projectField(project, 'summary');
+    var highlights = projectHighlights(project);
+    var tags = Array.isArray(project.tags) ? project.tags : [];
+    var tagHtml = '';
+    for (var ti = 0; ti < tags.length; ti++) {
+      tagHtml += '<li>' + escapeHtml(displayProjectTag(tags[ti])) + '</li>';
+    }
+    var highlightHtml = '';
+    for (var hi = 0; hi < highlights.length; hi++) {
+      if (highlights[hi] && highlights[hi].label) { highlightHtml += '<li>' + escapeHtml(highlights[hi].label) + '</li>'; }
+    }
+    return '<article class="project-entry" data-project-id="' + escapeAttr(projectId) + '">' +
+      '<div class="project-cover">' + renderProjectCover(project, index, true) + '</div>' +
+      '<div class="project-content">' +
+        (kicker ? '<p class="project-kicker">' + escapeHtml(kicker) + '</p>' : '') +
+        '<h3>' + escapeHtml(title) + '</h3>' +
+        (summary ? '<p class="project-summary">' + escapeHtml(summary) + '</p>' : '') +
+        (tagHtml ? '<ul class="project-tags" aria-label="' + escapeAttr(t('projectTagsLabel')) + '">' + tagHtml + '</ul>' : '') +
+        (highlightHtml ? '<ul class="project-highlights" aria-label="' + escapeAttr(t('projectHighlightsLabel')) + '">' + highlightHtml + '</ul>' : '') +
+        '<button class="project-link" type="button" data-project-detail="' + escapeAttr(projectId) + '">' + escapeHtml(t('projectViewDetail')) + '</button>' +
+      '</div>' +
+    '</article>';
+  }
+  function bindProjectImages(root) {
+    var images = root.querySelectorAll('.js-project-image');
+    for (var i = 0; i < images.length; i++) {
+      (function (img) {
+        var loaded = function () { img.classList.add('is-loaded'); };
+        var failed = function () { img.classList.add('is-error'); };
+        img.addEventListener('load', loaded);
+        img.addEventListener('error', failed);
+        if (img.complete) {
+          if (img.naturalWidth) { loaded(); }
+          else { failed(); }
+        }
+      })(images[i]);
+    }
+  }
+  function renderProjects() {
+    var list = document.getElementById('projectList');
+    if (!list || !projectsReady) { return; }
+    if (!publicProjects.length) {
+      list.innerHTML = '<p class="project-empty">' + escapeHtml(t('projectEmpty')) + '</p>';
+      return;
+    }
+    var html = '';
+    for (var i = 0; i < publicProjects.length; i++) { html += renderProjectEntry(publicProjects[i], i); }
+    list.innerHTML = html;
+    bindProjectImages(list);
+  }
+  function getPublicProject(id) {
+    for (var i = 0; i < publicProjects.length; i++) {
+      if (String(publicProjects[i].id) === String(id)) { return publicProjects[i]; }
+    }
+    return null;
+  }
+  function renderProjectDetail(project) {
+    if (!project) { return; }
+    detailProject = project;
+    var title = projectField(project, 'title') || t('projectUntitled');
+    var kicker = projectField(project, 'kicker');
+    var summary = projectField(project, 'summary');
+    var reflection = projectField(project, 'reflection');
+    var highlights = projectHighlights(project);
+    var tags = Array.isArray(project.tags) ? project.tags : [];
+    var images = projectImages(project);
+    var tagHtml = '';
+    for (var ti = 0; ti < tags.length; ti++) { tagHtml += '<li>' + escapeHtml(displayProjectTag(tags[ti])) + '</li>'; }
+    var highlightHtml = '';
+    for (var hi = 0; hi < highlights.length; hi++) {
+      var item = highlights[hi] || {};
+      highlightHtml += '<li><strong>' + escapeHtml(item.label || '') + '</strong><p>' + escapeHtml(item.text || '') + '</p></li>';
+    }
+    var galleryHtml = '';
+    for (var ii = 0; ii < images.length; ii++) {
+      var image = images[ii];
+      var src = projectImageUrl(image.storage_path);
+      if (!src) { continue; }
+      var alt = projectImageAlt(image, project);
+      galleryHtml += '<li><button class="project-gallery-item" type="button" data-lightbox-src="' + escapeAttr(src) + '" data-lightbox-alt="' + escapeAttr(alt) + '">' +
+        '<span class="project-cover-art" aria-hidden="true"></span><img class="js-project-image" src="' + escapeAttr(src) + '" alt="' + escapeAttr(alt) + '" loading="lazy" /></button></li>';
+    }
+    var content = document.getElementById('projectDetailContent');
+    if (!content) { return; }
+    content.innerHTML =
+      '<div class="project-detail-head">' +
+        (kicker ? '<p class="project-kicker">' + escapeHtml(kicker) + '</p>' : '') +
+        '<h2 id="projectDetailTitle">' + escapeHtml(title) + '</h2>' +
+        (tagHtml ? '<ul class="project-tags" aria-label="' + escapeAttr(t('projectTagsLabel')) + '">' + tagHtml + '</ul>' : '') +
+      '</div>' +
+      (summary ? '<p class="project-detail-summary">' + escapeHtml(summary) + '</p>' : '') +
+      (highlightHtml ? '<section class="project-detail-section"><h3>' + escapeHtml(t('projectDetailContrib')) + '</h3><ol class="project-detail-contrib">' + highlightHtml + '</ol></section>' : '') +
+      (reflection ? '<section class="project-detail-section project-insight"><h3>' + escapeHtml(t('projectDetailInsight')) + '</h3><p>' + escapeHtml(reflection) + '</p></section>' : '') +
+      (galleryHtml ? '<section class="project-detail-section"><h3>' + escapeHtml(t('projectGallery')) + '</h3><ul class="project-gallery">' + galleryHtml + '</ul></section>' : '');
+    bindProjectImages(content);
+  }
+  function openProjectDetail(id, trigger) {
+    var project = getPublicProject(id);
+    var modal = document.getElementById('projectDetailModal');
+    if (!project || !modal) { return; }
+    detailReturnFocus = trigger || document.activeElement;
+    renderProjectDetail(project);
+    modal.removeAttribute('hidden');
+    syncModalLock();
+    var close = document.getElementById('projectDetailClose');
+    if (close) { close.focus(); }
+  }
+  function closeProjectDetail() {
+    var modal = document.getElementById('projectDetailModal');
+    if (!modal || modal.hasAttribute('hidden')) { return; }
+    modal.setAttribute('hidden', '');
+    detailProject = null;
+    syncModalLock();
+    if (detailReturnFocus && detailReturnFocus.focus) { detailReturnFocus.focus(); }
+  }
+  function openImageLightbox(src, alt) {
+    var box = document.getElementById('imageLightbox');
+    var img = document.getElementById('imageLightboxImg');
+    if (!box || !img || !src) { return; }
+    img.src = src;
+    img.alt = alt || '';
+    box.removeAttribute('hidden');
+    syncModalLock();
+    var close = document.getElementById('imageLightboxClose');
+    if (close) { close.focus(); }
+  }
+  function closeImageLightbox() {
+    var box = document.getElementById('imageLightbox');
+    var img = document.getElementById('imageLightboxImg');
+    if (!box || box.hasAttribute('hidden')) { return; }
+    box.setAttribute('hidden', '');
+    if (img) { img.removeAttribute('src'); img.alt = ''; }
+    syncModalLock();
+    var detailClose = document.getElementById('projectDetailClose');
+    if (detailClose && detailProject) { detailClose.focus(); }
+  }
+  function initProjectDetail() {
+    var list = document.getElementById('projectList');
+    var modal = document.getElementById('projectDetailModal');
+    var close = document.getElementById('projectDetailClose');
+    var box = document.getElementById('imageLightbox');
+    var lightboxClose = document.getElementById('imageLightboxClose');
+    if (list) {
+      list.addEventListener('click', function (e) {
+        var trigger = e.target.closest ? e.target.closest('[data-project-detail]') : null;
+        if (!trigger) { return; }
+        openProjectDetail(trigger.getAttribute('data-project-detail'), trigger);
+      });
+    }
+    if (modal) {
+      modal.addEventListener('click', function (e) {
+        if (e.target && e.target.getAttribute && e.target.getAttribute('data-project-detail-close')) { closeProjectDetail(); }
+        var gallery = e.target.closest ? e.target.closest('.project-gallery-item') : null;
+        if (gallery) {
+          openImageLightbox(gallery.getAttribute('data-lightbox-src'), gallery.getAttribute('data-lightbox-alt'));
+        }
+      });
+    }
+    if (close) { close.addEventListener('click', closeProjectDetail); }
+    if (lightboxClose) { lightboxClose.addEventListener('click', closeImageLightbox); }
+    if (box) {
+      box.addEventListener('click', function (e) {
+        if (e.target === box || (e.target && e.target.id === 'imageLightboxClose')) { closeImageLightbox(); }
+      });
+    }
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && box && !box.hasAttribute('hidden')) { closeImageLightbox(); return; }
+      if (e.key === 'Escape' && modal && !modal.hasAttribute('hidden')) { closeProjectDetail(); return; }
+      if (!modal || modal.hasAttribute('hidden')) { return; }
+      trapFocus(modal.querySelector('.project-detail-dialog'), e);
+    });
+  }
+  function cloneProjectImage(image) {
+    return { id: image.id, project_id: image.project_id, storage_path: image.storage_path || '', alt_zh: image.alt_zh || '', alt_en: image.alt_en || '', sort_order: Number(image.sort_order) || 0, is_cover: !!image.is_cover };
+  }
+  function randomStorageId() {
+    if (window.crypto && window.crypto.randomUUID) { return window.crypto.randomUUID(); }
+    return Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 12);
+  }
+  function storageObjectUrl(path) {
+    return SUPABASE_URL + '/storage/v1/object/project-images/' + String(path || '').split('/').map(encodeURIComponent).join('/');
+  }
+  function storageAuthHeaders(contentType) {
+    var headers = { apikey: SUPABASE_KEY, Authorization: 'Bearer ' + (adminToken || '') };
+    if (contentType) { headers['Content-Type'] = contentType; }
+    return headers;
+  }
+  function deleteStorageFile(path) {
+    if (!path || !adminToken) { return Promise.resolve(); }
+    return fetch(storageObjectUrl(path), { method: 'DELETE', headers: storageAuthHeaders() }).then(function (res) {
+      if (!res.ok && res.status !== 404) { throw new Error('storage delete'); }
+      return true;
+    });
+  }
+  function editorProject() {
+    for (var i = 0; i < adminProjects.length; i++) { if (String(adminProjects[i].id) === String(editorProjectId)) { return adminProjects[i]; } }
+    return null;
+  }
+  function loadAdminProjects(preferredId) {
+    return apiFetch('projects?select=*,project_images(*)&order=sort_order.asc,created_at.asc').then(function (rows) {
+      adminProjects = Array.isArray(rows) ? rows : [];
+      renderProjectEditorList();
+      var wanted = preferredId || editorProjectId || (adminProjects[0] && adminProjects[0].id);
+      if (wanted) { selectEditorProject(wanted); } else { startNewEditorProject(false); }
+      return adminProjects;
+    });
+  }
+  function renderProjectEditorList() {
+    var list = document.getElementById('projectEditorList');
+    if (!list) { return; }
+    list.innerHTML = '';
+    if (!adminProjects.length) {
+      var empty = document.createElement('li'); empty.className = 'project-editor-list-empty'; empty.textContent = t('projectNoProjects'); list.appendChild(empty); return;
+    }
+    for (var i = 0; i < adminProjects.length; i++) {
+      var project = adminProjects[i]; var li = document.createElement('li'); var btn = document.createElement('button');
+      btn.type = 'button'; btn.className = 'project-editor-list-item'; btn.setAttribute('data-edit-project', String(project.id));
+      if (String(project.id) === String(editorProjectId)) { btn.classList.add('is-active'); }
+      var title = document.createElement('strong'); title.textContent = projectField(project, 'title') || t('projectUntitled');
+      var state = document.createElement('small'); state.textContent = project.is_published ? t('projectPublished') : t('projectDraft');
+      btn.appendChild(title); btn.appendChild(state); li.appendChild(btn); list.appendChild(li);
+    }
+  }
+  function renderContributionEditors(lang, items) {
+    var root = document.getElementById(lang === 'zh' ? 'projectContribZh' : 'projectContribEn');
+    if (!root) { return; }
+    root.innerHTML = '';
+    var list = Array.isArray(items) ? items : [];
+    for (var i = 0; i < list.length; i++) { addContributionEditor(lang, list[i]); }
+  }
+  function addContributionEditor(lang, item) {
+    var root = document.getElementById(lang === 'zh' ? 'projectContribZh' : 'projectContribEn');
+    if (!root || root.children.length >= 6) { return; }
+    var row = document.createElement('div'); row.className = 'contribution-editor-row'; row.setAttribute('data-contrib-lang', lang);
+    var label = document.createElement('input'); label.type = 'text'; label.maxLength = 50; label.setAttribute('data-contrib-label', '1');
+    label.placeholder = lang === 'zh' ? '名称，例如：产品设计' : 'Label, e.g. Product Design'; label.value = item && item.label ? item.label : '';
+    var text = document.createElement('textarea'); text.rows = 2; text.maxLength = 400; text.setAttribute('data-contrib-text', '1');
+    text.placeholder = lang === 'zh' ? '简要说明你的具体工作' : 'Describe the work briefly'; text.value = item && item.text ? item.text : '';
+    var remove = document.createElement('button'); remove.type = 'button'; remove.className = 'contribution-remove'; remove.setAttribute('data-remove-contrib', '1');
+    remove.setAttribute('aria-label', t('projectDeleteImage')); remove.textContent = '×';
+    row.appendChild(label); row.appendChild(text); row.appendChild(remove); root.appendChild(row);
+  }
+  function readContributionEditors(lang) {
+    var root = document.getElementById(lang === 'zh' ? 'projectContribZh' : 'projectContribEn');
+    if (!root) { return []; }
+    var rows = root.querySelectorAll('.contribution-editor-row'); var result = [];
+    for (var i = 0; i < rows.length; i++) {
+      var label = rows[i].querySelector('[data-contrib-label]'); var text = rows[i].querySelector('[data-contrib-text]');
+      var labelValue = label ? label.value.trim() : ''; var textValue = text ? text.value.trim() : '';
+      if (labelValue || textValue) { result.push({ label: labelValue, text: textValue }); }
+    }
+    return result;
+  }
+  function renderEditorImages() {
+    var root = document.getElementById('projectImagesList'); var addLabel = document.getElementById('projectAddImageLabel');
+    if (addLabel) { addLabel.classList.toggle('is-disabled', !editorProjectId || editorUploading); addLabel.setAttribute('aria-disabled', (!editorProjectId || editorUploading) ? 'true' : 'false'); }
+    if (!root) { return; }
+    root.innerHTML = '';
+    if (!editorImages.length) { var empty = document.createElement('p'); empty.className = 'project-images-empty'; empty.textContent = t('projectNoImage'); root.appendChild(empty); return; }
+    for (var i = 0; i < editorImages.length; i++) {
+      var image = editorImages[i]; var row = document.createElement('article'); row.className = 'project-image-row'; row.setAttribute('data-image-index', String(i));
+      var thumb = document.createElement('div'); thumb.className = 'project-image-thumb project-cover-art';
+      var img = document.createElement('img'); img.className = 'js-project-image'; img.loading = 'lazy'; img.src = projectImageUrl(image.storage_path); img.alt = projectImageAlt(image, editorProject() || {}); thumb.appendChild(img);
+      var fields = document.createElement('div'); fields.className = 'project-image-fields';
+      var altZh = document.createElement('input'); altZh.type = 'text'; altZh.maxLength = 160; altZh.setAttribute('data-image-alt-zh', '1'); altZh.placeholder = t('projectAltZh'); altZh.value = image.alt_zh || '';
+      var altEn = document.createElement('input'); altEn.type = 'text'; altEn.maxLength = 160; altEn.setAttribute('data-image-alt-en', '1'); altEn.placeholder = t('projectAltEn'); altEn.value = image.alt_en || '';
+      var actions = document.createElement('div'); actions.className = 'project-image-actions';
+      var up = document.createElement('button'); up.type = 'button'; up.setAttribute('data-image-action', 'up'); up.setAttribute('data-image-index', String(i)); up.textContent = t('projectMoveUp'); if (i === 0) { up.disabled = true; }
+      var down = document.createElement('button'); down.type = 'button'; down.setAttribute('data-image-action', 'down'); down.setAttribute('data-image-index', String(i)); down.textContent = t('projectMoveDown'); if (i === editorImages.length - 1) { down.disabled = true; }
+      var cover = document.createElement('button'); cover.type = 'button'; cover.setAttribute('data-image-action', 'cover'); cover.setAttribute('data-image-index', String(i)); cover.textContent = image.is_cover ? t('projectCover') : t('projectSetCover'); if (image.is_cover) { cover.disabled = true; cover.classList.add('is-cover'); }
+      var del = document.createElement('button'); del.type = 'button'; del.className = 'is-danger'; del.setAttribute('data-image-action', 'delete'); del.setAttribute('data-image-index', String(i)); del.textContent = t('projectDeleteImage');
+      actions.appendChild(up); actions.appendChild(down); actions.appendChild(cover); actions.appendChild(del); fields.appendChild(altZh); fields.appendChild(altEn); fields.appendChild(actions); row.appendChild(thumb); row.appendChild(fields); root.appendChild(row);
+    }
+    bindProjectImages(root);
+  }
+  function readEditorImages() {
+    var root = document.getElementById('projectImagesList'); if (!root) { return; }
+    var rows = root.querySelectorAll('.project-image-row');
+    for (var i = 0; i < rows.length; i++) {
+      var index = parseInt(rows[i].getAttribute('data-image-index'), 10); if (!editorImages[index]) { continue; }
+      var zh = rows[i].querySelector('[data-image-alt-zh]'); var en = rows[i].querySelector('[data-image-alt-en]');
+      editorImages[index].alt_zh = zh ? zh.value.trim() : ''; editorImages[index].alt_en = en ? en.value.trim() : ''; editorImages[index].sort_order = i + 1;
+    }
+  }
+  function persistEditorImages() {
+    readEditorImages(); if (!editorProjectId || !editorImages.length) { return Promise.resolve(); }
+    var chain = Promise.resolve();
+    for (var i = 0; i < editorImages.length; i++) {
+      (function (image) {
+        chain = chain.then(function () {
+          return apiFetch('project_images?id=eq.' + encodeURIComponent(image.id), { method: 'PATCH', prefer: 'return=minimal', body: { is_cover: false } });
+        });
+      })(editorImages[i]);
+    }
+    for (var j = 0; j < editorImages.length; j++) {
+      (function (image) {
+        chain = chain.then(function () {
+          return apiFetch('project_images?id=eq.' + encodeURIComponent(image.id), { method: 'PATCH', prefer: 'return=minimal', body: { alt_zh: image.alt_zh || '', alt_en: image.alt_en || '', sort_order: image.sort_order, is_cover: !!image.is_cover } });
+        });
+      })(editorImages[j]);
+    }
+    return chain;
+  }
+  function startNewEditorProject(focusTitle) {
+    editorProjectId = null; editorImages = [];
+    var fields = document.getElementById('projectEditorFields'); var empty = document.getElementById('projectEditorEmpty'); var form = document.getElementById('projectEditorForm'); var deleteBtn = document.getElementById('projectDelete');
+    if (empty) { empty.hidden = true; } if (fields) { fields.hidden = false; } if (form) { form.reset(); } if (deleteBtn) { deleteBtn.hidden = true; }
+    updateEditorMoveButtons();
+    var published = document.getElementById('projectPublished'); if (published) { published.checked = true; }
+    var order = document.getElementById('projectSortOrder'); if (order) { order.value = String(adminProjects.length + 1); }
+    renderContributionEditors('zh', []); renderContributionEditors('en', []); addContributionEditor('zh'); addContributionEditor('en'); renderEditorImages();
+    if (focusTitle) { var title = document.getElementById('projectTitleZh'); if (title) { title.focus(); } }
+  }
+  function selectEditorProject(id) {
+    var project = null;
+    for (var i = 0; i < adminProjects.length; i++) { if (String(adminProjects[i].id) === String(id)) { project = adminProjects[i]; break; } }
+    if (!project) { return; }
+    editorProjectId = project.id; editorImages = projectImages(project).map(cloneProjectImage);
+    var fields = document.getElementById('projectEditorFields'); var empty = document.getElementById('projectEditorEmpty'); var deleteBtn = document.getElementById('projectDelete');
+    if (empty) { empty.hidden = true; } if (fields) { fields.hidden = false; } if (deleteBtn) { deleteBtn.hidden = false; }
+    updateEditorMoveButtons();
+    document.getElementById('projectTitleZh').value = project.title_zh || ''; document.getElementById('projectKickerZh').value = project.kicker_zh || '';
+    document.getElementById('projectSummaryZh').value = project.summary_zh || ''; document.getElementById('projectReflectionZh').value = project.reflection_zh || '';
+    document.getElementById('projectTitleEn').value = project.title_en || ''; document.getElementById('projectKickerEn').value = project.kicker_en || '';
+    document.getElementById('projectSummaryEn').value = project.summary_en || ''; document.getElementById('projectReflectionEn').value = project.reflection_en || '';
+    document.getElementById('projectTags').value = Array.isArray(project.tags) ? project.tags.join(', ') : '';
+    document.getElementById('projectPublished').checked = !!project.is_published; document.getElementById('projectSortOrder').value = String(Number(project.sort_order) || 0);
+    renderContributionEditors('zh', project.highlights_zh || []); renderContributionEditors('en', project.highlights_en || []); renderEditorImages(); renderProjectEditorList();
+  }
+  function updateEditorMoveButtons() {
+    var up = document.getElementById('projectMoveUp');
+    var down = document.getElementById('projectMoveDown');
+    if (!up || !down) { return; }
+    if (!editorProjectId) {
+      up.hidden = true; down.hidden = true;
+      return;
+    }
+    var index = -1;
+    for (var i = 0; i < adminProjects.length; i++) { if (String(adminProjects[i].id) === String(editorProjectId)) { index = i; break; } }
+    up.hidden = false; down.hidden = false;
+    up.disabled = index <= 0;
+    down.disabled = index < 0 || index >= adminProjects.length - 1;
+  }  function parseProjectTags(value) {
+    var seen = {}; var tags = String(value || '').replace(/，/g, ',').replace(/；/g, ';').split(/[,;]+/); var result = [];
+    for (var i = 0; i < tags.length; i++) { var tag = tags[i].trim(); if (tag && !seen[tag] && result.length < 8) { seen[tag] = true; result.push(tag); } }
+    return result;
+  }
+  function saveEditorProject() {
+    readEditorImages(); var titleZh = document.getElementById('projectTitleZh').value.trim();
+    if (!titleZh) { showToast(t('projectTitleRequired'), 'error'); document.getElementById('projectTitleZh').focus(); return Promise.resolve(); }
+    var payload = {
+      title_zh: titleZh, title_en: document.getElementById('projectTitleEn').value.trim(), kicker_zh: document.getElementById('projectKickerZh').value.trim(), kicker_en: document.getElementById('projectKickerEn').value.trim(),
+      summary_zh: document.getElementById('projectSummaryZh').value.trim(), summary_en: document.getElementById('projectSummaryEn').value.trim(),
+      highlights_zh: readContributionEditors('zh'), highlights_en: readContributionEditors('en'),
+      reflection_zh: document.getElementById('projectReflectionZh').value.trim(), reflection_en: document.getElementById('projectReflectionEn').value.trim(),
+      tags: parseProjectTags(document.getElementById('projectTags').value), is_published: document.getElementById('projectPublished').checked, sort_order: parseInt(document.getElementById('projectSortOrder').value, 10) || 0
+    };
+    var saveBtn = document.getElementById('projectSave'); if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = t('feedbackSending'); }
+    var request = editorProjectId ? apiFetch('projects?id=eq.' + encodeURIComponent(editorProjectId), { method: 'PATCH', prefer: 'return=representation', body: payload }) : apiFetch('projects', { method: 'POST', prefer: 'return=representation', body: payload });
+    return request.then(function (saved) {
+      var row = Array.isArray(saved) ? saved[0] : saved; if (!editorProjectId && row && row.id) { editorProjectId = row.id; }
+      return persistEditorImages();
+    }).then(function () { return loadAdminProjects(editorProjectId); }).then(function () { showToast(t('projectSaved'), 'success'); return loadPublicProjects(); }).catch(function () {
+      showToast(t('projectSaveError'), 'error');
+    }).then(function () { if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = t('projectSave'); } renderEditorImages(); });
+  }
+  function deleteEditorProject() {
+    if (!editorProjectId || !window.confirm(t('projectDeleteConfirm'))) { return; }
+    var images = editorImages.slice(); var id = editorProjectId;
+    apiFetch('projects?id=eq.' + encodeURIComponent(id), { method: 'DELETE', prefer: 'return=minimal' }).then(function () {
+      var jobs = [];
+      for (var i = 0; i < images.length; i++) { if (images[i].storage_path) { jobs.push(deleteStorageFile(images[i].storage_path).catch(function () {})); } }
+      return Promise.all(jobs);
+    }).then(function () { editorProjectId = null; editorImages = []; showToast(t('projectDeleted'), 'success'); return loadAdminProjects(); }).then(function () { return loadPublicProjects(); }).catch(function () { showToast(t('projectSaveError'), 'error'); });
+  }
+  function moveEditorProject(id, direction) {
+    if (!adminProjects.length) { return; }
+    var index = -1; for (var i = 0; i < adminProjects.length; i++) { if (String(adminProjects[i].id) === String(id)) { index = i; break; } }
+    var target = index + direction; if (index < 0 || target < 0 || target >= adminProjects.length) { return; }
+    var moved = adminProjects.slice(); var item = moved.splice(index, 1)[0]; moved.splice(target, 0, item); var jobs = [];
+    for (var j = 0; j < moved.length; j++) { jobs.push(apiFetch('projects?id=eq.' + encodeURIComponent(moved[j].id), { method: 'PATCH', prefer: 'return=minimal', body: { sort_order: j + 1 } })); }
+    Promise.all(jobs).then(function () { return loadAdminProjects(id); }).then(function () { return loadPublicProjects(); }).catch(function () { showToast(t('projectSaveError'), 'error'); });
+  }
+  function deleteEditorImage(index) {
+    var image = editorImages[index]; if (!image || !window.confirm(t('projectDeleteImageConfirm'))) { return; }
+    apiFetch('project_images?id=eq.' + encodeURIComponent(image.id), { method: 'DELETE', prefer: 'return=minimal' }).then(function () {
+      var wasCover = !!image.is_cover; editorImages.splice(index, 1); if (wasCover && editorImages[0]) { editorImages[0].is_cover = true; }
+      for (var i = 0; i < editorImages.length; i++) { editorImages[i].sort_order = i + 1; }
+      return persistEditorImages();
+    }).then(function () { return deleteStorageFile(image.storage_path).catch(function () {}); }).then(function () {
+      showToast(t('projectImageDeleted'), 'success'); return loadAdminProjects(editorProjectId);
+    }).then(function () { return loadPublicProjects(); }).catch(function () { showToast(t('projectUploadError'), 'error'); });
+  }
+  function setEditorCover(index) {
+    if (!editorImages[index]) { return; }
+    for (var i = 0; i < editorImages.length; i++) { editorImages[i].is_cover = i === index; }
+    renderEditorImages(); persistEditorImages().then(function () { showToast(t('projectCoverSet'), 'success'); return loadPublicProjects(); }).catch(function () { showToast(t('projectSaveError'), 'error'); });
+  }
+  function moveEditorImage(index, direction) {
+    var target = index + direction; if (!editorImages[index] || !editorImages[target]) { return; }
+    var item = editorImages.splice(index, 1)[0]; editorImages.splice(target, 0, item);
+    for (var i = 0; i < editorImages.length; i++) { editorImages[i].sort_order = i + 1; }
+    renderEditorImages(); persistEditorImages().then(function () { showToast(t('projectImageSaved'), 'success'); return loadPublicProjects(); }).catch(function () { showToast(t('projectSaveError'), 'error'); });
+  }
+  function compressProjectImage(file) {
+    return new Promise(function (resolve, reject) {
+      var source = URL.createObjectURL(file); var image = new Image();
+      image.onload = function () {
+        var maxEdge = 1600; var scale = Math.min(1, maxEdge / Math.max(image.naturalWidth, image.naturalHeight));
+        var canvas = document.createElement('canvas'); canvas.width = Math.max(1, Math.round(image.naturalWidth * scale)); canvas.height = Math.max(1, Math.round(image.naturalHeight * scale));
+        canvas.getContext('2d').drawImage(image, 0, 0, canvas.width, canvas.height); URL.revokeObjectURL(source);
+        canvas.toBlob(function (blob) { if (blob) { resolve(blob); } else { reject(new Error('compress')); } }, 'image/webp', 0.82);
+      };
+      image.onerror = function () { URL.revokeObjectURL(source); reject(new Error('image')); }; image.src = source;
+    });
+  }
+  function uploadProjectImage(file) {
+    var path = String(editorProjectId) + '/' + randomStorageId() + '.webp'; var uploaded = false;
+    return compressProjectImage(file).then(function (blob) {
+      return fetch(storageObjectUrl(path), { method: 'POST', headers: storageAuthHeaders('image/webp'), body: blob }).then(function (res) {
+        if (!res.ok) { return res.text().then(function (txt) { throw new Error('upload ' + res.status + ' ' + txt); }); }
+        uploaded = true; return blob;
+      });
+    }).then(function () {
+      return apiFetch('project_images', { method: 'POST', prefer: 'return=representation', body: { project_id: editorProjectId, storage_path: path, alt_zh: file.name.replace(/\.[^.]+$/, ''), alt_en: file.name.replace(/\.[^.]+$/, ''), sort_order: editorImages.length + 1, is_cover: editorImages.length === 0 } });
+    }).then(function (row) {
+      var saved = Array.isArray(row) ? row[0] : row; if (!saved) { throw new Error('database'); } return saved;
+    }).catch(function (error) {
+      if (!uploaded) { throw error; } return deleteStorageFile(path).catch(function () {}).then(function () { throw error; });
+    });
+  }
+  function handleSelectedProjectImages(files) {
+    if (!editorProjectId) { showToast(t('projectNeedSave'), 'error'); return; }
+    var selected = Array.prototype.slice.call(files || []); if (!selected.length || editorUploading) { return; }
+    var slots = 6 - editorImages.length; if (slots <= 0) { showToast(t('projectImageLimit'), 'error'); return; }
+    if (selected.length > slots) { selected = selected.slice(0, slots); showToast(t('projectImageLimit'), 'error'); }
+    for (var i = 0; i < selected.length; i++) {
+      if (['image/jpeg', 'image/png', 'image/webp'].indexOf(selected[i].type) < 0) { showToast(t('projectFileType'), 'error'); return; }
+      if (selected[i].size > 8 * 1024 * 1024) { showToast(t('projectFileTooLarge'), 'error'); return; }
+    }
+    editorUploading = true; renderEditorImages(); showToast(t('projectUploading'), 'success');
+    var next = function (index) {
+      if (index >= selected.length) { return Promise.resolve(); }
+      return uploadProjectImage(selected[index]).then(function (row) { editorImages.push(cloneProjectImage(row)); renderEditorImages(); return next(index + 1); });
+    };
+    next(0).then(function () { editorUploading = false; renderEditorImages(); showToast(t('projectUploaded'), 'success'); return loadAdminProjects(editorProjectId); }).then(function () { return loadPublicProjects(); }).catch(function () { editorUploading = false; renderEditorImages(); showToast(t('projectUploadError'), 'error'); });
+  }
+  function openProjectEditor() {
+    if (!adminToken) { return; }
+    var modal = document.getElementById('projectEditorModal'); if (!modal) { return; }
+    editorReturnFocus = document.activeElement; modal.removeAttribute('hidden'); syncModalLock(); loadAdminProjects(editorProjectId).catch(function () { showToast(t('projectEditorError'), 'error'); });
+  }
+  function closeProjectEditor() {
+    var modal = document.getElementById('projectEditorModal'); if (!modal || modal.hasAttribute('hidden')) { return; }
+    modal.setAttribute('hidden', ''); editorProjectId = null; editorImages = []; syncModalLock();
+    if (editorReturnFocus && editorReturnFocus.focus) { editorReturnFocus.focus(); }
+  }
+  function initProjectEditor() {
+    var modal = document.getElementById('projectEditorModal'); var open = document.getElementById('projectManage'); if (!modal || !open) { return; }
+    open.addEventListener('click', openProjectEditor);
+    var close = document.getElementById('projectEditorClose'); if (close) { close.addEventListener('click', closeProjectEditor); }
+    modal.addEventListener('click', function (e) { if (e.target && e.target.getAttribute && e.target.getAttribute('data-project-editor-close')) { closeProjectEditor(); } });
+    var newBtn = document.getElementById('projectNew'); if (newBtn) { newBtn.addEventListener('click', function () { startNewEditorProject(true); renderProjectEditorList(); }); }
+    var list = document.getElementById('projectEditorList');
+    if (list) { list.addEventListener('click', function (e) { var btn = e.target.closest ? e.target.closest('[data-edit-project]') : null; if (btn) { selectEditorProject(btn.getAttribute('data-edit-project')); } }); }
+    var form = document.getElementById('projectEditorForm');
+    if (form) {
+      form.addEventListener('submit', function (e) { e.preventDefault(); saveEditorProject(); });
+      form.addEventListener('click', function (e) {
+        var add = e.target.closest ? e.target.closest('[data-add-contrib]') : null; if (add) { addContributionEditor(add.getAttribute('data-add-contrib')); return; }
+        var remove = e.target.closest ? e.target.closest('[data-remove-contrib]') : null; if (remove && remove.parentNode) { remove.parentNode.remove(); }
+      });
+    }
+    var imagesList = document.getElementById('projectImagesList');
+    if (imagesList) {
+      imagesList.addEventListener('click', function (e) {
+        var btn = e.target.closest ? e.target.closest('[data-image-action]') : null; if (!btn) { return; }
+        var index = parseInt(btn.getAttribute('data-image-index'), 10); var action = btn.getAttribute('data-image-action');
+        if (action === 'up') { moveEditorImage(index, -1); } else if (action === 'down') { moveEditorImage(index, 1); } else if (action === 'cover') { setEditorCover(index); } else if (action === 'delete') { deleteEditorImage(index); }
+      });
+    }
+    var imageInput = document.getElementById('projectImageInput'); var imageLabel = document.getElementById('projectAddImageLabel');
+    if (imageInput) { imageInput.addEventListener('change', function () { handleSelectedProjectImages(imageInput.files); imageInput.value = ''; }); }
+    if (imageLabel) { imageLabel.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); if (editorProjectId && imageInput && !editorUploading) { imageInput.click(); } } }); }
+    var deleteBtn = document.getElementById('projectDelete'); if (deleteBtn) { deleteBtn.addEventListener('click', deleteEditorProject); }
+    var moveUp = document.getElementById('projectMoveUp'); if (moveUp) { moveUp.addEventListener('click', function () { moveEditorProject(editorProjectId, -1); }); }
+    var moveDown = document.getElementById('projectMoveDown'); if (moveDown) { moveDown.addEventListener('click', function () { moveEditorProject(editorProjectId, 1); }); }
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !modal.hasAttribute('hidden')) { closeProjectEditor(); return; }
+      if (!modal.hasAttribute('hidden')) { trapFocus(modal.querySelector('.project-editor-dialog'), e); }
+    });
+    renderEditorImages();
+  }
+  function initProjects() {
+    initProjectDetail();
+    return loadPublicProjects();
+  }
   function addRipple(btn, x, y) {
     if (reduceMotion) { return; }
     var rect = btn.getBoundingClientRect();
@@ -699,6 +1480,9 @@
       btn.setAttribute('aria-label', lang === 'zh' ? 'Switch to English' : 'Switch to Chinese');
     }
     renderBoard();
+    if (projectsReady) { renderProjects(); }
+    if (detailProject) { renderProjectDetail(detailProject); }
+    if (editorProjectId) { renderProjectEditorList(); }
     if (agentGreeting) { agentGreeting.textContent = dict[lang].agentHello; }
   }
   function initBoard() {
@@ -1136,7 +1920,7 @@
       { keys: ['学校', '专业', '天津大学', '学什么', '就读'], a: '我在天津大学读智能医学工程' },
       { keys: ['特长', '技能', '会什么', '二胡', '篆刻'], a: '我的特长是二胡和篆刻' },
       { keys: ['爱好', '兴趣', '喜欢什么', '音乐', '小狗', '狗'], a: '我喜欢探索新鲜事物，也喜欢音乐，还特别偏爱小狗' },
-      { keys: ['项目', '作品', '做过什么'], a: '项目案例正在整理中，会陆续分享课程项目与设计探索' },
+      { keys: ['项目', '作品', '做过什么', '学习与探索'], a: '我的首个项目是何欣蔚个人主页，通过 Vibe Coding 完成，包含数字分身、留言板和暗黑模式' },
       { keys: ['联系', '邮箱', '邮件', '怎么找'], a: '可以发邮件到 xinwei_he@tju.edu.cn' },
       { keys: ['留言', '留言板'], a: '第三屏是留言板，欢迎留言' },
       { keys: ['你好', '您好', '嗨', '在吗'], a: '你好，我是何欣蔚的数字分身，问点你感兴趣的' }
@@ -1153,7 +1937,7 @@
       { keys: ['school', 'major', 'university', 'study'], a: 'I study Intelligent Medical Engineering at Tianjin University' },
       { keys: ['skill', 'specialty', 'erhu', 'seal'], a: 'My specialties are the erhu and seal carving' },
       { keys: ['hobby', 'interest', 'music', 'dog'], a: 'I like exploring new things and music, and I am especially fond of dogs' },
-      { keys: ['project', 'work', 'portfolio'], a: 'Project cases are being organized and will be shared soon' },
+      { keys: ['project', 'work', 'portfolio'], a: 'My first project is my personal homepage, built through Vibe Coding with a digital twin, message board, and dark mode' },
       { keys: ['contact', 'email', 'reach'], a: 'You can email me at xinwei_he@tju.edu.cn' },
       { keys: ['message', 'board', 'comment'], a: 'The third screen has a message board' },
       { keys: ['hello', 'hey', 'hi there'], a: 'Hi, I am the digital twin of He Xinwei. Ask me what you like' }
@@ -1335,7 +2119,7 @@
     var openModal = function () {
       lastFocus = document.activeElement;
       modal.removeAttribute('hidden');
-      document.documentElement.classList.add('feedback-open');
+      syncModalLock();
       if (textArea) { textArea.focus(); }
     };
     var closeModal = function () {
@@ -1480,6 +2264,8 @@
   }
   var initial = detectLang();
   initBoard();
+  initProjects();
+  initProjectEditor();
   initBoardLayout();
   applyLang(initial);
   initTheme();

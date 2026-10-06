@@ -84,8 +84,33 @@
     </section>
 
     <section class="card projects" id="projects">
-      <h2 data-i18n="projectsTitle">学习与探索</h2>
-      <p data-i18n="projectsText">学习记录正在整理中，将陆续分享课程实践与探索心得</p>
+      <div class="projects-head">
+        <h2 data-i18n="projectsTitle">学习与探索</h2>
+        <button id="projectManage" class="admin-edit-btn" type="button" data-admin-only data-i18n="projectManage" hidden>管理项目</button>
+      </div>
+      <div id="projectList" class="project-list" aria-live="polite">
+        <article class="project-entry project-entry-static" data-project-static="1">
+          <div class="project-cover">
+            <div class="project-cover-art" aria-hidden="true"><span>VIBE</span><strong>01</strong></div>
+          </div>
+          <div class="project-content">
+            <p class="project-kicker" data-i18n="projectStaticKicker">基于 Vibe Coding 构建</p>
+            <h3 data-i18n="projectStaticTitle">何欣蔚个人主页</h3>
+            <p class="project-summary" data-i18n="projectStaticSummary">一次通过 Vibe Coding（AI 辅助编程）独立完成的现代 Web 实践，从产品构思到工程落地均由我主导。</p>
+            <ul class="project-tags" aria-label="项目标签" data-i18n-aria="projectTagsLabel">
+              <li>Vibe Coding</li>
+              <li>HTML / CSS / JS</li>
+              <li data-i18n="projectIndependent">独立开发</li>
+            </ul>
+            <ul class="project-highlights" aria-label="贡献亮点" data-i18n-aria="projectHighlightsLabel">
+              <li data-i18n="projectDesign">产品设计</li>
+              <li data-i18n="projectPrompt">Prompt 架构</li>
+              <li data-i18n="projectEngineering">工程把控</li>
+            </ul>
+            <button class="project-link" type="button" data-project-detail="static" data-i18n="projectViewDetail">查看详情</button>
+          </div>
+        </article>
+      </div>
     </section>
 
     <section class="card contact" id="contact">
@@ -232,6 +257,96 @@
           <button class="btn btn-primary" type="submit" data-i18n="adminLogin">登录</button>
         </div>
       </form>
+    </div>
+  </div>
+  <div id="projectDetailModal" class="feedback-modal project-detail-modal" hidden>
+    <div class="feedback-backdrop" data-project-detail-close="1"></div>
+    <div class="feedback-dialog project-detail-dialog" role="dialog" aria-modal="true" aria-labelledby="projectDetailTitle">
+      <button id="projectDetailClose" class="feedback-close" type="button" aria-label="关闭" data-i18n-aria="feedbackClose">×</button>
+      <div id="projectDetailContent"></div>
+    </div>
+  </div>
+  <div id="imageLightbox" class="image-lightbox" hidden>
+    <button id="imageLightboxClose" class="image-lightbox-close" type="button" aria-label="关闭" data-i18n-aria="feedbackClose">×</button>
+    <img id="imageLightboxImg" alt="" />
+  </div>
+  <div id="projectEditorModal" class="feedback-modal project-editor-modal" hidden>
+    <div class="feedback-backdrop" data-project-editor-close="1"></div>
+    <div class="feedback-dialog project-editor-dialog" role="dialog" aria-modal="true" aria-labelledby="projectEditorTitle">
+      <button id="projectEditorClose" class="feedback-close" type="button" aria-label="关闭" data-i18n-aria="feedbackClose">×</button>
+      <div class="project-editor-head">
+        <div>
+          <p class="editor-eyebrow" data-i18n="projectManage">项目管理</p>
+          <h2 id="projectEditorTitle" data-i18n="projectEditorTitle">编辑项目</h2>
+        </div>
+        <button id="projectNew" class="btn btn-primary" type="button" data-i18n="projectNew">新增项目</button>
+      </div>
+      <div class="project-editor-layout">
+        <aside class="project-editor-sidebar">
+          <p class="editor-label" data-i18n="projectList">项目列表</p>
+          <ul id="projectEditorList" class="project-editor-list"></ul>
+        </aside>
+        <form id="projectEditorForm" class="project-editor-form" novalidate>
+          <div id="projectEditorEmpty" class="editor-empty" data-i18n="projectSelect">选择左侧项目开始编辑</div>
+          <div id="projectEditorFields" hidden>
+            <div class="editor-meta-grid">
+              <label class="switch-field">
+                <input id="projectPublished" type="checkbox" />
+                <span class="switch" aria-hidden="true"></span>
+                <span data-i18n="projectPublishedLabel">发布到主页</span>
+              </label>
+              <label class="editor-field editor-sort-field">
+                <span data-i18n="projectSortLabel">排序</span>
+                <input id="projectSortOrder" type="number" min="0" max="999" step="1" />
+              </label>
+            </div>
+            <div class="editor-language-grid">
+              <fieldset class="editor-language">
+                <legend data-i18n="projectContentZh">中文内容</legend>
+                <label class="editor-field"><span data-i18n="projectTitle">标题</span><input id="projectTitleZh" type="text" maxlength="100" /></label>
+                <label class="editor-field"><span data-i18n="projectKicker">副标题</span><input id="projectKickerZh" type="text" maxlength="80" /></label>
+                <label class="editor-field"><span data-i18n="projectSummary">简介</span><textarea id="projectSummaryZh" rows="3" maxlength="500"></textarea></label>
+                <label class="editor-field"><span data-i18n="projectTags">标签</span><input id="projectTags" type="text" maxlength="200" placeholder="Vibe Coding, HTML / CSS / JS" /></label>
+                <div class="editor-subgroup">
+                  <div class="editor-subhead"><span data-i18n="projectContributions">贡献亮点</span><button class="editor-mini-btn" type="button" data-add-contrib="zh" data-i18n="projectAddContribution">添加</button></div>
+                  <div id="projectContribZh" class="contrib-editor-list"></div>
+                </div>
+                <label class="editor-field"><span data-i18n="projectReflection">感悟</span><textarea id="projectReflectionZh" rows="4" maxlength="800"></textarea></label>
+              </fieldset>
+              <fieldset class="editor-language">
+                <legend data-i18n="projectContentEn">English content</legend>
+                <label class="editor-field"><span data-i18n="projectTitle">Title</span><input id="projectTitleEn" type="text" maxlength="100" /></label>
+                <label class="editor-field"><span data-i18n="projectKicker">Subtitle</span><input id="projectKickerEn" type="text" maxlength="80" /></label>
+                <label class="editor-field"><span data-i18n="projectSummary">Summary</span><textarea id="projectSummaryEn" rows="3" maxlength="500"></textarea></label>
+                <div class="editor-subgroup">
+                  <div class="editor-subhead"><span data-i18n="projectContributions">Contributions</span><button class="editor-mini-btn" type="button" data-add-contrib="en" data-i18n="projectAddContribution">Add</button></div>
+                  <div id="projectContribEn" class="contrib-editor-list"></div>
+                </div>
+                <label class="editor-field"><span data-i18n="projectReflection">Reflection</span><textarea id="projectReflectionEn" rows="4" maxlength="800"></textarea></label>
+              </fieldset>
+            </div>
+            <section class="project-image-editor">
+              <div class="editor-subhead">
+                <div>
+                  <span data-i18n="projectImages">项目图片</span>
+                  <small data-i18n="projectImagesHint">最多 6 张，JPEG / PNG / WebP，单张不超过 8 MB</small>
+                </div>
+                <label id="projectAddImageLabel" class="editor-upload-btn" for="projectImageInput" tabindex="0" data-i18n="projectAddImages">选择图片</label>
+                <input id="projectImageInput" type="file" accept="image/jpeg,image/png,image/webp" multiple hidden />
+              </div>
+              <div id="projectImagesList" class="project-images-list"></div>
+            </section>
+            <div class="editor-actions">
+              <div class="editor-action-start">
+                <button id="projectMoveUp" class="editor-secondary-btn" type="button" data-i18n="projectMoveUp">上移</button>
+                <button id="projectMoveDown" class="editor-secondary-btn" type="button" data-i18n="projectMoveDown">下移</button>
+                <button id="projectDelete" class="editor-delete-btn" type="button" data-i18n="projectDelete">删除项目</button>
+              </div>
+              <button id="projectSave" class="btn btn-primary" type="submit" data-i18n="projectSave">保存项目</button>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
   <button id="agentBall" class="agent-ball" type="button" aria-label="数字分身" data-i18n-aria="agentTitle">
