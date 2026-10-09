@@ -223,6 +223,8 @@
       boardMoveUp: '上移',
       boardMoveDown: '下移',
       boardPinned: '置顶',
+      expandMessage: '展开',
+      collapseMessage: '收起',
       pinError: '置顶操作失败',
       likeLabel: '点赞',
       unlikeLabel: '取消点赞',
@@ -487,6 +489,8 @@
       boardMoveUp: 'Move up',
       boardMoveDown: 'Move down',
       boardPinned: 'Pinned',
+      expandMessage: 'Expand',
+      collapseMessage: 'Collapse',
       pinError: 'Could not update pinned messages',
       likeLabel: 'Like',
       unlikeLabel: 'Unlike',
@@ -564,6 +568,7 @@
   };
   var boardCopy = null;
   var boardCopyReady = false;
+  var expandedMessageIds = {};
   var msgPreviewHook = null;
   var relKeys = {
     classmate: 'relClassmate',
@@ -1109,13 +1114,64 @@
     var items = ul.querySelectorAll('.msg-item');
     if (!items.length) { return; }
     if (ul.offsetHeight === 0) { return; }
+
     var isWide = !!(window.matchMedia && window.matchMedia('(min-width: 900px)').matches);
     var isDesk = !!(window.matchMedia && window.matchMedia('(min-width: 640px)').matches);
+    var cols = isWide ? 5 : (isDesk ? 3 : 2);
+    var gap = 12;
+    var listWidth = ul.getBoundingClientRect().width;
+    var unit = Math.max(80, (listWidth - gap * (cols - 1)) / cols);
+    document.documentElement.style.setProperty('--board-row-unit', unit + 'px');
+    document.documentElement.style.setProperty('--board-row-gap', gap + 'px');
+
     for (var i = 0; i < items.length; i++) {
       var el = items[i];
+      var id = String(el.getAttribute('data-message-id') || '');
+      var expandButton = el.querySelector('.msg-expand');
       el.style.gridRowEnd = '';
       el.style.gridColumn = '';
-      el.classList.remove('msg-w-sm', 'msg-w-md', 'msg-w-lg', 'msg-right');
+      el.style.removeProperty('--msg-body-max-height');
+      el.classList.remove('is-collapsed', 'is-expanded', 'is-collapsible');
+      if (expandButton) {
+        expandButton.hidden = true;
+        expandButton.setAttribute('aria-expanded', 'false');
+      }
+
+      var head = el.querySelector('.msg-head');
+      var body = el.querySelector('.msg-body');
+      var cardStyle = getComputedStyle(el);
+      var naturalHeight = Math.max(unit,
+        parseFloat(cardStyle.paddingTop || 0) +
+        parseFloat(cardStyle.paddingBottom || 0) +
+        (head ? head.getBoundingClientRect().height : 0) +
+        (body ? body.scrollHeight : 0) + 4
+      );
+
+      var neededRows = Math.max(1, Math.ceil((naturalHeight + gap) / (unit + gap)));
+      var canExpand = neededRows > 3 && !!id;
+      var expanded = canExpand && !!expandedMessageIds[id];
+      var span = neededRows;
+
+      if (canExpand) {
+        el.classList.add('is-collapsible');
+        expandButton.hidden = false;
+        expandButton.textContent = t(expanded ? 'collapseMessage' : 'expandMessage');
+        expandButton.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+        if (expanded) {
+          el.classList.add('is-expanded');
+        } else {
+          el.classList.add('is-collapsed');
+          span = 3;
+          var cardStyle = getComputedStyle(el);
+          var head = el.querySelector('.msg-head');
+          var headHeight = head ? head.getBoundingClientRect().height : 0;
+          var collapsedHeight = unit * 3 + gap * 2;
+          var bodyMax = Math.max(24, collapsedHeight - parseFloat(cardStyle.paddingTop || 0) - parseFloat(cardStyle.paddingBottom || 0) - headHeight - 4);
+          el.style.setProperty('--msg-body-max-height', bodyMax + 'px');
+        }
+      }
+
+      el.style.gridRowEnd = 'span ' + Math.max(1, span);
       if (el.classList.contains('msg-pinned')) { el.style.gridColumn = '1 / -1'; }
     }
   }
@@ -1145,6 +1201,7 @@
       for (var i = 0; i < list.length; i++) {
         var m = list[i];
         var li = document.createElement('li');
+        li.setAttribute('data-message-id', String(m.id || ''));
         var tone = normalizeMessageColor(m.color);
         li.className = 'msg-item color-' + tone;
         var msgTheme = MSG_THEMES.indexOf(m.theme) > -1 ? m.theme : 'minimal';
@@ -1232,9 +1289,17 @@
         likeButton.appendChild(stickerSvg);
         likeButton.appendChild(likeCount);
 
+        var expandButton = document.createElement('button');
+        expandButton.type = 'button';
+        expandButton.className = 'msg-expand';
+        expandButton.setAttribute('data-expand-message', String(m.id || ''));
+        expandButton.setAttribute('aria-expanded', 'false');
+        expandButton.textContent = t('expandMessage');
+        expandButton.hidden = true;
         li.appendChild(head);
         li.appendChild(likeButton);
         li.appendChild(body);
+        li.appendChild(expandButton);
         ul.appendChild(li);
         likeButtons.push(likeButton);
       }
@@ -2640,6 +2705,16 @@
     }
     if (list) {
       list.addEventListener('click', function (e) {
+        var expand = e.target.closest ? e.target.closest('.msg-expand') : null;
+        if (expand) {
+          var expandId = expand.getAttribute('data-expand-message') || '';
+          if (expandId) {
+            if (expandedMessageIds[expandId]) { delete expandedMessageIds[expandId]; }
+            else { expandedMessageIds[expandId] = true; }
+            layoutBoard();
+          }
+          return;
+        }
         var like = e.target.closest ? e.target.closest('.message-like') : null;
         if (!like || like.disabled) { return; }
         e.preventDefault();

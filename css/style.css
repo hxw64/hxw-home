@@ -1548,3 +1548,56 @@ button:focus:not(:focus-visible){outline:none}
   .message-like{position:absolute;float:none;right:7px;bottom:3px;margin:0}
   .msg-item.has-sticker .msg-body{padding-bottom:48px}
 }
+
+/* ---------- 留言卡片：按整数行高对齐，超过三行折叠 ---------- */
+:root{--board-row-unit:160px;--board-row-gap:12px}
+.msg-list{
+  grid-auto-rows:var(--board-row-unit);
+  row-gap:var(--board-row-gap);
+  align-items:stretch;
+}
+.msg-list .msg-item{
+  min-height:var(--board-row-unit);
+  align-self:stretch;
+  aspect-ratio:auto;
+}
+.msg-list .msg-item.msg-pinned{grid-column:1 / -1;width:100%}
+.msg-item.is-measuring{
+  min-height:0!important;
+  align-self:start!important;
+  grid-row:auto!important;
+  height:auto!important;
+}
+.msg-item.is-measuring .msg-body{
+  max-height:none!important;
+  overflow:visible!important;
+  -webkit-mask-image:none!important;
+  mask-image:none!important;
+}
+.msg-expand{
+  position:absolute;
+  left:14px;
+  bottom:11px;
+  z-index:3;
+  padding:0;
+  border:0;
+  background:none;
+  color:var(--card-text);
+  font:inherit;
+  font-size:12px;
+  font-weight:700;
+  text-decoration:underline;
+  cursor:pointer;
+}
+.msg-expand:hover,.msg-expand:focus-visible{color:var(--card-bg);background:var(--card-text);border-radius:4px;outline:none}
+.msg-expand[hidden]{display:none}
+.msg-item.is-collapsed .msg-body{
+  max-height:var(--msg-body-max-height);
+  overflow:hidden;
+  -webkit-mask-image:linear-gradient(to bottom,#000 72%,transparent 100%);
+  mask-image:linear-gradient(to bottom,#000 72%,transparent 100%);
+}
+@media (max-width:640px){.msg-expand{left:11px;bottom:8px}}
+
+/* 预留在第一行单位高度内，长内容可自然增高。 */
+.msg-preview .msg-item{min-height:var(--board-row-unit,160px);height:auto;aspect-ratio:auto}
