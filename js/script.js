@@ -2244,6 +2244,7 @@
         started = true;
         rx = x;
         ry = y;
+        document.documentElement.classList.add('custom-cursor');
         document.documentElement.classList.add('cursor-on');
       }
     });

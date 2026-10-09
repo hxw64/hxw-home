@@ -1149,3 +1149,7 @@ button:focus:not(:focus-visible){outline:none}
 .editor-secondary-btn:hover:not(:disabled){border-color:var(--coral);color:var(--coral)}
 .editor-secondary-btn:disabled{opacity:.42;cursor:default}
 @media (max-width:520px){.editor-action-start{display:grid;grid-template-columns:repeat(2,1fr)}.editor-action-start .editor-delete-btn{grid-column:1/-1}}
+/* ---------- 隐藏系统光标，只保留自绘圆环 ---------- */
+html.custom-cursor,
+html.custom-cursor *{cursor:none}
+html.cursor-text .cursor-ring{opacity:1}
