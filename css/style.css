@@ -1252,8 +1252,8 @@ html.custom-cursor #adminOpen,html.custom-cursor #hobbyManage,html.custom-cursor
 .msg-item{position:relative}
 .message-sticker{
   position:absolute;
-  right:12px;
-  bottom:10px;
+  right:9px;
+  bottom:4px;
   width:46px;
   height:46px;
   opacity:.95;
@@ -1301,7 +1301,7 @@ html.custom-cursor #adminOpen,html.custom-cursor #hobbyManage,html.custom-cursor
 .msg-preview .msg-item{width:100%;max-width:320px;min-height:84px;margin:0}
 
 @media (max-width:640px){
-  .message-sticker{width:40px;height:40px;right:10px;bottom:8px}
+  .message-sticker{width:40px;height:40px;right:7px;bottom:3px}
   .msg-item.has-sticker .msg-body{padding-right:44px}
   .sticker-option{width:48px;height:48px}
   .sticker-option svg{width:34px;height:34px}
