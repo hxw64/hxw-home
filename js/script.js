@@ -3098,6 +3098,78 @@
       });
     }
   }
+  function initCursor() {
+    var finePointer = !!(window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches);
+    if (!finePointer || reduceMotion) { return; }
+
+    var ring = document.createElement('div');
+    ring.className = 'cursor-ring';
+    document.body.appendChild(ring);
+
+    var x = window.innerWidth / 2;
+    var y = window.innerHeight / 2;
+    var rx = x;
+    var ry = y;
+    var pressed = false;
+    var started = false;
+    var running = false;
+
+    var draw = function () {
+      rx += (x - rx) * 0.16;
+      ry += (y - ry) * 0.16;
+      ring.style.transform = 'translate(' + rx + 'px,' + ry + 'px) scale(' + (pressed ? 0.9 : 1) + ')';
+      if (Math.abs(x - rx) < 0.2 && Math.abs(y - ry) < 0.2) {
+        rx = x; ry = y; running = false; return;
+      }
+      window.requestAnimationFrame(draw);
+    };
+    var start = function () {
+      if (!running) { running = true; window.requestAnimationFrame(draw); }
+    };
+    var updateTarget = function (node) {
+      var textField = node && node.closest ? node.closest('input, textarea, select, [contenteditable="true"]') : null;
+      var systemTarget = node && node.closest ? node.closest('#adminOpen, #hobbyManage, #projectManage') : null;
+      var disabled = node && node.closest ? node.closest(':disabled, [aria-disabled="true"]') : null;
+      var hit = node && node.closest ? node.closest('a, button, input, textarea, select, label, summary, [role="option"], [role="radio"], [role="button"]') : null;
+      ring.classList.toggle('is-hover', !!hit && !systemTarget && !disabled);
+      document.documentElement.classList.toggle('cursor-text', !!textField);
+      document.documentElement.classList.toggle('cursor-system', !!systemTarget || !!disabled);
+    };
+    var move = function (e) {
+      if (e.pointerType === 'touch') { return; }
+      x = e.clientX; y = e.clientY;
+      updateTarget(document.elementFromPoint(x, y));
+      start();
+      if (!started) {
+        started = true; rx = x; ry = y;
+        ring.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+        try {
+          document.documentElement.classList.add('custom-cursor');
+          document.documentElement.classList.add('cursor-on');
+        } catch (err) {
+          started = false;
+          document.documentElement.classList.remove('custom-cursor');
+          document.documentElement.classList.remove('cursor-on');
+        }
+      }
+    };
+    var restore = function () {
+      if (!started || !ring.isConnected || document.hidden) { return; }
+      document.documentElement.classList.add('cursor-on');
+    };
+
+    window.addEventListener('pointerenter', move);
+    window.addEventListener('pointermove', move);
+    document.addEventListener('pointerover', function (e) { if (e.pointerType !== 'touch') { updateTarget(e.target); } });
+    window.addEventListener('pointerleave', function () { document.documentElement.classList.remove('cursor-on'); });
+    window.addEventListener('blur', function () { document.documentElement.classList.remove('cursor-on'); });
+    window.addEventListener('focus', restore);
+    window.addEventListener('pageshow', restore);
+    document.addEventListener('visibilitychange', function () { if (!document.hidden) { restore(); } });
+    window.addEventListener('pointerdown', function (e) { pressed = true; if (!started) { move(e); } start(); });
+    window.addEventListener('pointerup', function () { pressed = false; start(); });
+  }
+  initCursor();
   var initial = detectLang();
   initBoard();
   initProjects();
