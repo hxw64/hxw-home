@@ -1402,3 +1402,69 @@ button:focus:not(:focus-visible){outline:none}
   border-color:rgba(255,255,255,.16);
   box-shadow:0 8px 22px rgba(0,0,0,.2);
 }
+
+/* ---------- 留言板标题文案与编辑 ---------- */
+.board-heading{margin:0 0 14px}
+.board-copy{display:flex;flex-direction:column;gap:4px}
+.board-title-row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.board-title-row h2{margin:0}
+.board-kicker{margin:0;color:var(--coral);font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.board-intro{margin:2px 0 0;color:var(--muted);font-size:15px;line-height:1.65;white-space:pre-wrap}
+.board-copy-dialog{max-width:840px}
+.board-copy-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:16px}
+@media (max-width:720px){.board-copy-grid{grid-template-columns:1fr}.board-title-row{align-items:flex-start}}
+
+/* ---------- 多条置顶：占满整行并显示管理员排序 ---------- */
+.msg-list .msg-item.msg-pinned{grid-column:1 / -1;width:100%;max-width:none}
+.msg-pin-badge{display:inline-flex;align-items:center;padding:2px 7px;border:1px solid var(--card-border);border-radius:999px;color:var(--card-muted);font-size:11px;font-weight:700;line-height:1.4}
+.msg-admin-actions{display:flex;align-items:center;gap:8px;margin-left:auto}
+.msg-admin-actions .msg-admin{margin-left:0}
+
+/* ---------- 贴纸点赞：贴纸表示作者选择，is-liked 表示访客状态 ---------- */
+.message-like{
+  position:absolute;
+  right:9px;
+  bottom:4px;
+  z-index:2;
+  display:flex;
+  align-items:flex-end;
+  gap:4px;
+  padding:0;
+  border:0;
+  background:none;
+  color:var(--sticker-color);
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+.message-like .message-sticker{
+  position:static;
+  right:auto;
+  bottom:auto;
+  margin:0;
+  opacity:.68;
+  filter:grayscale(.55) saturate(.55);
+  transition:opacity 180ms ease,filter 180ms ease,transform 180ms ease;
+}
+.message-like:hover .message-sticker,
+.message-like:focus-visible .message-sticker{transform:translateY(-2px) scale(1.04)}
+.message-like.is-liked .message-sticker{opacity:1;filter:none;filter:drop-shadow(0 0 7px color-mix(in srgb, var(--sticker-color) 55%, transparent))}
+.message-like[data-pending="1"]{pointer-events:none}
+.message-like:focus-visible{outline:2px solid var(--sticker-color);outline-offset:3px;border-radius:12px}
+.message-like:disabled{cursor:default}
+.like-count{display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 5px;border-radius:999px;background:var(--card-text);color:var(--card-bg);font-size:11px;font-weight:700;line-height:1}
+.like-count[hidden]{display:none}
+.message-like::before{content:"";position:absolute;left:23px;bottom:23px;width:18px;height:18px;margin:-9px;border:2px solid currentColor;border-radius:50%;opacity:0;pointer-events:none}
+.message-like.is-bursting .message-sticker{animation:like-sticker-pop 480ms cubic-bezier(.2,.9,.3,1.25)}
+.message-like.is-bursting::before{animation:like-ring 520ms ease-out}
+.message-like.is-bursting::after{content:"";position:absolute;left:23px;bottom:23px;width:5px;height:5px;border-radius:50%;background:currentColor;opacity:0;box-shadow:0 -25px 0 currentColor,18px -18px 0 currentColor,25px 0 0 currentColor,18px 18px 0 currentColor,0 25px 0 currentColor,-18px 18px 0 currentColor,-25px 0 0 currentColor,-18px -18px 0 currentColor;pointer-events:none;animation:like-spark 520ms ease-out}
+@keyframes like-sticker-pop{0%{transform:scale(1)}35%{transform:scale(1.22) rotate(-4deg)}70%{transform:scale(.96) rotate(2deg)}100%{transform:scale(1)}}
+@keyframes like-ring{0%{opacity:.75;transform:scale(.35)}100%{opacity:0;transform:scale(2.7)}}
+@keyframes like-spark{0%{opacity:0;transform:scale(.2)}25%{opacity:.9}100%{opacity:0;transform:scale(1.6)}}
+@media (prefers-reduced-motion:reduce){.message-like .message-sticker,.message-like::before,.message-like::after{animation:none!important;transition:none!important}}
+
+@media (max-width:640px){
+  .message-like{right:7px;bottom:3px}
+  .message-like .message-sticker{width:40px;height:40px}
+  .message-like::before,.message-like::after{left:20px;bottom:20px}
+  .msg-admin-actions{width:100%;justify-content:flex-start;margin-left:0}
+}

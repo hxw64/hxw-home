@@ -197,7 +197,6 @@
       themeLetter: '信纸',
       themeCode: '代码',
       msgStickerLabel: '贴纸',
-      stickerNone: '无',
       stickerFlower: '小花',
       stickerStar: '星星',
       stickerCloud: '云朵',
@@ -206,9 +205,29 @@
       stickerRocket: '火箭',
       stickerCode: '代码',
       stickerOrange: '小橘子',
+      stickerHeart: '爱心',
       previewLabel: '留言预览',
       previewJustNow: '刚刚',
       previewPlaceholder: '你的留言会显示在这里…',
+      boardCopyManage: '编辑留言板文案',
+      boardCopyTitle: '编辑留言板文案',
+      boardCopyHint: '分别填写中英文标题上方小字、主标题和介绍',
+      boardKickerLabel: '标题上方小字',
+      boardTitleLabel: '主标题',
+      boardIntroLabel: '标题下介绍',
+      boardCopySave: '保存文案',
+      boardCopySaved: '留言板文案已保存',
+      boardCopyError: '保存文案失败',
+      boardPin: '置顶',
+      boardUnpin: '取消置顶',
+      boardMoveUp: '上移',
+      boardMoveDown: '下移',
+      boardPinned: '置顶',
+      pinError: '置顶操作失败',
+      likeLabel: '点赞',
+      unlikeLabel: '取消点赞',
+      likeError: '点赞失败，请重试',
+      likeRate: '操作太频繁，请稍后再试',
       colorCoral: '珊瑚红',
       colorCream: '奶油黄',
       colorIvory: '暖米白',
@@ -442,7 +461,6 @@
       themeLetter: 'Letter',
       themeCode: 'Code',
       msgStickerLabel: 'Sticker',
-      stickerNone: 'None',
       stickerFlower: 'Flower',
       stickerStar: 'Star',
       stickerCloud: 'Cloud',
@@ -451,9 +469,29 @@
       stickerRocket: 'Rocket',
       stickerCode: 'Code',
       stickerOrange: 'Orange',
+      stickerHeart: 'Heart',
       previewLabel: 'Preview',
       previewJustNow: 'just now',
       previewPlaceholder: 'Your message will appear here...',
+      boardCopyManage: 'Edit board copy',
+      boardCopyTitle: 'Edit message board copy',
+      boardCopyHint: 'Edit the kicker, title, and intro for both languages',
+      boardKickerLabel: 'Kicker',
+      boardTitleLabel: 'Title',
+      boardIntroLabel: 'Intro',
+      boardCopySave: 'Save copy',
+      boardCopySaved: 'Board copy saved',
+      boardCopyError: 'Could not save board copy',
+      boardPin: 'Pin',
+      boardUnpin: 'Unpin',
+      boardMoveUp: 'Move up',
+      boardMoveDown: 'Move down',
+      boardPinned: 'Pinned',
+      pinError: 'Could not update pinned messages',
+      likeLabel: 'Like',
+      unlikeLabel: 'Unlike',
+      likeError: 'Could not update like',
+      likeRate: 'Too many actions. Please try again later',
       colorCoral: 'Coral',
       colorCream: 'Cream',
       colorIvory: 'Warm ivory',
@@ -495,7 +533,7 @@
   };
 
   var MSG_THEMES = ['minimal', 'glow', 'letter', 'code'];
-  var MSG_STICKERS = ['none', 'flower', 'star', 'cloud', 'paw', 'coffee', 'rocket', 'code', 'orange'];
+  var MSG_STICKERS = ['flower', 'star', 'cloud', 'paw', 'coffee', 'rocket', 'code', 'orange', 'heart'];
   var MSG_COLORS = ['coral', 'cream', 'ivory', 'teal', 'navy'];
   var MSG_COLOR_ALIASES = {
     coral: 'coral',
@@ -520,6 +558,12 @@
     var mapped = MSG_COLOR_ALIASES[String(value || '').toLowerCase()];
     return MSG_COLORS.indexOf(mapped) > -1 ? mapped : 'coral';
   }
+  var BOARD_COPY_DEFAULTS = {
+    zh: { kicker: '', title: '留言板', intro: '' },
+    en: { kicker: '', title: 'Message Board', intro: '' }
+  };
+  var boardCopy = null;
+  var boardCopyReady = false;
   var msgPreviewHook = null;
   var relKeys = {
     classmate: 'relClassmate',
@@ -644,6 +688,163 @@
     }).then(function () { return renderBoard(); });
   }
 
+  function adminPinMessage(id) {
+    return apiFetch('rpc/admin_pin_message', {
+      method: 'POST', prefer: 'return=representation', body: { p_message_id: id }
+    }).then(function () { return renderBoard(); });
+  }
+
+  function adminUnpinMessage(id) {
+    return apiFetch('rpc/admin_unpin_message', {
+      method: 'POST', prefer: 'return=minimal', body: { p_message_id: id }
+    }).then(function () { return renderBoard(); });
+  }
+
+  function adminMovePinnedMessage(id, direction) {
+    return apiFetch('rpc/admin_move_pinned_message', {
+      method: 'POST', prefer: 'return=minimal',
+      body: { p_message_id: id, p_direction: direction }
+    }).then(function () { return renderBoard(); });
+  }
+
+  function boardCopyDefault(key) {
+    return (BOARD_COPY_DEFAULTS[current] && BOARD_COPY_DEFAULTS[current][key]) || BOARD_COPY_DEFAULTS.zh[key] || '';
+  }
+
+  function boardCopyText(key) {
+    if (!boardCopy) { return boardCopyDefault(key); }
+    var langKey = key + '_' + current;
+    var otherLang = current === 'zh' ? 'en' : 'zh';
+    var otherKey = key + '_' + otherLang;
+    return String(boardCopy[langKey] || boardCopy[otherKey] || boardCopyDefault(key) || '');
+  }
+
+  function applyBoardCopy() {
+    var kicker = document.getElementById('boardKicker');
+    var title = document.getElementById('boardTitle');
+    var intro = document.getElementById('boardIntro');
+    var kickerText = boardCopyText('kicker');
+    var titleText = boardCopyText('title');
+    var introText = boardCopyText('intro');
+    if (kicker) { kicker.textContent = kickerText; kicker.hidden = !kickerText; }
+    if (title) { title.textContent = titleText; }
+    if (intro) { intro.textContent = introText; intro.hidden = !introText; }
+  }
+
+  function loadBoardSettings() {
+    return apiFetch('board_settings?id=eq.1&select=*').then(function (rows) {
+      boardCopy = rows && rows[0] ? rows[0] : null;
+      boardCopyReady = true;
+      applyBoardCopy();
+    }).catch(function () {
+      boardCopyReady = true;
+      applyBoardCopy();
+    });
+  }
+
+  function fillBoardCopyForm() {
+    var values = {
+      kicker_zh: boardCopy ? boardCopy.kicker_zh : '',
+      title_zh: boardCopy ? boardCopy.title_zh : BOARD_COPY_DEFAULTS.zh.title,
+      intro_zh: boardCopy ? boardCopy.intro_zh : '',
+      kicker_en: boardCopy ? boardCopy.kicker_en : '',
+      title_en: boardCopy ? boardCopy.title_en : BOARD_COPY_DEFAULTS.en.title,
+      intro_en: boardCopy ? boardCopy.intro_en : ''
+    };
+    Object.keys(values).forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) { el.value = values[id] || ''; }
+    });
+  }
+
+  function initBoardCopyEditor() {
+    var modal = document.getElementById('boardCopyModal');
+    var open = document.getElementById('boardCopyManage');
+    var form = document.getElementById('boardCopyForm');
+    if (!modal || !open || !form) { return; }
+    var close = function () { modal.setAttribute('hidden', ''); syncModalLock(); };
+    var openModal = function () {
+      if (!adminToken) { return; }
+      fillBoardCopyForm();
+      modal.removeAttribute('hidden');
+      syncModalLock();
+      var first = document.getElementById('boardKickerZh');
+      if (first) { first.focus(); }
+    };
+    open.addEventListener('click', openModal);
+    ['boardCopyClose', 'boardCopyCancel'].forEach(function (id) {
+      var btn = document.getElementById(id);
+      if (btn) { btn.addEventListener('click', close); }
+    });
+    modal.addEventListener('click', function (e) {
+      if (e.target && e.target.getAttribute && e.target.getAttribute('data-board-copy-close')) { close(); }
+    });
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!adminToken) { return; }
+      var payload = {
+        p_kicker_zh: (document.getElementById('boardKickerZh') || {}).value || '',
+        p_title_zh: (document.getElementById('boardTitleZh') || {}).value || '',
+        p_intro_zh: (document.getElementById('boardIntroZh') || {}).value || '',
+        p_kicker_en: (document.getElementById('boardKickerEn') || {}).value || '',
+        p_title_en: (document.getElementById('boardTitleEn') || {}).value || '',
+        p_intro_en: (document.getElementById('boardIntroEn') || {}).value || ''
+      };
+      apiFetch('rpc/admin_update_board_settings', {
+        method: 'POST', prefer: 'return=representation', body: payload
+      }).then(function (rows) {
+        boardCopy = rows && rows[0] ? rows[0] : boardCopy;
+        boardCopyReady = true;
+        applyBoardCopy();
+        close();
+        showToast(t('boardCopySaved'), 'success');
+      }).catch(function () { showToast(t('boardCopyError'), 'error'); });
+    });
+  }
+
+  function setLikeState(button, liked, count) {
+    if (!button) { return; }
+    var number = Math.max(0, Number(count) || 0);
+    button.classList.toggle('is-liked', !!liked);
+    button.setAttribute('aria-pressed', liked ? 'true' : 'false');
+    button.setAttribute('aria-label', t(liked ? 'unlikeLabel' : 'likeLabel'));
+    var badge = button.querySelector('.like-count');
+    if (badge) { badge.textContent = String(number); badge.hidden = number <= 0; }
+  }
+
+  function loadLikeStatuses(buttons) {
+    var ids = [];
+    for (var i = 0; i < buttons.length; i++) {
+      var id = buttons[i].getAttribute('data-message-id');
+      if (id && ids.indexOf(id) === -1) { ids.push(id); }
+    }
+    if (!ids.length) { return Promise.resolve(); }
+    return edgeFetch('like-message', { action: 'status', message_ids: ids }).then(function (data) {
+      var map = {};
+      var rows = data && data.statuses ? data.statuses : [];
+      for (var j = 0; j < rows.length; j++) { map[rows[j].message_id] = rows[j]; }
+      for (var k = 0; k < buttons.length; k++) {
+        var row = map[buttons[k].getAttribute('data-message-id')];
+        if (row) { setLikeState(buttons[k], !!row.liked, row.like_count); }
+      }
+    }).catch(function () {});
+  }
+
+  function toggleMessageLike(button) {
+    if (!button || button.getAttribute('data-pending') === '1') { return; }
+    button.setAttribute('data-pending', '1');
+    button.classList.remove('is-bursting');
+    if (!reduceMotion) { void button.offsetWidth; button.classList.add('is-bursting'); }
+    edgeFetch('like-message', { action: 'toggle', message_id: button.getAttribute('data-message-id') }).then(function (data) {
+      setLikeState(button, !!data.liked, data.like_count);
+    }).catch(function (err) {
+      showToast(t(err && String(err.message).indexOf('rate') > -1 ? 'likeRate' : 'likeError'), 'error');
+    }).then(function () {
+      button.removeAttribute('data-pending');
+      window.setTimeout(function () { button.classList.remove('is-bursting'); }, 520);
+    });
+  }
+
   function clearAllMessages() {
     return apiFetch('messages?id=not.is.null', {
       method: 'DELETE',
@@ -705,9 +906,17 @@
 
     if (list) {
       list.addEventListener('click', function (e) {
-        var btn = e.target.closest ? e.target.closest('.msg-admin') : null;
+        var btn = e.target.closest ? e.target.closest('[data-message-action]') : null;
         if (!btn || !adminToken) { return; }
-        hideMessage(btn.getAttribute('data-id')).catch(function () { showToast(t('msgError'), 'error'); });
+        var id = btn.getAttribute('data-id');
+        var action = btn.getAttribute('data-message-action');
+        var job = null;
+        if (action === 'hide') { job = hideMessage(id); }
+        else if (action === 'pin') { job = adminPinMessage(id); }
+        else if (action === 'unpin') { job = adminUnpinMessage(id); }
+        else if (action === 'up') { job = adminMovePinnedMessage(id, -1); }
+        else if (action === 'down') { job = adminMovePinnedMessage(id, 1); }
+        if (job) { job.catch(function () { showToast(t('pinError'), 'error'); }); }
       });
     }
   }
@@ -883,7 +1092,7 @@
     }
   }
   function loadMessages() {
-    return apiFetch('messages?select=*&is_visible=eq.true&order=created_at.desc&limit=50');
+    return apiFetch('messages?select=*&is_visible=eq.true&order=pin_order.asc.nullslast,created_at.desc&limit=50');
   }
   function sendMessage(data) {
     var payload = {};
@@ -910,14 +1119,20 @@
       el.style.gridColumn = '';
       el.classList.remove('msg-w-sm', 'msg-w-md', 'msg-w-lg', 'msg-right');
       var len = parseInt(el.getAttribute('data-len') || '0', 10);
+      var pinned = el.classList.contains('msg-pinned');
       if (!isDesk) {
-        if (len <= 12) { el.classList.add('msg-w-sm'); }
-        else if (len <= 40) { el.classList.add('msg-w-md'); }
-        else { el.classList.add('msg-w-lg'); }
-        if (i % 2 === 1) { el.classList.add('msg-right'); }
+        if (pinned) { el.classList.add('msg-w-lg'); }
+        else {
+          if (len <= 12) { el.classList.add('msg-w-sm'); }
+          else if (len <= 40) { el.classList.add('msg-w-md'); }
+          else { el.classList.add('msg-w-lg'); }
+          if (i % 2 === 1) { el.classList.add('msg-right'); }
+        }
         continue;
       }
-      if (cols > 1 && el.getAttribute('data-wide') === '1') {
+      if (pinned) {
+        el.style.gridColumn = '1 / -1';
+      } else if (cols > 1 && el.getAttribute('data-wide') === '1') {
         el.style.gridColumn = 'span 2';
       }
       var h = el.offsetHeight;
@@ -948,6 +1163,7 @@
         ul.appendChild(empty);
         return;
       }
+      var likeButtons = [];
       for (var i = 0; i < list.length; i++) {
         var m = list[i];
         var li = document.createElement('li');
@@ -955,57 +1171,97 @@
         li.className = 'msg-item color-' + tone;
         var msgTheme = MSG_THEMES.indexOf(m.theme) > -1 ? m.theme : 'minimal';
         li.setAttribute('data-theme', msgTheme);
-        var msgSticker = MSG_STICKERS.indexOf(m.sticker) > -1 ? m.sticker : 'none';
-        if (msgSticker !== 'none') { li.classList.add('has-sticker'); }
+        var msgSticker = MSG_STICKERS.indexOf(m.sticker) > -1 ? m.sticker : 'paw';
+        li.classList.add('has-sticker');
+        var pinOrder = Number(m.pin_order || 0);
+        if (pinOrder > 0) {
+          li.classList.add('msg-pinned');
+          li.setAttribute('data-pin-order', String(pinOrder));
+        }
         var rawText = String(m.content || '');
         li.setAttribute('data-len', String(rawText.length));
         var idStr = String(m.id || '');
         var hash = 0;
         for (var hi = 0; hi < idStr.length; hi++) { hash = (hash * 31 + idStr.charCodeAt(hi)) % 997; }
-        li.setAttribute('data-wide', (hash % 3 === 0) ? '1' : '0');
+        li.setAttribute('data-wide', (pinOrder > 0 || hash % 3 === 0) ? '1' : '0');
+
         var head = document.createElement('div');
         head.className = 'msg-head';
         var name = document.createElement('span');
         name.className = 'msg-name';
         name.textContent = (m.nickname && String(m.nickname).trim()) ? String(m.nickname).trim() : t('anonymousName');
-        var time = document.createElement('time');
-        time.className = 'msg-time';
-        time.textContent = (m.created_at ? new Date(m.created_at) : new Date()).toLocaleString();
         head.appendChild(name);
+        if (pinOrder > 0) {
+          var pinBadge = document.createElement('span');
+          pinBadge.className = 'msg-pin-badge';
+          pinBadge.textContent = t('boardPinned');
+          head.appendChild(pinBadge);
+        }
         if (m.relation && relKeys[m.relation]) {
           var relTag = document.createElement('span');
           relTag.className = 'msg-rel-tag';
           relTag.textContent = t(relKeys[m.relation]);
           head.appendChild(relTag);
         }
+        var time = document.createElement('time');
+        time.className = 'msg-time';
+        time.textContent = (m.created_at ? new Date(m.created_at) : new Date()).toLocaleString();
         head.appendChild(time);
+
+        var adminActions = document.createElement('span');
+        adminActions.className = 'msg-admin-actions';
         if (adminToken && m.id) {
-          var hideBtn = document.createElement('button');
-          hideBtn.type = 'button';
-          hideBtn.className = 'msg-admin';
-          hideBtn.setAttribute('data-id', m.id);
-          hideBtn.textContent = t('adminHide');
-          head.appendChild(hideBtn);
+          var makeAdminAction = function (label, action) {
+            var btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'msg-admin';
+            btn.setAttribute('data-id', m.id);
+            btn.setAttribute('data-message-action', action);
+            btn.textContent = label;
+            return btn;
+          };
+          adminActions.appendChild(makeAdminAction(t(pinOrder > 0 ? 'boardUnpin' : 'boardPin'), pinOrder > 0 ? 'unpin' : 'pin'));
+          if (pinOrder > 0) {
+            adminActions.appendChild(makeAdminAction(t('boardMoveUp'), 'up'));
+            adminActions.appendChild(makeAdminAction(t('boardMoveDown'), 'down'));
+          }
+          adminActions.appendChild(makeAdminAction(t('adminHide'), 'hide'));
         }
+        if (adminActions.childNodes.length) { head.appendChild(adminActions); }
+
         var body = document.createElement('p');
         body.className = 'msg-body';
         body.textContent = String(m.content || '');
+
+        var likeButton = document.createElement('button');
+        likeButton.type = 'button';
+        likeButton.className = 'message-like';
+        likeButton.setAttribute('data-message-id', String(m.id || ''));
+        likeButton.setAttribute('aria-pressed', 'false');
+        likeButton.setAttribute('aria-label', t('likeLabel'));
+        var stickerSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        stickerSvg.setAttribute('class', 'message-sticker');
+        stickerSvg.setAttribute('viewBox', '0 0 64 64');
+        stickerSvg.setAttribute('data-sticker', msgSticker);
+        stickerSvg.setAttribute('aria-hidden', 'true');
+        var stickerUse = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+        stickerUse.setAttribute('href', '#sticker-' + msgSticker);
+        stickerSvg.appendChild(stickerUse);
+        var likeCount = document.createElement('span');
+        likeCount.className = 'like-count';
+        likeCount.textContent = '0';
+        likeCount.hidden = true;
+        likeButton.appendChild(stickerSvg);
+        likeButton.appendChild(likeCount);
+
         li.appendChild(head);
         li.appendChild(body);
-        if (msgSticker !== 'none') {
-          var stickerSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-          stickerSvg.setAttribute('class', 'message-sticker');
-          stickerSvg.setAttribute('viewBox', '0 0 64 64');
-          stickerSvg.setAttribute('data-sticker', msgSticker);
-          stickerSvg.setAttribute('aria-hidden', 'true');
-          var stickerUse = document.createElementNS('http://www.w3.org/2000/svg', 'use');
-          stickerUse.setAttribute('href', '#sticker-' + msgSticker);
-          stickerSvg.appendChild(stickerUse);
-          li.appendChild(stickerSvg);
-        }
+        li.appendChild(likeButton);
         ul.appendChild(li);
+        likeButtons.push(likeButton);
       }
       layoutBoard();
+      return loadLikeStatuses(likeButtons);
     }).catch(function () {
       ul.textContent = '';
       var err = document.createElement('li');
@@ -2283,6 +2539,7 @@
       btn.textContent = lang === 'zh' ? 'EN' : '中文';
       btn.setAttribute('aria-label', lang === 'zh' ? 'Switch to English' : 'Switch to Chinese');
     }
+    applyBoardCopy();
     renderBoard();
     if (projectsReady) { renderProjects(); }
     if (detailProject) { renderProjectDetail(detailProject); }
@@ -2306,6 +2563,7 @@
     var messageAllowAt = 0;
     var themeRow = document.getElementById('themeRow');
     var stickerRow = document.getElementById('stickerRow');
+    var list = document.getElementById('msgList');
     var msgTheme = 'minimal';
     var msgSticker = 'paw';
     var preview = document.getElementById('messagePreview');
@@ -2313,6 +2571,7 @@
     var previewBody = document.getElementById('previewBody');
     var previewSticker = document.getElementById('previewSticker');
     var previewStickerUse = document.getElementById('previewStickerUse');
+    loadBoardSettings();
 
     var updatePreview = function () {
       if (!preview) { return; }
@@ -2322,18 +2581,12 @@
         var textNow = textInput ? textInput.value.trim() : '';
         previewBody.textContent = textNow || t('previewPlaceholder');
       }
-      preview.className = 'msg-item color-' + msgColor + (msgSticker !== 'none' ? ' has-sticker' : '');
+      preview.className = 'msg-item color-' + msgColor + ' has-sticker';
       preview.setAttribute('data-theme', msgTheme);
       if (previewSticker && previewStickerUse) {
-        if (msgSticker === 'none') {
-          previewSticker.setAttribute('hidden', '');
-          previewStickerUse.setAttribute('href', '');
-          previewSticker.removeAttribute('data-sticker');
-        } else {
-          previewStickerUse.setAttribute('href', '#sticker-' + msgSticker);
-          previewSticker.setAttribute('data-sticker', msgSticker);
-          previewSticker.removeAttribute('hidden');
-        }
+        previewStickerUse.setAttribute('href', '#sticker-' + msgSticker);
+        previewSticker.setAttribute('data-sticker', msgSticker);
+        previewSticker.removeAttribute('hidden');
       }
     };
     msgPreviewHook = updatePreview;
@@ -2356,8 +2609,8 @@
       stickerRow.addEventListener('click', function (e) {
         var opt = e.target.closest ? e.target.closest('.sticker-option') : null;
         if (!opt) { return; }
-        var value = opt.getAttribute('data-sticker') || 'none';
-        msgSticker = MSG_STICKERS.indexOf(value) > -1 ? value : 'none';
+        var value = opt.getAttribute('data-sticker') || 'paw';
+        msgSticker = MSG_STICKERS.indexOf(value) > -1 ? value : 'paw';
         var opts = stickerRow.querySelectorAll('.sticker-option');
         for (var i = 0; i < opts.length; i++) {
           var on = opts[i].getAttribute('data-sticker') === msgSticker;
@@ -2405,6 +2658,14 @@
         for (var i = 0; i < chips.length; i++) {
           chips[i].classList.toggle('is-on', chips[i].getAttribute('data-rel') === msgRel);
         }
+      });
+    }
+    if (list) {
+      list.addEventListener('click', function (e) {
+        var like = e.target.closest ? e.target.closest('.message-like') : null;
+        if (!like || like.disabled) { return; }
+        e.preventDefault();
+        toggleMessageLike(like);
       });
     }
     if (colorRow) {
@@ -3172,6 +3433,7 @@
   initCursor();
   var initial = detectLang();
   initBoard();
+  initBoardCopyEditor();
   initProjects();
   initProjectEditor();
   initHobbies();

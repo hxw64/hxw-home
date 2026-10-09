@@ -24,7 +24,7 @@ const COLORS: Record<string, string> = {
 };
 const RELATIONS = new Set(['classmate', 'friend', 'family', 'teacher', 'other']);
 const THEMES = new Set(['minimal', 'glow', 'letter', 'code']);
-const STICKERS = new Set(['none', 'flower', 'star', 'cloud', 'paw', 'coffee', 'rocket', 'code', 'orange']);
+const STICKERS = new Set(['flower', 'star', 'cloud', 'paw', 'coffee', 'rocket', 'code', 'orange', 'heart']);
 
 function json(body: unknown, status = 200, headers: Record<string, string> = {}) {
   return new Response(JSON.stringify(body), {
@@ -44,7 +44,7 @@ function clientIp(req: Request) {
     .split(',')
     .map((part) => part.trim())
     .filter(Boolean);
-  return chain[chain.length - 1] || req.headers.get('x-real-ip') || 'unknown';
+  return chain[0] || req.headers.get('x-real-ip') || 'unknown';
 }
 
 Deno.serve(async (req: Request) => {
@@ -70,7 +70,7 @@ Deno.serve(async (req: Request) => {
   const color = COLORS[String(payload.color || '')] || 'ivory';
   const relation = RELATIONS.has(String(payload.relation || '')) ? String(payload.relation) : '';
   const theme = THEMES.has(String(payload.theme || '')) ? String(payload.theme) : 'minimal';
-  const sticker = STICKERS.has(String(payload.sticker || '')) ? String(payload.sticker) : 'none';
+  const sticker = STICKERS.has(String(payload.sticker || '')) ? String(payload.sticker) : 'paw';
 
   const ip = clientIp(req);
   const rateSalt = Deno.env.get('RATE_LIMIT_SALT') || SERVICE_KEY;

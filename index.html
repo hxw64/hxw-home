@@ -70,7 +70,12 @@
         </g>
       </symbol>
 
-      <!-- 咖啡 -->
+      <!-- 爱心 -->
+  <symbol id="sticker-heart" viewBox="0 0 64 64">
+    <path d="M32 53S9 39 9 23.5C9 14.8 15.6 9 23 9c4.5 0 7.8 2.1 9 5.2C33.2 11.1 36.5 9 41 9c7.4 0 14 5.8 14 14.5C55 39 32 53 32 53Z" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- 咖啡 -->
       <symbol id="sticker-coffee" viewBox="0 0 64 64">
         <path d="M18 26h28v12a12 12 0 0 1-12 12h-4a12 12 0 0 1-12-12Z"
               fill="#F3E3D3" stroke="#B58C63" stroke-width="2.5" stroke-linejoin="round"/>
@@ -203,7 +208,16 @@
 
     <div class="page page-3" id="page3">
       <section class="card board" id="board">
-        <h2 data-i18n="boardTitle">留言板</h2>
+        <div class="board-heading">
+          <div class="board-copy">
+            <p id="boardKicker" class="board-kicker" hidden></p>
+            <div class="board-title-row">
+              <h2 id="boardTitle">留言板</h2>
+              <button id="boardCopyManage" class="admin-edit-btn" type="button" data-admin-only data-i18n="boardCopyManage" hidden>编辑留言板文案</button>
+            </div>
+            <p id="boardIntro" class="board-intro" hidden></p>
+          </div>
+        </div>
         <ul id="msgList" class="msg-list"></ul>
         <div id="adminBar" class="admin-bar" hidden>
           <button id="adminClear" class="clear-btn" type="button" data-i18n="adminClear">清空留言板</button>
@@ -242,15 +256,17 @@
                   <time class="msg-time" data-i18n="previewJustNow">刚刚</time>
                 </div>
                 <p class="msg-body" id="previewBody" data-i18n="previewPlaceholder">你的留言会显示在这里…</p>
-                <svg id="previewSticker" class="message-sticker" viewBox="0 0 64 64" data-sticker="paw" aria-hidden="true">
-                  <use id="previewStickerUse" href="#sticker-paw"></use>
-                </svg>
+                <button type="button" class="message-like is-preview" disabled aria-hidden="true">
+                  <svg id="previewSticker" class="message-sticker" viewBox="0 0 64 64" data-sticker="paw" aria-hidden="true">
+                    <use id="previewStickerUse" href="#sticker-paw"></use>
+                  </svg>
+                  <span id="previewLikeCount" class="like-count" hidden>0</span>
+                </button>
               </article>
             </div>
             <fieldset class="msg-sticker">
               <legend data-i18n="msgStickerLabel">贴纸</legend>
               <div class="sticker-row" id="stickerRow" role="radiogroup" aria-label="选择贴纸" data-i18n-aria="msgStickerLabel">
-                <button type="button" class="sticker-option" data-sticker="none" role="radio" aria-checked="false"><span class="no-sticker" data-i18n="stickerNone">无</span></button>
                 <button type="button" class="sticker-option" data-sticker="flower" role="radio" aria-checked="false" data-i18n-aria="stickerFlower"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#sticker-flower"></use></svg></button>
                 <button type="button" class="sticker-option" data-sticker="star" role="radio" aria-checked="false" data-i18n-aria="stickerStar"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#sticker-star"></use></svg></button>
                 <button type="button" class="sticker-option" data-sticker="cloud" role="radio" aria-checked="false" data-i18n-aria="stickerCloud"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#sticker-cloud"></use></svg></button>
@@ -259,6 +275,7 @@
                 <button type="button" class="sticker-option" data-sticker="rocket" role="radio" aria-checked="false" data-i18n-aria="stickerRocket"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#sticker-rocket"></use></svg></button>
                 <button type="button" class="sticker-option" data-sticker="code" role="radio" aria-checked="false" data-i18n-aria="stickerCode"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#sticker-code"></use></svg></button>
                 <button type="button" class="sticker-option" data-sticker="orange" role="radio" aria-checked="false" data-i18n-aria="stickerOrange"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#sticker-orange"></use></svg></button>
+                <button type="button" class="sticker-option" data-sticker="heart" role="radio" aria-checked="false" data-i18n-aria="stickerHeart"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#sticker-heart"></use></svg></button>
               </div>
             </fieldset>
             <fieldset class="msg-rel">
@@ -367,6 +384,32 @@
         </div>
       </form>
     </div>
+  </div>
+  <div id="boardCopyModal" class="feedback-modal" hidden>
+    <div class="feedback-backdrop" data-board-copy-close="1"></div>
+    <form id="boardCopyForm" class="feedback-dialog board-copy-dialog" role="dialog" aria-modal="true" aria-labelledby="boardCopyTitle" novalidate>
+      <button id="boardCopyClose" class="feedback-close" type="button" aria-label="关闭" data-i18n-aria="feedbackClose">×</button>
+      <h2 id="boardCopyTitle" data-i18n="boardCopyTitle">编辑留言板文案</h2>
+      <p class="sub-text" data-i18n="boardCopyHint">分别填写中英文标题上方小字、主标题和介绍</p>
+      <div class="board-copy-grid">
+        <fieldset class="editor-language">
+          <legend data-i18n="projectContentZh">中文内容</legend>
+          <label class="editor-field"><span data-i18n="boardKickerLabel">标题上方小字</span><input id="boardKickerZh" type="text" maxlength="40" /></label>
+          <label class="editor-field"><span data-i18n="boardTitleLabel">主标题</span><input id="boardTitleZh" type="text" maxlength="60" /></label>
+          <label class="editor-field"><span data-i18n="boardIntroLabel">标题下介绍</span><textarea id="boardIntroZh" rows="3" maxlength="200"></textarea></label>
+        </fieldset>
+        <fieldset class="editor-language">
+          <legend data-i18n="projectContentEn">English content</legend>
+          <label class="editor-field"><span data-i18n="boardKickerLabel">Kicker</span><input id="boardKickerEn" type="text" maxlength="40" /></label>
+          <label class="editor-field"><span data-i18n="boardTitleLabel">Title</span><input id="boardTitleEn" type="text" maxlength="60" /></label>
+          <label class="editor-field"><span data-i18n="boardIntroLabel">Intro</span><textarea id="boardIntroEn" rows="3" maxlength="200"></textarea></label>
+        </fieldset>
+      </div>
+      <div class="feedback-actions">
+        <button id="boardCopyCancel" class="chip" type="button" data-i18n="feedbackCancel">取消</button>
+        <button class="btn btn-primary" type="submit" data-i18n="boardCopySave">保存文案</button>
+      </div>
+    </form>
   </div>
   <div id="projectDetailModal" class="feedback-modal project-detail-modal" hidden>
     <div class="feedback-backdrop" data-project-detail-close="1"></div>
