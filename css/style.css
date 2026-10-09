@@ -1441,13 +1441,15 @@ button:focus:not(:focus-visible){outline:none}
   right:auto;
   bottom:auto;
   margin:0;
-  opacity:.68;
-  filter:grayscale(.55) saturate(.55);
-  transition:opacity 180ms ease,filter 180ms ease,transform 180ms ease;
+  opacity:1;
+  filter:none;
+  transition:transform 180ms ease;
 }
 .message-like:hover .message-sticker,
 .message-like:focus-visible .message-sticker{transform:translateY(-2px) scale(1.04)}
-.message-like.is-liked .message-sticker{opacity:1;filter:none;filter:drop-shadow(0 0 7px color-mix(in srgb, var(--sticker-color) 55%, transparent))}
+.message-like.is-liked .message-sticker{opacity:1;filter:none}
+.message-like.is-liked .message-sticker[data-sticker="paw"],
+.message-like.is-liked .message-sticker[data-sticker="heart"]{color:var(--card-text);--sticker-fill-opacity:1}
 .message-like[data-pending="1"]{pointer-events:none}
 .message-like:focus-visible{outline:2px solid var(--sticker-color);outline-offset:3px;border-radius:12px}
 .message-like:disabled{cursor:default}
