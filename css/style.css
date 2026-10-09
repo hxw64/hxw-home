@@ -1468,3 +1468,48 @@ button:focus:not(:focus-visible){outline:none}
   .message-like::before,.message-like::after{left:20px;bottom:20px}
   .msg-admin-actions{width:100%;justify-content:flex-start;margin-left:0}
 }
+
+/* ---------- 留言卡片：桌面五列、平板三列、手机两列 ---------- */
+.msg-list{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  grid-auto-rows:auto;
+  grid-auto-flow:dense;
+  column-gap:12px;
+  row-gap:12px;
+  align-items:start;
+}
+.msg-list .msg-item,
+.msg-list .msg-item.msg-w-sm,
+.msg-list .msg-item.msg-w-md,
+.msg-list .msg-item.msg-w-lg{
+  width:100%;
+  max-width:none;
+  align-self:start;
+  grid-column:auto;
+  aspect-ratio:1 / 1;
+  border-radius:14px;
+}
+.msg-list .msg-item.msg-right{align-self:stretch}
+.msg-list .msg-item.msg-pinned{
+  grid-column:1 / -1;
+  width:100%;
+  aspect-ratio:auto;
+}
+.msg-item[data-theme="letter"],
+.msg-item[data-theme="code"],
+.msg-preview .msg-item{border-radius:14px}
+.msg-preview .msg-item{
+  width:calc((100% - 12px) / 2);
+  max-width:none;
+  min-height:0;
+  aspect-ratio:1 / 1;
+}
+@media (min-width:640px){
+  .msg-list{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .msg-preview .msg-item{width:calc((100% - 24px) / 3)}
+}
+@media (min-width:900px){
+  .msg-list{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .msg-preview .msg-item{width:calc((100% - 48px) / 5)}
+}

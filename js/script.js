@@ -1109,38 +1109,16 @@
     var items = ul.querySelectorAll('.msg-item');
     if (!items.length) { return; }
     if (ul.offsetHeight === 0) { return; }
-    var isDesk = !!(window.matchMedia && window.matchMedia('(min-width: 640px)').matches);
     var isWide = !!(window.matchMedia && window.matchMedia('(min-width: 900px)').matches);
-    var cols = isWide ? 3 : (isDesk ? 2 : 1);
-    var rowH = 1;
+    var isDesk = !!(window.matchMedia && window.matchMedia('(min-width: 640px)').matches);
     for (var i = 0; i < items.length; i++) {
       var el = items[i];
       el.style.gridRowEnd = '';
       el.style.gridColumn = '';
       el.classList.remove('msg-w-sm', 'msg-w-md', 'msg-w-lg', 'msg-right');
-      var len = parseInt(el.getAttribute('data-len') || '0', 10);
-      var pinned = el.classList.contains('msg-pinned');
-      if (!isDesk) {
-        if (pinned) { el.classList.add('msg-w-lg'); }
-        else {
-          if (len <= 12) { el.classList.add('msg-w-sm'); }
-          else if (len <= 40) { el.classList.add('msg-w-md'); }
-          else { el.classList.add('msg-w-lg'); }
-          if (i % 2 === 1) { el.classList.add('msg-right'); }
-        }
-        continue;
-      }
-      if (pinned) {
-        el.style.gridColumn = '1 / -1';
-      } else if (cols > 1 && el.getAttribute('data-wide') === '1') {
-        el.style.gridColumn = 'span 2';
-      }
-      var h = el.offsetHeight;
-      var rows = Math.max(1, Math.ceil(h / rowH));
-      el.style.gridRowEnd = 'span ' + rows;
+      if (el.classList.contains('msg-pinned')) { el.style.gridColumn = '1 / -1'; }
     }
   }
-
   function initBoardLayout() {
     var timer = null;
     window.addEventListener('resize', function () {
