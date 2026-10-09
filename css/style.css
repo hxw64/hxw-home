@@ -1528,3 +1528,21 @@ button:focus:not(:focus-visible){outline:none}
 @media (max-width:640px){
   .message-like{right:auto;bottom:auto;margin:6px 0 5px 6px}
 }
+
+/* ---------- 贴纸固定在右下角：文字只在上方，底部留空 ---------- */
+.message-like{
+  position:absolute;
+  float:none;
+  right:9px;
+  bottom:4px;
+  margin:0;
+  shape-outside:none;
+}
+.msg-item.has-sticker .msg-body{
+  padding-right:0;
+  padding-bottom:56px;
+}
+@media (max-width:640px){
+  .message-like{position:absolute;float:none;right:7px;bottom:3px;margin:0}
+  .msg-item.has-sticker .msg-body{padding-bottom:48px}
+}
