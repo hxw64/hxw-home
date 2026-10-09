@@ -734,7 +734,7 @@ html.feedback-open{overflow:hidden}
   width:26px;
   height:26px;
   margin:-13px 0 0 -13px;
-  border:1px solid rgba(255,107,87,.45);
+  border:1.5px solid rgba(255,107,87,.7);
   border-radius:50%;
   transition:width 180ms ease,height 180ms ease,margin 180ms ease,background-color 220ms ease,border-color 220ms ease,opacity 200ms ease;
 }
@@ -1214,3 +1214,9 @@ button:focus:not(:focus-visible){outline:none}
   .hobby-media-row{grid-template-columns:96px minmax(0,1fr)}
   .rich-editor-area{min-height:150px}
 }
+
+/* ---------- 隐藏系统光标，只保留自绘圆环 ---------- */
+html.custom-cursor,
+html.custom-cursor *{cursor:none}
+
+html.custom-cursor input,html.custom-cursor textarea,html.custom-cursor select,html.custom-cursor [contenteditable="true"]{cursor:text}

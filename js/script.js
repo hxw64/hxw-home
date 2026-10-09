@@ -2966,6 +2966,7 @@
         started = true;
         rx = x;
         ry = y;
+        document.documentElement.classList.add('custom-cursor');
         document.documentElement.classList.add('cursor-on');
       }
     });
@@ -2981,7 +2982,7 @@
     document.addEventListener('pointerover', function (e) {
       var node = e.target;
       var textField = node && node.closest ? node.closest('input, textarea, [contenteditable="true"]') : null;
-      var hit = node && node.closest ? node.closest('a, button, .chip, .avatar, .card, [role="option"]') : null;
+      var hit = node && node.closest ? node.closest('a, button, input, textarea, select, label, summary, [role="option"], [role="radio"], [role="button"]') : null;
       ring.classList.toggle('is-hover', !!hit);
       document.documentElement.classList.toggle('cursor-text', !!textField);
     });
