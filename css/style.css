@@ -1513,3 +1513,18 @@ button:focus:not(:focus-visible){outline:none}
   .msg-list{grid-template-columns:repeat(5,minmax(0,1fr))}
   .msg-preview .msg-item{width:calc((100% - 48px) / 5)}
 }
+
+/* ---------- 贴纸参与正文排版：文字环绕并可出现在贴纸上方 ---------- */
+.message-like{
+  position:relative;
+  right:auto;
+  bottom:auto;
+  float:right;
+  margin:7px 0 6px 8px;
+  shape-outside:circle(50%);
+  shape-margin:4px;
+}
+.msg-item.has-sticker .msg-body{padding-right:0}
+@media (max-width:640px){
+  .message-like{right:auto;bottom:auto;margin:6px 0 5px 6px}
+}

@@ -1233,8 +1233,8 @@
         likeButton.appendChild(likeCount);
 
         li.appendChild(head);
-        li.appendChild(body);
         li.appendChild(likeButton);
+        li.appendChild(body);
         ul.appendChild(li);
         likeButtons.push(likeButton);
       }
