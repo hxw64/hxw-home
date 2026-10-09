@@ -795,7 +795,7 @@ html.cursor-on .cursor-ring{opacity:1}
 footer{padding-bottom:34px}
 /* ---------- 只显示圆环，不显示系统箭头 ---------- */
 /* ---------- 文字输入时隐藏圆环 ---------- */
-html.cursor-text .cursor-ring{opacity:0}
+html.cursor-text .cursor-ring{opacity:1;width:20px;height:20px;margin:-10px 0 0 -10px;border-color:rgba(255,107,87,.6)}
 
 /* ---------- 隐私备注 ---------- */
 .privacy-note{margin:14px 0 0;color:var(--faint);font-size:13px;line-height:1.7}
