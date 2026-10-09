@@ -3157,10 +3157,12 @@
 
     document.addEventListener('pointerover', function (e) {
       var node = e.target;
-      var textField = node && node.closest ? node.closest('input, textarea, [contenteditable="true"]') : null;
+      var textField = node && node.closest ? node.closest('input, textarea, select, [contenteditable="true"]') : null;
+      var systemTarget = node && node.closest ? node.closest('#adminOpen, #hobbyManage, #projectManage') : null;
       var hit = node && node.closest ? node.closest('a, button, input, textarea, select, label, summary, [role="option"], [role="radio"], [role="button"]') : null;
-      ring.classList.toggle('is-hover', !!hit);
+      ring.classList.toggle('is-hover', !!hit && !systemTarget);
       document.documentElement.classList.toggle('cursor-text', !!textField);
+      document.documentElement.classList.toggle('cursor-system', !!systemTarget);
     });
   }
   var initial = detectLang();
