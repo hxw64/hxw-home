@@ -1262,7 +1262,7 @@ html.custom-cursor input,html.custom-cursor textarea,html.custom-cursor select,h
 .message-sticker[data-sticker="flower"]{transform:rotate(-6deg)}
 .message-sticker[data-sticker="star"]{transform:rotate(5deg)}
 .message-sticker[data-sticker="cloud"]{transform:rotate(-2deg)}
-.message-sticker[data-sticker="paw"]{transform:rotate(7deg)}
+.message-sticker[data-sticker="paw"]{transform:none}
 .message-sticker[data-sticker="coffee"]{transform:rotate(-4deg)}
 .message-sticker[data-sticker="rocket"]{transform:rotate(5deg)}
 .message-sticker[data-sticker="code"]{transform:rotate(0deg)}
@@ -1296,13 +1296,14 @@ html.custom-cursor input,html.custom-cursor textarea,html.custom-cursor select,h
 /* ---------- 留言预览 ---------- */
 .msg-preview{margin-top:16px}
 .preview-title{margin:0 0 8px;color:var(--muted);font-size:14px;font-weight:600}
-.msg-preview .msg-item{max-width:none;margin:0}
+.msg-preview .msg-item{width:100%;max-width:320px;min-height:84px;margin:0}
 
 @media (max-width:640px){
   .message-sticker{width:40px;height:40px;right:10px;bottom:8px}
   .msg-item.has-sticker .msg-body{padding-right:44px}
   .sticker-option{width:48px;height:48px}
   .sticker-option svg{width:34px;height:34px}
+  .msg-preview .msg-item{max-width:88%}
 }
 
 /* ---------- 留言板五色主题：珊瑚 / 奶油 / 米白 / 青绿 / 深海 ---------- */
