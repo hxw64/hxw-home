@@ -1149,3 +1149,68 @@ button:focus:not(:focus-visible){outline:none}
 .editor-secondary-btn:hover:not(:disabled){border-color:var(--coral);color:var(--coral)}
 .editor-secondary-btn:disabled{opacity:.42;cursor:default}
 @media (max-width:520px){.editor-action-start{display:grid;grid-template-columns:repeat(2,1fr)}.editor-action-start .editor-delete-btn{grid-column:1/-1}}
+/* ---------- 兴趣与特长：详情与后台 ---------- */
+.skills-head{margin-bottom:12px}
+.skills-head h2{margin:0}
+.skills-head + .sub-title{margin-top:0}
+.hobby-list li{padding:0;background:transparent}
+.hobby-retry-item{flex-basis:100%;margin-top:2px}
+.hobby-tag{
+  display:block;padding:6px 16px;border:none;border-radius:999px;background:var(--tag-bg);color:var(--tag-text);
+  font:inherit;font-size:16px;font-weight:500;line-height:1.8;cursor:pointer;
+  transition:background-color 180ms ease,color 180ms ease,transform 180ms ease,box-shadow 180ms ease;
+}
+.hobby-tag:hover,.hobby-tag:focus-visible{background:rgba(255,107,87,.14);color:var(--coral-dark);transform:translateY(-1px);outline:none;box-shadow:0 0 0 3px rgba(255,107,87,.12)}
+.hobby-tag:active{transform:scale(.98)}
+.hobby-detail-dialog{max-width:900px;padding:26px 28px}
+.hobby-detail-head{padding-right:34px}
+.hobby-detail-head h2{margin:4px 0 0;font-size:30px;line-height:1.25}
+.hobby-detail-subtitle{margin:8px 0 0;color:var(--muted);line-height:1.7}
+.hobby-media-section,.hobby-text-section{margin-top:24px;padding-top:20px;border-top:1px solid var(--border)}
+.hobby-section-title{margin:0 0 12px;font-size:17px;color:var(--text)}
+.hobby-media-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;list-style:none;margin:0;padding:0}
+.hobby-media-item{min-width:0}
+.hobby-media-image{
+  position:relative;display:block;width:100%;aspect-ratio:4/3;padding:0;overflow:hidden;border:1px solid var(--border);
+  border-radius:12px;background:var(--tag-bg);cursor:zoom-in;
+}
+.hobby-media-image img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 220ms ease,transform 260ms ease}
+.hobby-media-image img.is-loaded{opacity:1}
+.hobby-media-image:hover img{transform:scale(1.025)}
+.hobby-media-video{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;border:1px solid var(--border);border-radius:12px;background:#111}
+.hobby-media-video video{display:block;width:100%;height:100%;background:#111}
+.hobby-media-empty,.hobby-content-empty{margin:0;padding:18px;border:1px dashed var(--border);border-radius:12px;color:var(--faint);text-align:center}
+.hobby-rich-content{color:var(--text);font-size:16px;line-height:1.85;overflow-wrap:anywhere}
+.hobby-rich-content p,.hobby-rich-content div{margin:0 0 12px}
+.hobby-rich-content p:last-child,.hobby-rich-content div:last-child{margin-bottom:0}
+.hobby-rich-content ul,.hobby-rich-content ol{margin:8px 0 14px;padding-left:24px}
+.hobby-rich-content li+li{margin-top:5px}
+.hobby-rich-content a{color:var(--coral-dark);text-decoration:underline;text-underline-offset:3px}
+.hobby-editor-dialog{max-width:1040px}
+.hobby-upload-actions{display:flex;flex-wrap:wrap;gap:7px;justify-content:flex-end}
+.rich-editor-field{gap:7px}
+.rich-toolbar{display:flex;flex-wrap:wrap;gap:5px;padding:6px;border:1px solid var(--border);border-radius:10px 10px 0 0;background:var(--btn-ghost-bg)}
+.rich-toolbar button{min-width:31px;height:29px;padding:0 8px;border:1px solid transparent;border-radius:7px;background:transparent;color:var(--muted);font:inherit;font-size:12px;font-weight:700;cursor:pointer}
+.rich-toolbar button:hover,.rich-toolbar button:focus-visible{border-color:var(--border);background:var(--card);color:var(--coral);outline:none}
+.rich-editor-area{min-height:190px;padding:12px 13px;border:1px solid var(--border);border-top:none;border-radius:0 0 10px 10px;background:var(--input-bg);color:var(--text);font:inherit;font-size:14px;line-height:1.75;overflow-y:auto;outline:none}
+.rich-editor-area:focus{border-color:var(--coral);box-shadow:0 0 0 3px rgba(255,107,87,.15)}
+.rich-editor-area:empty::before{content:attr(data-placeholder);color:var(--faint);pointer-events:none}
+.editor-upload-progress{display:grid;grid-template-columns:minmax(0,1fr) 150px;align-items:center;gap:10px;margin-top:12px;color:var(--muted);font-size:12px}
+.editor-upload-progress[hidden]{display:none}
+.editor-upload-progress progress{width:100%;height:8px;accent-color:var(--coral)}
+.hobby-media-row{grid-template-columns:132px minmax(0,1fr)}
+.hobby-media-thumb{position:relative;aspect-ratio:4/3;overflow:hidden;border-radius:9px;background:#111}
+.hobby-media-thumb img,.hobby-media-thumb video{display:block;width:100%;height:100%;object-fit:cover}
+.hobby-media-type{display:inline-flex;align-items:center;padding:2px 7px;border-radius:999px;background:var(--tag-bg);color:var(--tag-text);font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+.hobby-media-name{overflow:hidden;color:var(--muted);font-size:12px;text-overflow:ellipsis;white-space:nowrap}
+@media (max-width:760px){
+  .hobby-detail-dialog{padding:22px 18px}
+  .hobby-media-grid{grid-template-columns:1fr}
+  .hobby-upload-actions{justify-content:flex-start}
+}
+@media (max-width:520px){
+  .hobby-detail-head h2{font-size:25px}
+  .editor-upload-progress{grid-template-columns:1fr}
+  .hobby-media-row{grid-template-columns:96px minmax(0,1fr)}
+  .rich-editor-area{min-height:150px}
+}

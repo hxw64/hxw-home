@@ -72,13 +72,16 @@
     </section>
 
     <section class="card skills" id="skills">
-      <h2 data-i18n="skillsTitle">经历与技能</h2>
+      <div class="skills-head projects-head">
+        <h2 data-i18n="skillsTitle">经历与技能</h2>
+        <button id="hobbyManage" class="admin-edit-btn" type="button" data-admin-only data-i18n="hobbyManage" hidden>管理爱好</button>
+      </div>
       <h3 class="sub-title" data-i18n="eduLabel">教育背景</h3>
       <p class="sub-text" data-i18n="eduText">天津大学 · 智能医学工程 · 本科在读</p>
       <h3 class="sub-title" data-i18n="interestLabel">兴趣与特长</h3>
-      <ul class="tag-list">
-        <li data-i18n="tagErhu">二胡</li>
-        <li data-i18n="tagSeal">篆刻</li>
+      <ul id="hobbyList" class="tag-list hobby-list" aria-label="兴趣与特长" data-i18n-aria="interestLabel">
+        <li><button class="hobby-tag" type="button" data-hobby-id="1f8d0d48-7f0b-4a5c-9a3d-000000000001" data-i18n="tagErhu">二胡</button></li>
+        <li><button class="hobby-tag" type="button" data-hobby-id="1f8d0d48-7f0b-4a5c-9a3d-000000000002" data-i18n="tagSeal">篆刻</button></li>
       </ul>
     </section>
 
@@ -342,6 +345,109 @@
                 <button id="projectDelete" class="editor-delete-btn" type="button" data-i18n="projectDelete">删除项目</button>
               </div>
               <button id="projectSave" class="btn btn-primary" type="submit" data-i18n="projectSave">保存项目</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div id="hobbyDetailModal" class="feedback-modal hobby-detail-modal" hidden>
+    <div class="feedback-backdrop" data-hobby-detail-close="1"></div>
+    <div class="feedback-dialog hobby-detail-dialog" role="dialog" aria-modal="true" aria-labelledby="hobbyDetailTitle">
+      <button id="hobbyDetailClose" class="feedback-close" type="button" aria-label="关闭" data-i18n-aria="feedbackClose">×</button>
+      <div id="hobbyDetailContent"></div>
+    </div>
+  </div>
+  <div id="hobbyEditorModal" class="feedback-modal project-editor-modal" hidden>
+    <div class="feedback-backdrop" data-hobby-editor-close="1"></div>
+    <div class="feedback-dialog project-editor-dialog hobby-editor-dialog" role="dialog" aria-modal="true" aria-labelledby="hobbyEditorTitle">
+      <button id="hobbyEditorClose" class="feedback-close" type="button" aria-label="关闭" data-i18n-aria="feedbackClose">×</button>
+      <div class="project-editor-head">
+        <div>
+          <p class="editor-eyebrow" data-i18n="hobbyManage">爱好管理</p>
+          <h2 id="hobbyEditorTitle" data-i18n="hobbyEditorTitle">编辑爱好</h2>
+        </div>
+        <button id="hobbyNew" class="btn btn-primary" type="button" data-i18n="hobbyNew">新增爱好</button>
+      </div>
+      <div class="project-editor-layout">
+        <aside class="project-editor-sidebar">
+          <p class="editor-label" data-i18n="hobbyListLabel">爱好列表</p>
+          <ul id="hobbyEditorList" class="project-editor-list"></ul>
+        </aside>
+        <form id="hobbyEditorForm" class="project-editor-form" novalidate>
+          <div id="hobbyEditorEmpty" class="editor-empty" data-i18n="hobbySelect">选择左侧爱好开始编辑</div>
+          <div id="hobbyEditorFields" hidden>
+            <div class="editor-meta-grid">
+              <label class="switch-field">
+                <input id="hobbyPublished" type="checkbox" />
+                <span class="switch" aria-hidden="true"></span>
+                <span data-i18n="hobbyPublishedLabel">发布到主页</span>
+              </label>
+              <label class="editor-field editor-sort-field">
+                <span data-i18n="hobbySortLabel">排序</span>
+                <input id="hobbySortOrder" type="number" min="0" max="999" step="1" />
+              </label>
+            </div>
+            <div class="editor-language-grid">
+              <fieldset class="editor-language">
+                <legend data-i18n="projectContentZh">中文内容</legend>
+                <label class="editor-field"><span data-i18n="hobbyTitle">标题</span><input id="hobbyTitleZh" type="text" maxlength="100" /></label>
+                <div class="editor-field rich-editor-field" data-rich-editor-wrap="zh">
+                  <span data-i18n="hobbyContent">正文</span>
+                  <div class="rich-toolbar" role="toolbar" aria-label="富文本格式" data-i18n-aria="hobbyRichToolbar">
+                    <button type="button" data-rich-command="formatBlock" data-rich-value="p" data-i18n="hobbyRichParagraph">正文</button>
+                    <button type="button" data-rich-command="bold" data-i18n-aria="hobbyRichBold" aria-label="加粗"><strong>B</strong></button>
+                    <button type="button" data-rich-command="italic" data-i18n-aria="hobbyRichItalic" aria-label="斜体"><em>I</em></button>
+                    <button type="button" data-rich-command="insertUnorderedList" data-i18n-aria="hobbyRichBullet" aria-label="无序列表">•</button>
+                    <button type="button" data-rich-command="insertOrderedList" data-i18n-aria="hobbyRichNumber" aria-label="有序列表">1.</button>
+                    <button type="button" data-rich-command="createLink" data-i18n="hobbyRichLink">链接</button>
+                  </div>
+                  <div id="hobbyContentZh" class="rich-editor-area" contenteditable="true" role="textbox" aria-multiline="true"></div>
+                </div>
+              </fieldset>
+              <fieldset class="editor-language">
+                <legend data-i18n="projectContentEn">English content</legend>
+                <label class="editor-field"><span data-i18n="hobbyTitle">Title</span><input id="hobbyTitleEn" type="text" maxlength="100" /></label>
+                <div class="editor-field rich-editor-field" data-rich-editor-wrap="en">
+                  <span data-i18n="hobbyContent">Content</span>
+                  <div class="rich-toolbar" role="toolbar" aria-label="Rich text formatting" data-i18n-aria="hobbyRichToolbar">
+                    <button type="button" data-rich-command="formatBlock" data-rich-value="p" data-i18n="hobbyRichParagraph">Paragraph</button>
+                    <button type="button" data-rich-command="bold" data-i18n-aria="hobbyRichBold" aria-label="Bold"><strong>B</strong></button>
+                    <button type="button" data-rich-command="italic" data-i18n-aria="hobbyRichItalic" aria-label="Italic"><em>I</em></button>
+                    <button type="button" data-rich-command="insertUnorderedList" data-i18n-aria="hobbyRichBullet" aria-label="Bulleted list">•</button>
+                    <button type="button" data-rich-command="insertOrderedList" data-i18n-aria="hobbyRichNumber" aria-label="Numbered list">1.</button>
+                    <button type="button" data-rich-command="createLink" data-i18n="hobbyRichLink">Link</button>
+                  </div>
+                  <div id="hobbyContentEn" class="rich-editor-area" contenteditable="true" role="textbox" aria-multiline="true"></div>
+                </div>
+              </fieldset>
+            </div>
+            <section class="project-image-editor hobby-media-editor">
+              <div class="editor-subhead">
+                <div>
+                  <span data-i18n="hobbyMedia">照片与视频</span>
+                  <small data-i18n="hobbyMediaHint">最多 20 张图片、3 个视频；图片 8 MB，视频 50 MB</small>
+                </div>
+                <div class="hobby-upload-actions">
+                  <label id="hobbyAddImageLabel" class="editor-upload-btn" for="hobbyImageInput" tabindex="0" data-i18n="hobbyAddImages">添加图片</label>
+                  <input id="hobbyImageInput" type="file" accept="image/jpeg,image/png,image/webp" multiple hidden />
+                  <label id="hobbyAddVideoLabel" class="editor-upload-btn" for="hobbyVideoInput" tabindex="0" data-i18n="hobbyAddVideos">添加视频</label>
+                  <input id="hobbyVideoInput" type="file" accept="video/mp4,video/webm" multiple hidden />
+                </div>
+              </div>
+              <div id="hobbyUploadProgress" class="editor-upload-progress" hidden>
+                <span id="hobbyUploadStatus"></span>
+                <progress id="hobbyUploadBar" max="100" value="0"></progress>
+              </div>
+              <div id="hobbyMediaList" class="project-images-list hobby-media-list"></div>
+            </section>
+            <div class="editor-actions">
+              <div class="editor-action-start">
+                <button id="hobbyMoveUp" class="editor-secondary-btn" type="button" data-i18n="projectMoveUp">上移</button>
+                <button id="hobbyMoveDown" class="editor-secondary-btn" type="button" data-i18n="projectMoveDown">下移</button>
+                <button id="hobbyDelete" class="editor-delete-btn" type="button" data-i18n="hobbyDelete">删除爱好</button>
+              </div>
+              <button id="hobbySave" class="btn btn-primary" type="submit" data-i18n="hobbySave">保存爱好</button>
             </div>
           </div>
         </form>

@@ -125,7 +125,63 @@
       projectUntitled: '未命名项目',
       projectNoProjects: '还没有项目',
       projectAltZh: '中文替代文字',
-      projectAltEn: '英文替代文字',      contactTitle: '联系我',
+      projectAltEn: '英文替代文字',
+      hobbyManage: '管理爱好',
+      hobbyEditorTitle: '编辑爱好',
+      hobbyNew: '新增爱好',
+      hobbyListLabel: '爱好列表',
+      hobbySelect: '选择左侧爱好开始编辑',
+      hobbyPublishedLabel: '发布到主页',
+      hobbySortLabel: '排序',
+      hobbyTitle: '标题',
+      hobbyContent: '正文',
+      hobbyRichToolbar: '富文本格式',
+      hobbyRichParagraph: '正文',
+      hobbyRichBold: '加粗',
+      hobbyRichItalic: '斜体',
+      hobbyRichBullet: '无序列表',
+      hobbyRichNumber: '有序列表',
+      hobbyRichLink: '链接',
+      hobbyLinkPrompt: '请输入链接地址（https:// 或 mailto:）',
+      hobbyMedia: '照片与视频',
+      hobbyMediaHint: '最多 20 张图片、3 个视频；图片 8 MB，视频 50 MB',
+      hobbyAddImages: '添加图片',
+      hobbyAddVideos: '添加视频',
+      hobbyDelete: '删除爱好',
+      hobbySave: '保存爱好',
+      hobbyDetailMedia: '照片与视频',
+      hobbyDetailText: '关于这个爱好',
+      hobbyNoMedia: '还没有照片或视频',
+      hobbyContentEmpty: '文字内容正在整理中',
+      hobbyEmpty: '爱好内容正在整理中',
+      hobbyLoadError: '爱好加载失败',
+      hobbyRetry: '重试',
+      hobbyEditorError: '爱好管理加载失败',
+      hobbySaved: '爱好已保存',
+      hobbySaveError: '保存失败，请重试',
+      hobbyDeleted: '爱好已删除',
+      hobbyDeleteConfirm: '确定删除这个爱好吗？其中的照片和视频也会一并删除。',
+      hobbyDeleteMediaConfirm: '确定删除这个媒体文件吗？',
+      hobbyTitleRequired: '请填写中文标题',
+      hobbyNeedSave: '请先保存爱好再上传媒体',
+      hobbyImageLimit: '每个爱好最多 20 张图片',
+      hobbyVideoLimit: '每个爱好最多 3 个视频',
+      hobbyImageType: '图片仅支持 JPEG、PNG 或 WebP',
+      hobbyVideoType: '视频仅支持 MP4 或 WebM',
+      hobbyImageTooLarge: '单张图片不能超过 8 MB',
+      hobbyVideoTooLarge: '单个视频不能超过 50 MB',
+      hobbyUploading: '媒体上传中…',
+      hobbyUploaded: '媒体已上传',
+      hobbyUploadError: '媒体上传失败',
+      hobbyMediaDeleted: '媒体已删除',
+      hobbyMediaSaved: '媒体顺序已保存',
+      hobbyDraft: '草稿',
+      hobbyPublished: '已发布',
+      hobbyUntitled: '未命名爱好',
+      hobbyNoHobbies: '还没有爱好',
+      hobbyImageTypeLabel: '图片',
+      hobbyVideoTypeLabel: '视频',
+      contactTitle: '联系我',
       contactHint: '欢迎联系我',
       emailLabel: '邮箱：',
       sendEmailBtn: '发送邮件',
@@ -148,7 +204,7 @@
       relOther: '其他',
       adminOpen: '管理',
       adminTitle: '管理员登录',
-      adminIntro: '登录后可以管理留言和项目内容',
+      adminIntro: '登录后可以管理留言、项目和爱好内容',
       adminEmail: '邮箱',
       adminPass: '密码',
       adminLogin: '登录',
@@ -296,7 +352,63 @@
       projectUntitled: 'Untitled project',
       projectNoProjects: 'No projects yet',
       projectAltZh: 'Chinese alt text',
-      projectAltEn: 'English alt text',      contactTitle: 'Contact Me',
+      projectAltEn: 'English alt text',
+      hobbyManage: 'Manage Hobbies',
+      hobbyEditorTitle: 'Edit Hobby',
+      hobbyNew: 'New Hobby',
+      hobbyListLabel: 'Hobbies',
+      hobbySelect: 'Select a hobby to edit',
+      hobbyPublishedLabel: 'Published',
+      hobbySortLabel: 'Sort order',
+      hobbyTitle: 'Title',
+      hobbyContent: 'Content',
+      hobbyRichToolbar: 'Rich text formatting',
+      hobbyRichParagraph: 'Paragraph',
+      hobbyRichBold: 'Bold',
+      hobbyRichItalic: 'Italic',
+      hobbyRichBullet: 'Bulleted list',
+      hobbyRichNumber: 'Numbered list',
+      hobbyRichLink: 'Link',
+      hobbyLinkPrompt: 'Enter a link (https:// or mailto:)',
+      hobbyMedia: 'Photos and videos',
+      hobbyMediaHint: 'Up to 20 images and 3 videos; images 8 MB, videos 50 MB',
+      hobbyAddImages: 'Add images',
+      hobbyAddVideos: 'Add videos',
+      hobbyDelete: 'Delete hobby',
+      hobbySave: 'Save hobby',
+      hobbyDetailMedia: 'Photos and videos',
+      hobbyDetailText: 'About this hobby',
+      hobbyNoMedia: 'No photos or videos yet',
+      hobbyContentEmpty: 'Written content is being prepared',
+      hobbyEmpty: 'Hobby content is being prepared',
+      hobbyLoadError: 'Could not load hobbies',
+      hobbyRetry: 'Retry',
+      hobbyEditorError: 'Could not load hobby manager',
+      hobbySaved: 'Hobby saved',
+      hobbySaveError: 'Could not save hobby',
+      hobbyDeleted: 'Hobby deleted',
+      hobbyDeleteConfirm: 'Delete this hobby and all of its media?',
+      hobbyDeleteMediaConfirm: 'Delete this media file?',
+      hobbyTitleRequired: 'Chinese title is required',
+      hobbyNeedSave: 'Save the hobby before uploading media',
+      hobbyImageLimit: 'Up to 20 images per hobby',
+      hobbyVideoLimit: 'Up to 3 videos per hobby',
+      hobbyImageType: 'Only JPEG, PNG, or WebP images are supported',
+      hobbyVideoType: 'Only MP4 or WebM videos are supported',
+      hobbyImageTooLarge: 'Each image must be 8 MB or less',
+      hobbyVideoTooLarge: 'Each video must be 50 MB or less',
+      hobbyUploading: 'Uploading media...',
+      hobbyUploaded: 'Media uploaded',
+      hobbyUploadError: 'Could not upload media',
+      hobbyMediaDeleted: 'Media deleted',
+      hobbyMediaSaved: 'Media order saved',
+      hobbyDraft: 'Draft',
+      hobbyPublished: 'Published',
+      hobbyUntitled: 'Untitled hobby',
+      hobbyNoHobbies: 'No hobbies yet',
+      hobbyImageTypeLabel: 'Image',
+      hobbyVideoTypeLabel: 'Video',
+      contactTitle: 'Contact Me',
       contactHint: 'Feel free to contact me',
       emailLabel: 'Email: ',
       sendEmailBtn: 'Send Email',
@@ -319,7 +431,7 @@
       relOther: 'Other',
       adminOpen: 'Admin',
       adminTitle: 'Admin sign in',
-      adminIntro: 'Sign in to manage messages and projects',
+      adminIntro: 'Sign in to manage messages, projects, and hobbies',
       adminEmail: 'Email',
       adminPass: 'Password',
       adminLogin: 'Sign in',
@@ -407,6 +519,21 @@
   var editorUploading = false;
   var editorReturnFocus = null;
 
+  var FALLBACK_HOBBIES = [
+    { id: '1f8d0d48-7f0b-4a5c-9a3d-000000000001', sort_order: 1, is_published: true, title_zh: '二胡', title_en: 'Erhu', content_zh: '', content_en: '', hobby_media: [] },
+    { id: '1f8d0d48-7f0b-4a5c-9a3d-000000000002', sort_order: 2, is_published: true, title_zh: '篆刻', title_en: 'Seal Carving', content_zh: '', content_en: '', hobby_media: [] }
+  ];
+  var publicHobbies = [];
+  var adminHobbies = [];
+  var hobbiesReady = false;
+  var detailHobby = null;
+  var detailHobbyReturnFocus = null;
+  var editorHobbyId = null;
+  var editorHobbyMedia = [];
+  var editorHobbyUploading = false;
+  var hobbyEditorReturnFocus = null;
+  var lightboxReturnFocus = null;
+
   function updateAdminUI() {
     var bar = document.getElementById('adminBar');
     var adminNodes = document.querySelectorAll('[data-admin-only]');
@@ -440,6 +567,7 @@
     adminToken = null;
     try { sessionStorage.removeItem(ADMIN_KEY); } catch (e) {}
     closeProjectEditor();
+    if (typeof closeHobbyEditor === 'function') { closeHobbyEditor(); }
     updateAdminUI();
     renderProjects();
     return renderBoard();
@@ -892,7 +1020,7 @@
     return value;
   }
   function syncModalLock() {
-    var ids = ['feedbackModal', 'adminModal', 'projectDetailModal', 'projectEditorModal'];
+    var ids = ['feedbackModal', 'adminModal', 'projectDetailModal', 'projectEditorModal', 'hobbyDetailModal', 'hobbyEditorModal'];
     var open = false;
     for (var i = 0; i < ids.length; i++) {
       var node = document.getElementById(ids[i]);
@@ -1062,10 +1190,11 @@
     syncModalLock();
     if (detailReturnFocus && detailReturnFocus.focus) { detailReturnFocus.focus(); }
   }
-  function openImageLightbox(src, alt) {
+  function openImageLightbox(src, alt, trigger) {
     var box = document.getElementById('imageLightbox');
     var img = document.getElementById('imageLightboxImg');
     if (!box || !img || !src) { return; }
+    lightboxReturnFocus = trigger || document.activeElement;
     img.src = src;
     img.alt = alt || '';
     box.removeAttribute('hidden');
@@ -1080,8 +1209,12 @@
     box.setAttribute('hidden', '');
     if (img) { img.removeAttribute('src'); img.alt = ''; }
     syncModalLock();
-    var detailClose = document.getElementById('projectDetailClose');
-    if (detailClose && detailProject) { detailClose.focus(); }
+    if (lightboxReturnFocus && lightboxReturnFocus.focus) { lightboxReturnFocus.focus(); }
+    else {
+      var detailClose = document.getElementById('projectDetailClose');
+      if (detailClose && detailProject) { detailClose.focus(); }
+    }
+    lightboxReturnFocus = null;
   }
   function initProjectDetail() {
     var list = document.getElementById('projectList');
@@ -1444,6 +1577,592 @@
     initProjectDetail();
     return loadPublicProjects();
   }
+  function hobbyField(hobby, base) {
+    var preferred = hobby[base + '_' + current];
+    var fallback = hobby[base + '_' + (current === 'zh' ? 'en' : 'zh')];
+    return preferred || fallback || '';
+  }
+  function hobbyMediaItems(hobby) {
+    var list = hobby && Array.isArray(hobby.hobby_media) ? hobby.hobby_media.slice() : [];
+    list.sort(function (a, b) { return (Number(a && a.sort_order) || 0) - (Number(b && b.sort_order) || 0); });
+    return list;
+  }
+  function hobbyMediaUrl(path) {
+    var raw = String(path || '').trim();
+    if (!raw) { return ''; }
+    if (/^https?:\/\//i.test(raw)) { return raw; }
+    var safePath = raw.replace(/^\/+/, '').split('/').map(encodeURIComponent).join('/');
+    return SUPABASE_URL + '/storage/v1/object/public/hobby-media/' + safePath;
+  }
+  function hobbyMediaAlt(media, hobby) {
+    var fallback = hobbyField(hobby, 'title') || t('hobbyUntitled');
+    if (!media) { return fallback; }
+    return media['alt_' + current] || media['alt_' + (current === 'zh' ? 'en' : 'zh')] || fallback;
+  }
+  function loadPublicHobbies() {
+    var list = document.getElementById('hobbyList');
+    if (!list) { return Promise.resolve(); }
+    return apiFetch('hobbies?select=*,hobby_media(*)&is_published=eq.true&order=sort_order.asc').then(function (rows) {
+      publicHobbies = Array.isArray(rows) ? rows : [];
+      hobbiesReady = true;
+      renderHobbyTags();
+    }).catch(function () {
+      publicHobbies = FALLBACK_HOBBIES.slice();
+      hobbiesReady = true;
+      renderHobbyTags();
+      var retry = document.createElement('button');
+      retry.type = 'button'; retry.className = 'project-retry'; retry.textContent = t('hobbyRetry');
+      retry.addEventListener('click', function () { loadPublicHobbies(); });
+      var item = document.createElement('li'); item.className = 'hobby-retry-item'; item.appendChild(retry);
+      list.appendChild(item);
+    });
+  }
+  function renderHobbyTags() {
+    var list = document.getElementById('hobbyList');
+    if (!list || !hobbiesReady) { return; }
+    if (!publicHobbies.length) {
+      list.innerHTML = '<li class="hobby-empty-item">' + escapeHtml(t('hobbyEmpty')) + '</li>';
+      return;
+    }
+    var html = '';
+    for (var i = 0; i < publicHobbies.length; i++) {
+      var hobby = publicHobbies[i];
+      if (!hobby || !hobby.is_published) { continue; }
+      var id = String(hobby.id || '');
+      var title = hobbyField(hobby, 'title') || t('hobbyUntitled');
+      html += '<li><button class="hobby-tag" type="button" data-hobby-id="' + escapeAttr(id) + '">' + escapeHtml(title) + '</button></li>';
+    }
+    list.innerHTML = html || '<li class="hobby-empty-item">' + escapeHtml(t('hobbyEmpty')) + '</li>';
+  }
+  function getPublicHobby(id) {
+    for (var i = 0; i < publicHobbies.length; i++) {
+      if (String(publicHobbies[i].id) === String(id)) { return publicHobbies[i]; }
+    }
+    return null;
+  }
+  function renderHobbyDetail(hobby) {
+    if (!hobby) { return; }
+    detailHobby = hobby;
+    var title = hobbyField(hobby, 'title') || t('hobbyUntitled');
+    var contentHtml = sanitizeRichHtml(hobbyField(hobby, 'content'));
+    var media = hobbyMediaItems(hobby);
+    var mediaHtml = '';
+    for (var i = 0; i < media.length; i++) {
+      var item = media[i] || {};
+      var src = hobbyMediaUrl(item.storage_path);
+      if (!src) { continue; }
+      var alt = hobbyMediaAlt(item, hobby);
+      if (item.media_type === 'video') {
+        mediaHtml += '<li class="hobby-media-item hobby-media-video"><video controls playsinline preload="metadata" src="' + escapeAttr(src) + '" aria-label="' + escapeAttr(alt) + '"></video></li>';
+      } else {
+        mediaHtml += '<li class="hobby-media-item"><button class="hobby-media-image" type="button" data-hobby-lightbox-src="' + escapeAttr(src) + '" data-hobby-lightbox-alt="' + escapeAttr(alt) + '">' +
+          '<img class="js-project-image" src="' + escapeAttr(src) + '" alt="' + escapeAttr(alt) + '" loading="lazy" /></button></li>';
+      }
+    }
+    var content = document.getElementById('hobbyDetailContent');
+    if (!content) { return; }
+    content.innerHTML =
+      '<div class="hobby-detail-head"><p class="project-kicker">' + escapeHtml(t('interestLabel')) + '</p><h2 id="hobbyDetailTitle">' + escapeHtml(title) + '</h2></div>' +
+      '<section class="hobby-media-section"><h3 class="hobby-section-title">' + escapeHtml(t('hobbyDetailMedia')) + '</h3>' +
+        (mediaHtml ? '<ul class="hobby-media-grid">' + mediaHtml + '</ul>' : '<p class="hobby-media-empty">' + escapeHtml(t('hobbyNoMedia')) + '</p>') +
+      '</section>' +
+      '<section class="hobby-text-section"><h3 class="hobby-section-title">' + escapeHtml(t('hobbyDetailText')) + '</h3>' +
+        (contentHtml ? '<div class="hobby-rich-content">' + contentHtml + '</div>' : '<p class="hobby-content-empty">' + escapeHtml(t('hobbyContentEmpty')) + '</p>') +
+      '</section>';
+    bindProjectImages(content);
+    bindHobbyVideos(content);
+  }
+  function bindHobbyVideos(root) {
+    if (!root) { return; }
+    var videos = root.querySelectorAll('video');
+    for (var i = 0; i < videos.length; i++) {
+      (function (video) {
+        video.addEventListener('play', function () {
+          for (var j = 0; j < videos.length; j++) {
+            if (videos[j] !== video && !videos[j].paused) { videos[j].pause(); }
+          }
+        });
+      })(videos[i]);
+    }
+  }
+  function openHobbyDetail(id, trigger) {
+    var hobby = getPublicHobby(id);
+    var modal = document.getElementById('hobbyDetailModal');
+    if (!hobby || !modal) { return; }
+    detailHobbyReturnFocus = trigger || document.activeElement;
+    renderHobbyDetail(hobby);
+    modal.removeAttribute('hidden');
+    syncModalLock();
+    var close = document.getElementById('hobbyDetailClose');
+    if (close) { close.focus(); }
+  }
+  function closeHobbyDetail() {
+    var modal = document.getElementById('hobbyDetailModal');
+    if (!modal || modal.hasAttribute('hidden')) { return; }
+    var videos = modal.querySelectorAll('video');
+    for (var i = 0; i < videos.length; i++) { videos[i].pause(); }
+    modal.setAttribute('hidden', '');
+    detailHobby = null;
+    syncModalLock();
+    if (detailHobbyReturnFocus && detailHobbyReturnFocus.focus) { detailHobbyReturnFocus.focus(); }
+    detailHobbyReturnFocus = null;
+  }
+  function initHobbies() {
+    var list = document.getElementById('hobbyList');
+    var modal = document.getElementById('hobbyDetailModal');
+    var close = document.getElementById('hobbyDetailClose');
+    if (list) {
+      list.addEventListener('click', function (e) {
+        var trigger = e.target.closest ? e.target.closest('[data-hobby-id]') : null;
+        if (trigger) { openHobbyDetail(trigger.getAttribute('data-hobby-id'), trigger); }
+      });
+    }
+    if (modal) {
+      modal.addEventListener('click', function (e) {
+        if (e.target && e.target.getAttribute && e.target.getAttribute('data-hobby-detail-close')) { closeHobbyDetail(); }
+        var image = e.target.closest ? e.target.closest('[data-hobby-lightbox-src]') : null;
+        if (image) { openImageLightbox(image.getAttribute('data-hobby-lightbox-src'), image.getAttribute('data-hobby-lightbox-alt'), image); }
+      });
+    }
+    if (close) { close.addEventListener('click', closeHobbyDetail); }
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && modal && !modal.hasAttribute('hidden')) { closeHobbyDetail(); return; }
+      if (modal && !modal.hasAttribute('hidden')) { trapFocus(modal.querySelector('.hobby-detail-dialog'), e); }
+    });
+    return loadPublicHobbies();
+  }
+  function sanitizeRichHtml(html) {
+    var value = String(html == null ? '' : html);
+    if (!value) { return ''; }
+    var template = document.createElement('template');
+    template.innerHTML = value;
+    var allowed = { P: true, DIV: true, BR: true, STRONG: true, B: true, EM: true, I: true, UL: true, OL: true, LI: true, A: true };
+    var cleanNode = function (node) {
+      if (node.nodeType === 3) { return document.createTextNode(node.nodeValue || ''); }
+      if (node.nodeType !== 1) { return document.createDocumentFragment(); }
+      var tag = node.tagName.toUpperCase();
+      if (!allowed[tag]) {
+        var fragment = document.createDocumentFragment();
+        for (var i = 0; i < node.childNodes.length; i++) { fragment.appendChild(cleanNode(node.childNodes[i])); }
+        return fragment;
+      }
+      var output = document.createElement(tag.toLowerCase());
+      if (tag === 'A') {
+        var href = String(node.getAttribute('href') || '').trim();
+        if (/^(https?:\/\/|mailto:)/i.test(href)) {
+          output.setAttribute('href', href);
+          if (/^https?:\/\//i.test(href)) {
+            output.setAttribute('target', '_blank');
+            output.setAttribute('rel', 'noopener noreferrer');
+          }
+        }
+      }
+      for (var j = 0; j < node.childNodes.length; j++) { output.appendChild(cleanNode(node.childNodes[j])); }
+      return output;
+    };
+    var holder = document.createElement('div');
+    for (var k = 0; k < template.content.childNodes.length; k++) { holder.appendChild(cleanNode(template.content.childNodes[k])); }
+    return holder.innerHTML.trim();
+  }
+  function setRichEditor(id, html) {
+    var editor = document.getElementById(id);
+    if (editor) { editor.innerHTML = sanitizeRichHtml(html); }
+  }
+  function readRichEditor(id) {
+    var editor = document.getElementById(id);
+    if (!editor) { return ''; }
+    var html = sanitizeRichHtml(editor.innerHTML);
+    var probe = document.createElement('div'); probe.innerHTML = html;
+    if (!String(probe.textContent || '').trim() && !probe.querySelector('li,br')) { return ''; }
+    return html;
+  }
+  function runRichCommand(command, value) {
+    if (!command) { return; }
+    try { document.execCommand(command, false, value || null); } catch (e) {}
+  }
+  function initRichTextEditor() {
+    var modal = document.getElementById('hobbyEditorModal');
+    if (!modal || modal.getAttribute('data-rich-bound') === '1') { return; }
+    modal.setAttribute('data-rich-bound', '1');
+    modal.addEventListener('mousedown', function (e) {
+      var button = e.target.closest ? e.target.closest('.rich-toolbar button') : null;
+      if (button) { e.preventDefault(); }
+    });
+    modal.addEventListener('click', function (e) {
+      var button = e.target.closest ? e.target.closest('.rich-toolbar button') : null;
+      if (!button) { return; }
+      var command = button.getAttribute('data-rich-command');
+      var value = button.getAttribute('data-rich-value') || '';
+      if (command === 'createLink') {
+        var entered = window.prompt(t('hobbyLinkPrompt'), 'https://');
+        if (!entered) { return; }
+        entered = entered.trim();
+        if (!/^(https?:\/\/|mailto:)/i.test(entered)) { entered = 'https://' + entered; }
+        value = entered;
+      }
+      runRichCommand(command, value);
+    });
+    modal.addEventListener('paste', function (e) {
+      var area = e.target.closest ? e.target.closest('.rich-editor-area') : null;
+      if (!area) { return; }
+      e.preventDefault();
+      var text = e.clipboardData ? e.clipboardData.getData('text/plain') : '';
+      if (text) { runRichCommand('insertText', text); }
+    });
+  }
+  function cloneHobbyMedia(media) {
+    return {
+      id: media.id, hobby_id: media.hobby_id, media_type: media.media_type === 'video' ? 'video' : 'image',
+      storage_path: media.storage_path || '', alt_zh: media.alt_zh || '', alt_en: media.alt_en || '',
+      sort_order: Number(media.sort_order) || 0, created_at: media.created_at || ''
+    };
+  }
+  function hobbyEditorHobby() {
+    for (var i = 0; i < adminHobbies.length; i++) {
+      if (String(adminHobbies[i].id) === String(editorHobbyId)) { return adminHobbies[i]; }
+    }
+    return null;
+  }
+  function loadAdminHobbies(preferredId) {
+    return apiFetch('hobbies?select=*,hobby_media(*)&order=sort_order.asc,created_at.asc').then(function (rows) {
+      adminHobbies = Array.isArray(rows) ? rows : [];
+      renderHobbyEditorList();
+      var wanted = preferredId || editorHobbyId || (adminHobbies[0] && adminHobbies[0].id);
+      if (wanted) { selectEditorHobby(wanted); }
+      else { startNewEditorHobby(false); }
+      return adminHobbies;
+    });
+  }
+  function renderHobbyEditorList() {
+    var list = document.getElementById('hobbyEditorList');
+    if (!list) { return; }
+    list.innerHTML = '';
+    if (!adminHobbies.length) {
+      var empty = document.createElement('li'); empty.className = 'project-editor-list-empty';
+      empty.textContent = t('hobbyNoHobbies'); list.appendChild(empty); return;
+    }
+    for (var i = 0; i < adminHobbies.length; i++) {
+      var hobby = adminHobbies[i]; var li = document.createElement('li'); var btn = document.createElement('button');
+      btn.type = 'button'; btn.className = 'project-editor-list-item'; btn.setAttribute('data-edit-hobby', String(hobby.id));
+      if (String(hobby.id) === String(editorHobbyId)) { btn.classList.add('is-active'); }
+      var title = document.createElement('strong'); title.textContent = hobbyField(hobby, 'title') || t('hobbyUntitled');
+      var state = document.createElement('small'); state.textContent = hobby.is_published ? t('hobbyPublished') : t('hobbyDraft');
+      btn.appendChild(title); btn.appendChild(state); li.appendChild(btn); list.appendChild(li);
+    }
+  }
+  function setHobbyEditorForm(hobby) {
+    var empty = document.getElementById('hobbyEditorEmpty'); var fields = document.getElementById('hobbyEditorFields');
+    if (empty) { empty.hidden = true; }
+    if (fields) { fields.hidden = false; }
+    document.getElementById('hobbyPublished').checked = hobby ? hobby.is_published !== false : true;
+    document.getElementById('hobbySortOrder').value = hobby ? (Number(hobby.sort_order) || 0) : adminHobbies.length + 1;
+    document.getElementById('hobbyTitleZh').value = hobby ? (hobby.title_zh || '') : '';
+    document.getElementById('hobbyTitleEn').value = hobby ? (hobby.title_en || '') : '';
+    setRichEditor('hobbyContentZh', hobby ? (hobby.content_zh || '') : '');
+    setRichEditor('hobbyContentEn', hobby ? (hobby.content_en || '') : '');
+    updateHobbyEditorMoveButtons();
+  }
+  function startNewEditorHobby(focusTitle) {
+    editorHobbyId = null; editorHobbyMedia = [];
+    setHobbyEditorForm(null); renderHobbyEditorList(); renderHobbyMediaEditor();
+    if (focusTitle) { var input = document.getElementById('hobbyTitleZh'); if (input) { input.focus(); } }
+  }
+  function selectEditorHobby(id) {
+    var hobby = null;
+    for (var i = 0; i < adminHobbies.length; i++) { if (String(adminHobbies[i].id) === String(id)) { hobby = adminHobbies[i]; break; } }
+    if (!hobby) { return; }
+    editorHobbyId = hobby.id;
+    editorHobbyMedia = [];
+    var media = hobbyMediaItems(hobby);
+    for (var j = 0; j < media.length; j++) { editorHobbyMedia.push(cloneHobbyMedia(media[j])); }
+    setHobbyEditorForm(hobby); renderHobbyEditorList(); renderHobbyMediaEditor();
+  }
+  function updateHobbyEditorMoveButtons() {
+    var index = -1;
+    for (var i = 0; i < adminHobbies.length; i++) { if (String(adminHobbies[i].id) === String(editorHobbyId)) { index = i; break; } }
+    var up = document.getElementById('hobbyMoveUp'); var down = document.getElementById('hobbyMoveDown');
+    if (up) { up.disabled = index <= 0; }
+    if (down) { down.disabled = index < 0 || index >= adminHobbies.length - 1; }
+  }
+  function saveEditorHobby() {
+    if (!adminToken || !editorHobbyId && document.getElementById('hobbyEditorFields').hidden) { return Promise.resolve(); }
+    var titleZh = document.getElementById('hobbyTitleZh').value.trim();
+    if (!titleZh) { showToast(t('hobbyTitleRequired'), 'error'); document.getElementById('hobbyTitleZh').focus(); return Promise.resolve(); }
+    var payload = {
+      title_zh: titleZh,
+      title_en: document.getElementById('hobbyTitleEn').value.trim(),
+      content_zh: readRichEditor('hobbyContentZh'),
+      content_en: readRichEditor('hobbyContentEn'),
+      is_published: document.getElementById('hobbyPublished').checked,
+      sort_order: parseInt(document.getElementById('hobbySortOrder').value, 10) || 0
+    };
+    var saveBtn = document.getElementById('hobbySave');
+    if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = t('feedbackSending'); }
+    var request = editorHobbyId
+      ? apiFetch('hobbies?id=eq.' + encodeURIComponent(editorHobbyId), { method: 'PATCH', prefer: 'return=representation', body: payload })
+      : apiFetch('hobbies', { method: 'POST', prefer: 'return=representation', body: payload });
+    return request.then(function (saved) {
+      var row = Array.isArray(saved) ? saved[0] : saved;
+      if (!editorHobbyId && row && row.id) { editorHobbyId = row.id; }
+      return persistHobbyMediaOrder();
+    }).then(function () { return loadAdminHobbies(editorHobbyId); }).then(function () {
+      showToast(t('hobbySaved'), 'success'); return loadPublicHobbies();
+    }).catch(function () {
+      showToast(t('hobbySaveError'), 'error');
+    }).then(function () {
+      if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = t('hobbySave'); }
+      renderHobbyMediaEditor();
+    });
+  }
+  function deleteEditorHobby() {
+    if (!editorHobbyId || !window.confirm(t('hobbyDeleteConfirm'))) { return; }
+    var media = editorHobbyMedia.slice(); var id = editorHobbyId;
+    apiFetch('hobbies?id=eq.' + encodeURIComponent(id), { method: 'DELETE', prefer: 'return=minimal' }).then(function () {
+      var jobs = [];
+      for (var i = 0; i < media.length; i++) {
+        if (media[i].storage_path) { jobs.push(deleteHobbyStorageFile(media[i].storage_path).catch(function () {})); }
+      }
+      return Promise.all(jobs);
+    }).then(function () {
+      editorHobbyId = null; editorHobbyMedia = [];
+      showToast(t('hobbyDeleted'), 'success'); return loadAdminHobbies();
+    }).then(function () { return loadPublicHobbies(); }).catch(function () { showToast(t('hobbySaveError'), 'error'); });
+  }
+  function moveEditorHobby(id, direction) {
+    if (!adminHobbies.length) { return; }
+    var index = -1;
+    for (var i = 0; i < adminHobbies.length; i++) { if (String(adminHobbies[i].id) === String(id)) { index = i; break; } }
+    var target = index + direction;
+    if (index < 0 || target < 0 || target >= adminHobbies.length) { return; }
+    var moved = adminHobbies.slice(); var item = moved.splice(index, 1)[0]; moved.splice(target, 0, item); var jobs = [];
+    for (var j = 0; j < moved.length; j++) {
+      jobs.push(apiFetch('hobbies?id=eq.' + encodeURIComponent(moved[j].id), { method: 'PATCH', prefer: 'return=minimal', body: { sort_order: j + 1 } }));
+    }
+    Promise.all(jobs).then(function () { return loadAdminHobbies(id); }).then(function () { return loadPublicHobbies(); }).catch(function () { showToast(t('hobbySaveError'), 'error'); });
+  }
+  function openHobbyEditor() {
+    if (!adminToken) { return; }
+    var modal = document.getElementById('hobbyEditorModal');
+    if (!modal) { return; }
+    hobbyEditorReturnFocus = document.activeElement;
+    modal.removeAttribute('hidden'); syncModalLock();
+    loadAdminHobbies(editorHobbyId).catch(function () { showToast(t('hobbyEditorError'), 'error'); });
+  }
+  function closeHobbyEditor() {
+    var modal = document.getElementById('hobbyEditorModal');
+    if (!modal || modal.hasAttribute('hidden')) { return; }
+    modal.setAttribute('hidden', ''); editorHobbyId = null; editorHobbyMedia = []; syncModalLock();
+    if (hobbyEditorReturnFocus && hobbyEditorReturnFocus.focus) { hobbyEditorReturnFocus.focus(); }
+    hobbyEditorReturnFocus = null;
+  }
+  function renderHobbyMediaEditor() {
+    var root = document.getElementById('hobbyMediaList');
+    var imageLabel = document.getElementById('hobbyAddImageLabel');
+    var videoLabel = document.getElementById('hobbyAddVideoLabel');
+    var disabled = !editorHobbyId || editorHobbyUploading;
+    if (imageLabel) { imageLabel.classList.toggle('is-disabled', disabled); imageLabel.setAttribute('aria-disabled', disabled ? 'true' : 'false'); }
+    if (videoLabel) { videoLabel.classList.toggle('is-disabled', disabled); videoLabel.setAttribute('aria-disabled', disabled ? 'true' : 'false'); }
+    if (!root) { return; }
+    root.innerHTML = '';
+    if (!editorHobbyMedia.length) {
+      var empty = document.createElement('p'); empty.className = 'project-images-empty'; empty.textContent = t('hobbyNoMedia'); root.appendChild(empty); return;
+    }
+    for (var i = 0; i < editorHobbyMedia.length; i++) {
+      var media = editorHobbyMedia[i]; var src = hobbyMediaUrl(media.storage_path);
+      var row = document.createElement('div'); row.className = 'project-image-row hobby-media-row'; row.setAttribute('data-media-id', String(media.id || ''));
+      var thumb = document.createElement('div'); thumb.className = 'hobby-media-thumb';
+      if (media.media_type === 'video') {
+        var video = document.createElement('video'); video.src = src; video.muted = true; video.playsInline = true; video.preload = 'metadata'; thumb.appendChild(video);
+      } else {
+        var img = document.createElement('img'); img.src = src; img.alt = hobbyMediaAlt(media, hobbyEditorHobby() || { title_zh: '', title_en: '' }); thumb.appendChild(img);
+      }
+      var fields = document.createElement('div'); fields.className = 'project-image-fields';
+      var meta = document.createElement('div'); meta.className = 'hobby-media-meta';
+      var type = document.createElement('span'); type.className = 'hobby-media-type'; type.textContent = media.media_type === 'video' ? t('hobbyVideoTypeLabel') : t('hobbyImageTypeLabel');
+      var name = document.createElement('span'); name.className = 'hobby-media-name'; name.textContent = String(media.storage_path || '').split('/').pop() || '';
+      meta.appendChild(type); meta.appendChild(name);
+      var actions = document.createElement('div'); actions.className = 'project-image-actions';
+      var up = document.createElement('button'); up.type = 'button'; up.setAttribute('data-hobby-media-action', 'up'); up.setAttribute('data-media-index', String(i)); up.textContent = t('projectMoveUp'); up.disabled = i === 0;
+      var down = document.createElement('button'); down.type = 'button'; down.setAttribute('data-hobby-media-action', 'down'); down.setAttribute('data-media-index', String(i)); down.textContent = t('projectMoveDown'); down.disabled = i === editorHobbyMedia.length - 1;
+      var remove = document.createElement('button'); remove.type = 'button'; remove.className = 'is-danger'; remove.setAttribute('data-hobby-media-action', 'delete'); remove.setAttribute('data-media-index', String(i)); remove.textContent = t('projectDeleteImage');
+      actions.appendChild(up); actions.appendChild(down); actions.appendChild(remove);
+      fields.appendChild(meta); fields.appendChild(actions); row.appendChild(thumb); row.appendChild(fields); root.appendChild(row);
+    }
+  }
+  function persistHobbyMediaOrder() {
+    var jobs = [];
+    for (var i = 0; i < editorHobbyMedia.length; i++) {
+      var media = editorHobbyMedia[i];
+      media.sort_order = i + 1;
+      if (media.id) {
+        jobs.push(apiFetch('hobby_media?id=eq.' + encodeURIComponent(media.id), { method: 'PATCH', prefer: 'return=minimal', body: { sort_order: media.sort_order } }));
+      }
+    }
+    return Promise.all(jobs);
+  }
+  function deleteEditorHobbyMedia(index) {
+    var media = editorHobbyMedia[index];
+    if (!media || !window.confirm(t('hobbyDeleteMediaConfirm'))) { return; }
+    apiFetch('hobby_media?id=eq.' + encodeURIComponent(media.id), { method: 'DELETE', prefer: 'return=minimal' }).then(function () {
+      editorHobbyMedia.splice(index, 1); return persistHobbyMediaOrder();
+    }).then(function () { return deleteHobbyStorageFile(media.storage_path).catch(function () {}); }).then(function () {
+      showToast(t('hobbyMediaDeleted'), 'success'); renderHobbyMediaEditor(); return loadPublicHobbies();
+    }).catch(function () { showToast(t('hobbyUploadError'), 'error'); });
+  }
+  function moveEditorHobbyMedia(index, direction) {
+    var target = index + direction;
+    if (!editorHobbyMedia[index] || !editorHobbyMedia[target]) { return; }
+    var item = editorHobbyMedia.splice(index, 1)[0]; editorHobbyMedia.splice(target, 0, item);
+    renderHobbyMediaEditor();
+    persistHobbyMediaOrder().then(function () {
+      showToast(t('hobbyMediaSaved'), 'success'); return loadPublicHobbies();
+    }).catch(function () { showToast(t('hobbySaveError'), 'error'); });
+  }
+  function hobbyStorageObjectUrl(path) {
+    return SUPABASE_URL + '/storage/v1/object/hobby-media/' + String(path || '').split('/').map(encodeURIComponent).join('/');
+  }
+  function deleteHobbyStorageFile(path) {
+    if (!path || !adminToken) { return Promise.resolve(); }
+    return fetch(hobbyStorageObjectUrl(path), { method: 'DELETE', headers: storageAuthHeaders() }).then(function (res) {
+      if (!res.ok && res.status !== 404) { throw new Error('storage delete'); }
+      return true;
+    });
+  }
+  function uploadHobbyMediaWithProgress(path, blob, contentType, onProgress) {
+    return new Promise(function (resolve, reject) {
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', hobbyStorageObjectUrl(path), true);
+      var headers = storageAuthHeaders(contentType);
+      for (var key in headers) { if (Object.prototype.hasOwnProperty.call(headers, key)) { xhr.setRequestHeader(key, headers[key]); } }
+      xhr.upload.onprogress = function (event) {
+        if (onProgress && event.lengthComputable) { onProgress(Math.round(event.loaded / event.total * 100)); }
+      };
+      xhr.onload = function () {
+        if (xhr.status >= 200 && xhr.status < 300) { resolve(true); return; }
+        reject(new Error('upload ' + xhr.status + ' ' + xhr.responseText));
+      };
+      xhr.onerror = function () { reject(new Error('upload network')); };
+      xhr.send(blob);
+    });
+  }
+  function hobbyMediaKind(file) {
+    var name = String(file && file.name || '').toLowerCase();
+    if (/^(image\/jpeg|image\/png|image\/webp)$/.test(file && file.type || '') || /\.(jpe?g|png|webp)$/.test(name)) { return 'image'; }
+    if (/^(video\/mp4|video\/webm)$/.test(file && file.type || '') || /\.(mp4|webm)$/.test(name)) { return 'video'; }
+    return '';
+  }
+  function uploadHobbyMedia(file, mediaType, onProgress) {
+    var isVideo = mediaType === 'video';
+    var lowerName = String(file.name || '').toLowerCase();
+    var extension = isVideo ? (/\.webm$/.test(lowerName) || file.type === 'video/webm' ? 'webm' : 'mp4') : 'webp';
+    var contentType = isVideo ? (extension === 'webm' ? 'video/webm' : 'video/mp4') : 'image/webp';
+    var path = String(editorHobbyId) + '/' + randomStorageId() + '.' + extension;
+    var uploaded = false;
+    var source = isVideo ? Promise.resolve(file) : compressProjectImage(file);
+    return source.then(function (blob) {
+      return uploadHobbyMediaWithProgress(path, blob, contentType, onProgress).then(function () { uploaded = true; return blob; });
+    }).then(function () {
+      var base = file.name.replace(/\.[^.]+$/, '');
+      return apiFetch('hobby_media', {
+        method: 'POST', prefer: 'return=representation',
+        body: { hobby_id: editorHobbyId, media_type: mediaType, storage_path: path, alt_zh: base, alt_en: base, sort_order: editorHobbyMedia.length + 1 }
+      });
+    }).then(function (row) {
+      var saved = Array.isArray(row) ? row[0] : row;
+      if (!saved) { throw new Error('database'); }
+      return saved;
+    }).catch(function (error) {
+      if (!uploaded) { throw error; }
+      return deleteHobbyStorageFile(path).catch(function () {}).then(function () { throw error; });
+    });
+  }
+  function setHobbyUploadProgress(current, total, percent) {
+    var box = document.getElementById('hobbyUploadProgress');
+    var status = document.getElementById('hobbyUploadStatus');
+    var bar = document.getElementById('hobbyUploadBar');
+    if (!box || !status || !bar) { return; }
+    box.hidden = false;
+    status.textContent = t('hobbyUploading') + ' ' + current + '/' + total + ' · ' + Math.max(0, Math.min(100, Math.round(percent))) + '%';
+    bar.value = Math.max(0, Math.min(100, percent));
+  }
+  function hideHobbyUploadProgress() {
+    var box = document.getElementById('hobbyUploadProgress');
+    var bar = document.getElementById('hobbyUploadBar');
+    if (box) { box.hidden = true; }
+    if (bar) { bar.value = 0; }
+  }
+  function handleSelectedHobbyMedia(files, mediaType) {
+    if (!editorHobbyId) { showToast(t('hobbyNeedSave'), 'error'); return; }
+    var selected = Array.prototype.slice.call(files || []);
+    if (!selected.length || editorHobbyUploading) { return; }
+    var existing = 0;
+    for (var e = 0; e < editorHobbyMedia.length; e++) { if (editorHobbyMedia[e].media_type === mediaType) { existing++; } }
+    var limit = mediaType === 'video' ? 3 : 20;
+    var slots = limit - existing;
+    if (slots <= 0) { showToast(t(mediaType === 'video' ? 'hobbyVideoLimit' : 'hobbyImageLimit'), 'error'); return; }
+    if (selected.length > slots) { selected = selected.slice(0, slots); showToast(t(mediaType === 'video' ? 'hobbyVideoLimit' : 'hobbyImageLimit'), 'error'); }
+    for (var i = 0; i < selected.length; i++) {
+      if (hobbyMediaKind(selected[i]) !== mediaType) { showToast(t(mediaType === 'video' ? 'hobbyVideoType' : 'hobbyImageType'), 'error'); return; }
+      if (mediaType === 'image' && selected[i].size > 8 * 1024 * 1024) { showToast(t('hobbyImageTooLarge'), 'error'); return; }
+      if (mediaType === 'video' && selected[i].size > 50 * 1024 * 1024) { showToast(t('hobbyVideoTooLarge'), 'error'); return; }
+    }
+    editorHobbyUploading = true; renderHobbyMediaEditor(); setHobbyUploadProgress(1, selected.length, 0);
+    var next = function (index) {
+      if (index >= selected.length) { return Promise.resolve(); }
+      return uploadHobbyMedia(selected[index], mediaType, function (filePercent) {
+        var overall = ((index + filePercent / 100) / selected.length) * 100;
+        setHobbyUploadProgress(index + 1, selected.length, overall);
+      }).then(function (row) {
+        editorHobbyMedia.push(cloneHobbyMedia(row)); renderHobbyMediaEditor(); return next(index + 1);
+      });
+    };
+    next(0).then(function () {
+      editorHobbyUploading = false; renderHobbyMediaEditor(); hideHobbyUploadProgress();
+      showToast(t('hobbyUploaded'), 'success'); return loadAdminHobbies(editorHobbyId);
+    }).then(function () { return loadPublicHobbies(); }).catch(function () {
+      editorHobbyUploading = false; renderHobbyMediaEditor(); hideHobbyUploadProgress(); showToast(t('hobbyUploadError'), 'error');
+    });
+  }
+  function initHobbyEditor() {
+    var modal = document.getElementById('hobbyEditorModal');
+    var open = document.getElementById('hobbyManage');
+    if (!modal || !open) { return; }
+    open.addEventListener('click', openHobbyEditor);
+    var close = document.getElementById('hobbyEditorClose'); if (close) { close.addEventListener('click', closeHobbyEditor); }
+    modal.addEventListener('click', function (e) {
+      if (e.target && e.target.getAttribute && e.target.getAttribute('data-hobby-editor-close')) { closeHobbyEditor(); }
+    });
+    var newBtn = document.getElementById('hobbyNew');
+    if (newBtn) { newBtn.addEventListener('click', function () { startNewEditorHobby(true); }); }
+    var list = document.getElementById('hobbyEditorList');
+    if (list) { list.addEventListener('click', function (e) { var btn = e.target.closest ? e.target.closest('[data-edit-hobby]') : null; if (btn) { selectEditorHobby(btn.getAttribute('data-edit-hobby')); } }); }
+    var form = document.getElementById('hobbyEditorForm');
+    if (form) { form.addEventListener('submit', function (e) { e.preventDefault(); saveEditorHobby(); }); }
+    var mediaList = document.getElementById('hobbyMediaList');
+    if (mediaList) {
+      mediaList.addEventListener('click', function (e) {
+        var btn = e.target.closest ? e.target.closest('[data-hobby-media-action]') : null; if (!btn) { return; }
+        var index = parseInt(btn.getAttribute('data-media-index'), 10); var action = btn.getAttribute('data-hobby-media-action');
+        if (action === 'up') { moveEditorHobbyMedia(index, -1); }
+        else if (action === 'down') { moveEditorHobbyMedia(index, 1); }
+        else if (action === 'delete') { deleteEditorHobbyMedia(index); }
+      });
+    }
+    var imageInput = document.getElementById('hobbyImageInput'); var imageLabel = document.getElementById('hobbyAddImageLabel');
+    if (imageInput) { imageInput.addEventListener('change', function () { handleSelectedHobbyMedia(imageInput.files, 'image'); imageInput.value = ''; }); }
+    if (imageLabel) { imageLabel.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); if (editorHobbyId && imageInput && !editorHobbyUploading) { imageInput.click(); } } }); }
+    var videoInput = document.getElementById('hobbyVideoInput'); var videoLabel = document.getElementById('hobbyAddVideoLabel');
+    if (videoInput) { videoInput.addEventListener('change', function () { handleSelectedHobbyMedia(videoInput.files, 'video'); videoInput.value = ''; }); }
+    if (videoLabel) { videoLabel.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); if (editorHobbyId && videoInput && !editorHobbyUploading) { videoInput.click(); } } }); }
+    var deleteBtn = document.getElementById('hobbyDelete'); if (deleteBtn) { deleteBtn.addEventListener('click', deleteEditorHobby); }
+    var moveUp = document.getElementById('hobbyMoveUp'); if (moveUp) { moveUp.addEventListener('click', function () { moveEditorHobby(editorHobbyId, -1); }); }
+    var moveDown = document.getElementById('hobbyMoveDown'); if (moveDown) { moveDown.addEventListener('click', function () { moveEditorHobby(editorHobbyId, 1); }); }
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !modal.hasAttribute('hidden')) { closeHobbyEditor(); return; }
+      if (!modal.hasAttribute('hidden')) { trapFocus(modal.querySelector('.hobby-editor-dialog'), e); }
+    });
+    initRichTextEditor(); renderHobbyMediaEditor();
+  }
   function addRipple(btn, x, y) {
     if (reduceMotion) { return; }
     var rect = btn.getBoundingClientRect();
@@ -1485,6 +2204,9 @@
     if (projectsReady) { renderProjects(); }
     if (detailProject) { renderProjectDetail(detailProject); }
     if (editorProjectId) { renderProjectEditorList(); }
+    if (hobbiesReady) { renderHobbyTags(); }
+    if (detailHobby) { renderHobbyDetail(detailHobby); }
+    if (editorHobbyId) { renderHobbyEditorList(); renderHobbyMediaEditor(); }
     if (agentGreeting) { agentGreeting.textContent = dict[lang].agentHello; }
   }
   function initBoard() {
@@ -2268,6 +2990,8 @@
   initBoard();
   initProjects();
   initProjectEditor();
+  initHobbies();
+  initHobbyEditor();
   initBoardLayout();
   applyLang(initial);
   initTheme();
