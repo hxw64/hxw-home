@@ -719,37 +719,23 @@ html.feedback-open{overflow:hidden}
   .feedback-modal{padding:16px}
   .feedback-dialog{padding:22px 18px;max-height:88vh}
 }
-/* ---------- 自定义鼠标 ---------- */
-.cursor-dot,
-.cursor-ring{
-  position:fixed;
-  left:0;
-  top:0;
-  pointer-events:none;
-  z-index:70;
-  opacity:0;
-  will-change:transform;
+/* ---------- CSS 图片圆环：刷新即显示，交互状态沿用原效果 ---------- */
+:root{
+  --cursor-ring:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNiIgaGVpZ2h0PSIyNiIgdmlld0JveD0iMCAwIDI2IDI2Ij48Y2lyY2xlIGN4PSIxMyIgY3k9IjEzIiByPSIxMS4yNSIgZmlsbD0iI2ZmNmI1NyIgZmlsbC1vcGFjaXR5PSIwIiBzdHJva2U9IiNmZjZiNTciIHN0cm9rZS1vcGFjaXR5PSIuNyIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48Y2lyY2xlIGN4PSIxMyIgY3k9IjEzIiByPSIxLjUiIGZpbGw9IiNmZjZiNTciIGZpbGwtb3BhY2l0eT0iMC43OCIvPjwvc3ZnPg==") 13 13,auto;
+  --cursor-ring-hover:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0NiIgaGVpZ2h0PSI0NiIgdmlld0JveD0iMCAwIDQ2IDQ2Ij48Y2lyY2xlIGN4PSIyMyIgY3k9IjIzIiByPSIyMi4yNSIgZmlsbD0iI2ZmNmI1NyIgZmlsbC1vcGFjaXR5PSIwLjEyIiBzdHJva2U9IiNmZjZiNTciIHN0cm9rZS1vcGFjaXR5PSIuNyIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48Y2lyY2xlIGN4PSIyMyIgY3k9IjIzIiByPSIxLjgiIGZpbGw9IiNmZjZiNTciIGZpbGwtb3BhY2l0eT0iMC44MiIvPjwvc3ZnPg==") 23 23,pointer;
+  --cursor-ring-active:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMyIgaGVpZ2h0PSIyMyIgdmlld0JveD0iMCAwIDIzIDIzIj48Y2lyY2xlIGN4PSIxMS41IiBjeT0iMTEuNSIgcj0iOS43NSIgZmlsbD0iI2ZmNmI1NyIgZmlsbC1vcGFjaXR5PSIwIiBzdHJva2U9IiNmZjZiNTciIHN0cm9rZS1vcGFjaXR5PSIuNyIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48Y2lyY2xlIGN4PSIxMS41IiBjeT0iMTEuNSIgcj0iMS40IiBmaWxsPSIjZmY2YjU3IiBmaWxsLW9wYWNpdHk9IjAuNzgiLz48L3N2Zz4=") 12 12,auto;
+  --cursor-ring-hover-active:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MSIgaGVpZ2h0PSI0MSIgdmlld0JveD0iMCAwIDQxIDQxIj48Y2lyY2xlIGN4PSIyMC41IiBjeT0iMjAuNSIgcj0iMTkuNzUiIGZpbGw9IiNmZjZiNTciIGZpbGwtb3BhY2l0eT0iMC4xMiIgc3Ryb2tlPSIjZmY2YjU3IiBzdHJva2Utb3BhY2l0eT0iLjciIHN0cm9rZS13aWR0aD0iMS41Ii8+PGNpcmNsZSBjeD0iMjAuNSIgY3k9IjIwLjUiIHI9IjEuNyIgZmlsbD0iI2ZmNmI1NyIgZmlsbC1vcGFjaXR5PSIwLjgyIi8+PC9zdmc+") 21 21,pointer;
 }
-.cursor-ring{
-  width:26px;
-  height:26px;
-  margin:-13px 0 0 -13px;
-  border:1.5px solid rgba(255,107,87,.7);
-  border-radius:50%;
-  transition:width 180ms ease,height 180ms ease,margin 180ms ease,background-color 220ms ease,border-color 220ms ease,opacity 200ms ease;
-}
-.cursor-ring.is-hover{
-  width:46px;
-  height:46px;
-  margin:-23px 0 0 -23px;
-  border-width:1.5px;
-  background:rgba(255,107,87,.12);
-}
-html.cursor-on .cursor-dot,
-html.cursor-on .cursor-ring{opacity:1}
-@media (prefers-reduced-motion: reduce){
-  .cursor-dot,
-  .cursor-ring{transition:none}
+@media (hover:hover) and (pointer:fine){
+  html,body,body *{cursor:var(--cursor-ring)}
+  html:active,body:active,body *:active{cursor:var(--cursor-ring-active)}
+  a,button:not(:disabled),label,summary,[role="option"],[role="radio"],[role="button"],.chip,.color-dot,.sticker-option,.theme-chip,.rel-chip,.device-chip{cursor:var(--cursor-ring-hover)}
+  a:active,button:not(:disabled):active,label:active,summary:active,[role="option"]:active,[role="radio"]:active,[role="button"]:active,.chip:active,.color-dot:active,.sticker-option:active,.theme-chip:active,.rel-chip:active,.device-chip:active{cursor:var(--cursor-ring-hover-active)}
+  input:where(:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not([type="file"])),textarea,[contenteditable="true"]{cursor:text}
+  select,input[type="button"],input[type="submit"],input[type="reset"]{cursor:pointer}
+  input[type="checkbox"],input[type="radio"],input[type="range"],input[type="color"],input[type="file"]{cursor:default}
+  #adminOpen,#hobbyManage,#projectManage{cursor:pointer}
+  :disabled,[aria-disabled="true"]{cursor:not-allowed}
 }
 /* ---------- 留言板与数字分身整体下移 ---------- */
 .page-3,
@@ -793,11 +779,6 @@ html.cursor-on .cursor-ring{opacity:1}
   .page-3{padding-top:80px}
 }
 footer{padding-bottom:34px}
-/* ---------- 只显示圆环，不显示系统箭头 ---------- */
-/* ---------- 文字输入时隐藏圆环 ---------- */
-html.cursor-text .cursor-ring,
-html.cursor-system .cursor-ring{opacity:0}
-
 /* ---------- 隐私备注 ---------- */
 .privacy-note{margin:14px 0 0;color:var(--faint);font-size:13px;line-height:1.7}
 
@@ -1215,13 +1196,6 @@ button:focus:not(:focus-visible){outline:none}
   .hobby-media-row{grid-template-columns:96px minmax(0,1fr)}
   .rich-editor-area{min-height:150px}
 }
-
-/* ---------- 隐藏系统光标，只保留自绘圆环 ---------- */
-html.custom-cursor,
-html.custom-cursor *{cursor:none}
-
-html.custom-cursor input,html.custom-cursor textarea,html.custom-cursor select,html.custom-cursor [contenteditable="true"]{cursor:text}
-html.custom-cursor #adminOpen,html.custom-cursor #hobbyManage,html.custom-cursor #projectManage{cursor:pointer}
 
 /* ---------- 留言主题选择 ---------- */
 .theme-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}

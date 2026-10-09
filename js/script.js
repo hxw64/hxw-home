@@ -3098,73 +3098,6 @@
       });
     }
   }
-  function initCursor() {
-    var finePointer = !!(window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches);
-    if (!finePointer || reduceMotion) { return; }
-
-    var ring = document.createElement('div');
-    ring.className = 'cursor-ring';
-    document.body.appendChild(ring);
-
-    var x = window.innerWidth / 2;
-    var y = window.innerHeight / 2;
-    var rx = x;
-    var ry = y;
-    var pressed = false;
-    var started = false;
-    var running = false;
-
-    var draw = function () {
-      rx += (x - rx) * 0.16;
-      ry += (y - ry) * 0.16;
-      ring.style.transform = 'translate(' + rx + 'px,' + ry + 'px) scale(' + (pressed ? 0.9 : 1) + ')';
-      if (Math.abs(x - rx) < 0.2 && Math.abs(y - ry) < 0.2) {
-        rx = x;
-        ry = y;
-        running = false;
-        return;
-      }
-      window.requestAnimationFrame(draw);
-    };
-    var start = function () {
-      if (!running) {
-        running = true;
-        window.requestAnimationFrame(draw);
-      }
-    };
-
-    window.addEventListener('pointermove', function (e) {
-      if (e.pointerType === 'touch') { return; }
-      x = e.clientX;
-      y = e.clientY;
-      start();
-      if (!started) {
-        started = true;
-        rx = x;
-        ry = y;
-        document.documentElement.classList.add('custom-cursor');
-        document.documentElement.classList.add('cursor-on');
-      }
-    });
-    window.addEventListener('pointerleave', function () {
-      document.documentElement.classList.remove('cursor-on');
-    });
-    window.addEventListener('blur', function () {
-      document.documentElement.classList.remove('cursor-on');
-    });
-    window.addEventListener('pointerdown', function () { pressed = true; start(); });
-    window.addEventListener('pointerup', function () { pressed = false; start(); });
-
-    document.addEventListener('pointerover', function (e) {
-      var node = e.target;
-      var textField = node && node.closest ? node.closest('input, textarea, select, [contenteditable="true"]') : null;
-      var systemTarget = node && node.closest ? node.closest('#adminOpen, #hobbyManage, #projectManage') : null;
-      var hit = node && node.closest ? node.closest('a, button, input, textarea, select, label, summary, [role="option"], [role="radio"], [role="button"]') : null;
-      ring.classList.toggle('is-hover', !!hit && !systemTarget);
-      document.documentElement.classList.toggle('cursor-text', !!textField);
-      document.documentElement.classList.toggle('cursor-system', !!systemTarget);
-    });
-  }
   var initial = detectLang();
   initBoard();
   initProjects();
@@ -3179,7 +3112,6 @@
   initAgent(pager);
   initFeedback();
   initAdmin();
-  initCursor();
 
   var toggle = document.getElementById('langToggle');
   if (toggle) {
