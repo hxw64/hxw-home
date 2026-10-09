@@ -191,11 +191,29 @@
       msgPlaceholder: '写点什么…',
       anonLabel: '匿名',
       msgColorLabel: '气泡颜色',
+      msgThemeLabel: '留言主题',
+      themeMinimal: '简约',
+      themeGlow: '柔光',
+      themeLetter: '信纸',
+      themeCode: '代码',
+      msgStickerLabel: '贴纸',
+      stickerNone: '无',
+      stickerFlower: '小花',
+      stickerStar: '星星',
+      stickerCloud: '云朵',
+      stickerPaw: '狗爪',
+      stickerCoffee: '咖啡',
+      stickerRocket: '火箭',
+      stickerCode: '代码',
+      stickerOrange: '小橘子',
+      previewLabel: '留言预览',
+      previewJustNow: '刚刚',
+      previewPlaceholder: '你的留言会显示在这里…',
       colorCoral: '珊瑚红',
-      colorAmber: '暖橙',
-      colorSky: '天蓝',
-      colorMint: '薄荷绿',
-      colorLilac: '淡紫',
+      colorCream: '奶油黄',
+      colorIvory: '暖米白',
+      colorTeal: '青绿色',
+      colorNavy: '深海蓝',
       relLabel: '与我的关系',
       relClassmate: '同学',
       relFriend: '朋友',
@@ -418,11 +436,29 @@
       msgPlaceholder: 'Write something...',
       anonLabel: 'Anonymous',
       msgColorLabel: 'Bubble color',
+      msgThemeLabel: 'Message theme',
+      themeMinimal: 'Minimal',
+      themeGlow: 'Soft glow',
+      themeLetter: 'Letter',
+      themeCode: 'Code',
+      msgStickerLabel: 'Sticker',
+      stickerNone: 'None',
+      stickerFlower: 'Flower',
+      stickerStar: 'Star',
+      stickerCloud: 'Cloud',
+      stickerPaw: 'Dog paw',
+      stickerCoffee: 'Coffee',
+      stickerRocket: 'Rocket',
+      stickerCode: 'Code',
+      stickerOrange: 'Orange',
+      previewLabel: 'Preview',
+      previewJustNow: 'just now',
+      previewPlaceholder: 'Your message will appear here...',
       colorCoral: 'Coral',
-      colorAmber: 'Amber',
-      colorSky: 'Sky blue',
-      colorMint: 'Mint',
-      colorLilac: 'Lilac',
+      colorCream: 'Cream',
+      colorIvory: 'Warm ivory',
+      colorTeal: 'Teal',
+      colorNavy: 'Deep navy',
       relLabel: 'Relation to me',
       relClassmate: 'Classmate',
       relFriend: 'Friend',
@@ -458,6 +494,33 @@
     }
   };
 
+  var MSG_THEMES = ['minimal', 'glow', 'letter', 'code'];
+  var MSG_STICKERS = ['none', 'flower', 'star', 'cloud', 'paw', 'coffee', 'rocket', 'code', 'orange'];
+  var MSG_COLORS = ['coral', 'cream', 'ivory', 'teal', 'navy'];
+  var MSG_COLOR_ALIASES = {
+    coral: 'coral',
+    cream: 'cream',
+    ivory: 'ivory',
+    teal: 'teal',
+    navy: 'navy',
+    amber: 'cream',
+    mint: 'ivory',
+    sky: 'teal',
+    lilac: 'navy',
+    rose: 'coral'
+  };
+  var MSG_SUBMIT_COLOR_ALIASES = {
+    coral: 'coral',
+    cream: 'amber',
+    ivory: 'mint',
+    teal: 'sky',
+    navy: 'lilac'
+  };
+  function normalizeMessageColor(value) {
+    var mapped = MSG_COLOR_ALIASES[String(value || '').toLowerCase()];
+    return MSG_COLORS.indexOf(mapped) > -1 ? mapped : 'coral';
+  }
+  var msgPreviewHook = null;
   var relKeys = {
     classmate: 'relClassmate',
     friend: 'relFriend',
@@ -823,8 +886,14 @@
     return apiFetch('messages?select=*&is_visible=eq.true&order=created_at.desc&limit=50');
   }
   function sendMessage(data) {
-    return edgeFetch('post-message', data);
+    var payload = {};
+    for (var key in data) {
+      if (Object.prototype.hasOwnProperty.call(data, key)) { payload[key] = data[key]; }
+    }
+    payload.color = MSG_SUBMIT_COLOR_ALIASES[data.color] || MSG_SUBMIT_COLOR_ALIASES.coral;
+    return edgeFetch('post-message', payload);
   }
+
   function layoutBoard() {
     var ul = document.getElementById('msgList');
     if (!ul) { return; }
@@ -879,12 +948,15 @@
         ul.appendChild(empty);
         return;
       }
-      var palette = ['coral', 'amber', 'sky', 'mint', 'lilac'];
       for (var i = 0; i < list.length; i++) {
         var m = list[i];
         var li = document.createElement('li');
-        var tone = palette.indexOf(m.color) > -1 ? m.color : 'coral';
+        var tone = normalizeMessageColor(m.color);
         li.className = 'msg-item color-' + tone;
+        var msgTheme = MSG_THEMES.indexOf(m.theme) > -1 ? m.theme : 'minimal';
+        li.setAttribute('data-theme', msgTheme);
+        var msgSticker = MSG_STICKERS.indexOf(m.sticker) > -1 ? m.sticker : 'none';
+        if (msgSticker !== 'none') { li.classList.add('has-sticker'); }
         var rawText = String(m.content || '');
         li.setAttribute('data-len', String(rawText.length));
         var idStr = String(m.id || '');
@@ -920,6 +992,17 @@
         body.textContent = String(m.content || '');
         li.appendChild(head);
         li.appendChild(body);
+        if (msgSticker !== 'none') {
+          var stickerSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+          stickerSvg.setAttribute('class', 'message-sticker');
+          stickerSvg.setAttribute('viewBox', '0 0 64 64');
+          stickerSvg.setAttribute('data-sticker', msgSticker);
+          stickerSvg.setAttribute('aria-hidden', 'true');
+          var stickerUse = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+          stickerUse.setAttribute('href', '#sticker-' + msgSticker);
+          stickerSvg.appendChild(stickerUse);
+          li.appendChild(stickerSvg);
+        }
         ul.appendChild(li);
       }
       layoutBoard();
@@ -2214,13 +2297,81 @@
     var anonBox = document.getElementById('msgAnon');
     var nickInput = document.getElementById('msgNick');
     var colorRow = document.getElementById('colorRow');
-    var msgColor = 'coral';
+    var msgColor = 'ivory';
     var more = document.getElementById('msgMore');
     var relRow = document.getElementById('relRow');
     var textInput = document.getElementById('msgText');
     var msgRel = '';
     var messageSubmitting = false;
     var messageAllowAt = 0;
+    var themeRow = document.getElementById('themeRow');
+    var stickerRow = document.getElementById('stickerRow');
+    var msgTheme = 'minimal';
+    var msgSticker = 'paw';
+    var preview = document.getElementById('messagePreview');
+    var previewName = document.getElementById('previewName');
+    var previewBody = document.getElementById('previewBody');
+    var previewSticker = document.getElementById('previewSticker');
+    var previewStickerUse = document.getElementById('previewStickerUse');
+
+    var updatePreview = function () {
+      if (!preview) { return; }
+      var nickNow = (anonBox && anonBox.checked) ? '' : (nickInput ? nickInput.value.trim() : '');
+      if (previewName) { previewName.textContent = nickNow || t('anonymousName'); }
+      if (previewBody) {
+        var textNow = textInput ? textInput.value.trim() : '';
+        previewBody.textContent = textNow || t('previewPlaceholder');
+      }
+      preview.className = 'msg-item color-' + msgColor + (msgSticker !== 'none' ? ' has-sticker' : '');
+      preview.setAttribute('data-theme', msgTheme);
+      if (previewSticker && previewStickerUse) {
+        if (msgSticker === 'none') {
+          previewSticker.setAttribute('hidden', '');
+          previewStickerUse.setAttribute('href', '');
+          previewSticker.removeAttribute('data-sticker');
+        } else {
+          previewStickerUse.setAttribute('href', '#sticker-' + msgSticker);
+          previewSticker.setAttribute('data-sticker', msgSticker);
+          previewSticker.removeAttribute('hidden');
+        }
+      }
+    };
+    msgPreviewHook = updatePreview;
+
+    if (themeRow) {
+      themeRow.addEventListener('click', function (e) {
+        var chip = e.target.closest ? e.target.closest('.theme-chip') : null;
+        if (!chip) { return; }
+        var value = chip.getAttribute('data-msg-theme') || 'minimal';
+        msgTheme = MSG_THEMES.indexOf(value) > -1 ? value : 'minimal';
+        var chips = themeRow.querySelectorAll('.theme-chip');
+        for (var i = 0; i < chips.length; i++) {
+          chips[i].classList.toggle('is-on', chips[i].getAttribute('data-msg-theme') === msgTheme);
+        }
+        updatePreview();
+      });
+    }
+
+    if (stickerRow) {
+      stickerRow.addEventListener('click', function (e) {
+        var opt = e.target.closest ? e.target.closest('.sticker-option') : null;
+        if (!opt) { return; }
+        var value = opt.getAttribute('data-sticker') || 'none';
+        msgSticker = MSG_STICKERS.indexOf(value) > -1 ? value : 'none';
+        var opts = stickerRow.querySelectorAll('.sticker-option');
+        for (var i = 0; i < opts.length; i++) {
+          var on = opts[i].getAttribute('data-sticker') === msgSticker;
+          opts[i].classList.toggle('is-active', on);
+          opts[i].setAttribute('aria-checked', on ? 'true' : 'false');
+        }
+        updatePreview();
+      });
+    }
+
+    if (textInput) { textInput.addEventListener('input', updatePreview); }
+    if (nickInput) { nickInput.addEventListener('input', updatePreview); }
+    if (anonBox) { anonBox.addEventListener('change', updatePreview); }
+    updatePreview();
 
     if (anonBox && nickInput) {
       anonBox.addEventListener('change', function () { nickInput.disabled = anonBox.checked; });
@@ -2260,10 +2411,11 @@
       colorRow.addEventListener('click', function (e) {
         var dot = e.target.closest ? e.target.closest('.color-dot') : null;
         if (!dot) { return; }
-        msgColor = dot.getAttribute('data-color') || 'coral';
+        msgColor = normalizeMessageColor(dot.getAttribute('data-color'));
         var dots = colorRow.querySelectorAll('.color-dot');
         for (var i = 0; i < dots.length; i++) {
           dots[i].setAttribute('aria-pressed', dots[i] === dot ? 'true' : 'false');
+        updatePreview();
         }
       });
     }
@@ -2282,9 +2434,33 @@
         messageSubmitting = true;
         messageAllowAt = now + MESSAGE_COOLDOWN_MS;
         if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = t('msgSending'); }
-        sendMessage({ nickname: nick, content: text, color: msgColor, relation: msgRel }).then(function () {
+        sendMessage({ nickname: nick, content: text, color: msgColor, relation: msgRel, theme: msgTheme, sticker: msgSticker }).then(function () {
           form.reset();
           msgRel = '';
+          msgColor = 'ivory';
+          msgTheme = 'minimal';
+          msgSticker = 'paw';
+          if (themeRow) {
+            var themeChips = themeRow.querySelectorAll('.theme-chip');
+            for (var tc = 0; tc < themeChips.length; tc++) {
+              themeChips[tc].classList.toggle('is-on', themeChips[tc].getAttribute('data-msg-theme') === 'minimal');
+            }
+          }
+          if (colorRow) {
+            var colorDots = colorRow.querySelectorAll('.color-dot');
+            for (var dc = 0; dc < colorDots.length; dc++) {
+              colorDots[dc].setAttribute('aria-pressed', colorDots[dc].getAttribute('data-color') === msgColor ? 'true' : 'false');
+            }
+          }
+          if (stickerRow) {
+            var stickerOpts = stickerRow.querySelectorAll('.sticker-option');
+            for (var so = 0; so < stickerOpts.length; so++) {
+              var isSelected = stickerOpts[so].getAttribute('data-sticker') === msgSticker;
+              stickerOpts[so].classList.toggle('is-active', isSelected);
+              stickerOpts[so].setAttribute('aria-checked', isSelected ? 'true' : 'false');
+            }
+          }
+          updatePreview();
           if (relRow) {
             var relChips = relRow.querySelectorAll('.rel-chip');
             for (var rc = 0; rc < relChips.length; rc++) { relChips[rc].classList.remove('is-on'); }

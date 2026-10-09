@@ -1220,3 +1220,194 @@ html.custom-cursor,
 html.custom-cursor *{cursor:none}
 
 html.custom-cursor input,html.custom-cursor textarea,html.custom-cursor select,html.custom-cursor [contenteditable="true"]{cursor:text}
+
+/* ---------- 留言主题选择 ---------- */
+.theme-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.theme-chip.is-on{background:var(--coral);border-color:var(--coral);color:#fff}
+
+/* ---------- 贴纸选择 ---------- */
+.sticker-sprite{position:absolute;width:0;height:0;overflow:hidden;pointer-events:none}
+.sticker-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.sticker-option{
+  display:grid;
+  place-items:center;
+  width:52px;
+  height:52px;
+  padding:6px;
+  background:var(--btn-ghost-bg);
+  border:1px solid var(--border);
+  border-radius:13px;
+  cursor:pointer;
+  transition:transform 180ms ease,border-color 180ms ease,box-shadow 180ms ease,background-color 180ms ease;
+}
+.sticker-option svg{display:block;width:38px;height:38px;overflow:visible;pointer-events:none}
+.sticker-option:hover{transform:translateY(-2px) rotate(-2deg);border-color:var(--coral)}
+.sticker-option:focus-visible{outline:2px solid var(--coral);outline-offset:2px}
+.sticker-option.is-active{border-color:var(--coral);background:var(--tag-bg);box-shadow:0 0 0 3px rgba(255,107,87,.12)}
+.no-sticker{color:var(--faint);font-size:12px}
+
+/* ---------- 留言卡片上的贴纸 ---------- */
+.msg-item{position:relative}
+.message-sticker{
+  position:absolute;
+  right:12px;
+  bottom:10px;
+  width:46px;
+  height:46px;
+  opacity:.95;
+  pointer-events:none;
+  user-select:none;
+}
+.msg-item.has-sticker .msg-body{padding-right:52px}
+.message-sticker[data-sticker="flower"]{transform:rotate(-6deg)}
+.message-sticker[data-sticker="star"]{transform:rotate(5deg)}
+.message-sticker[data-sticker="cloud"]{transform:rotate(-2deg)}
+.message-sticker[data-sticker="paw"]{transform:rotate(7deg)}
+.message-sticker[data-sticker="coffee"]{transform:rotate(-4deg)}
+.message-sticker[data-sticker="rocket"]{transform:rotate(5deg)}
+.message-sticker[data-sticker="code"]{transform:rotate(0deg)}
+.message-sticker[data-sticker="orange"]{transform:rotate(4deg)}
+.message-sticker[hidden]{display:none}
+
+/* ---------- 留言主题样式 ---------- */
+.msg-item[data-theme="glow"]{
+  box-shadow:0 6px 18px var(--bubble-border,var(--msg-border));
+}
+.msg-item[data-theme="letter"]{
+  background:#FFFDF4;
+  background-image:repeating-linear-gradient(to bottom,transparent 0 26px,#F1E9DA 26px 27px);
+  border:1px dashed #E0D6C4;
+  border-radius:8px;
+  font-family:"Noto Serif SC","Songti SC",serif;
+}
+[data-theme="dark"] .msg-item[data-theme="letter"]{
+  background:#23262B;
+  background-image:repeating-linear-gradient(to bottom,transparent 0 26px,rgba(255,255,255,.06) 26px 27px);
+  border-color:rgba(255,255,255,.16);
+}
+.msg-item[data-theme="code"]{
+  border-radius:12px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Courier New",monospace;
+  background-image:linear-gradient(rgba(120,150,200,.10) 1px,transparent 1px),linear-gradient(90deg,rgba(120,150,200,.10) 1px,transparent 1px);
+  background-size:22px 22px;
+}
+.msg-item[data-theme="code"] .msg-body::before{content:"> ";opacity:.5}
+
+/* ---------- 留言预览 ---------- */
+.msg-preview{margin-top:16px}
+.preview-title{margin:0 0 8px;color:var(--muted);font-size:14px;font-weight:600}
+.msg-preview .msg-item{max-width:none;margin:0}
+
+@media (max-width:640px){
+  .message-sticker{width:40px;height:40px;right:10px;bottom:8px}
+  .msg-item.has-sticker .msg-body{padding-right:44px}
+  .sticker-option{width:48px;height:48px}
+  .sticker-option svg{width:34px;height:34px}
+}
+
+/* ---------- 留言板五色主题：珊瑚 / 奶油 / 米白 / 青绿 / 深海 ---------- */
+.msg-item{
+  --card-bg:#fff8ef;
+  --card-text:#343840;
+  --card-muted:rgba(52,56,64,.62);
+  --card-line:rgba(52,56,64,.11);
+  --card-border:rgba(80,65,55,.12);
+  --card-shadow:0 6px 16px rgba(80,54,45,.08);
+  --sticker-color:#d95d68;
+  --accent:#d95d68;
+}
+.msg-item.color-coral{
+  --accent:#d95d68;
+  --card-bg:#d95d68;
+  --card-text:#fffaf2;
+  --card-muted:rgba(255,250,242,.72);
+  --card-line:rgba(255,250,242,.16);
+  --card-border:rgba(80,32,40,.18);
+  --card-shadow:0 6px 16px rgba(111,43,52,.16);
+  --sticker-color:#fff2cf;
+}
+.msg-item.color-cream{
+  --accent:#ffe19a;
+  --card-bg:#ffe19a;
+  --card-text:#064865;
+  --card-muted:rgba(6,72,101,.66);
+  --card-line:rgba(6,72,101,.13);
+  --card-border:rgba(105,77,29,.15);
+  --card-shadow:0 6px 16px rgba(126,91,35,.10);
+  --sticker-color:#064865;
+}
+.msg-item.color-ivory{
+  --accent:#fff8ef;
+  --card-bg:#fff8ef;
+  --card-text:#343840;
+  --card-muted:rgba(52,56,64,.62);
+  --card-line:rgba(52,56,64,.11);
+  --card-border:rgba(80,65,55,.12);
+  --card-shadow:0 6px 16px rgba(80,54,45,.08);
+  --sticker-color:#d95d68;
+}
+.msg-item.color-teal{
+  --accent:#6bb0bb;
+  --card-bg:#6bb0bb;
+  --card-text:#fffdf8;
+  --card-muted:rgba(255,253,248,.74);
+  --card-line:rgba(255,253,248,.18);
+  --card-border:rgba(23,76,86,.18);
+  --card-shadow:0 6px 16px rgba(31,88,98,.14);
+  --sticker-color:#fff8ef;
+}
+.msg-item.color-navy{
+  --accent:#064865;
+  --card-bg:#064865;
+  --card-text:#fffaf2;
+  --card-muted:rgba(255,250,242,.7);
+  --card-line:rgba(255,250,242,.16);
+  --card-border:rgba(2,35,50,.28);
+  --card-shadow:0 6px 16px rgba(3,42,60,.18);
+  --sticker-color:#ffe19a;
+}
+.msg-item[data-theme]{
+  color:var(--card-text);
+  background-color:var(--card-bg);
+  background-image:none;
+  border:1px solid var(--card-border);
+  box-shadow:var(--card-shadow);
+}
+.msg-item .msg-name,
+.msg-item .msg-body{color:var(--card-text)}
+.msg-item .msg-time,
+.msg-item .msg-rel-tag,
+.msg-item .msg-admin{color:var(--card-muted)}
+.msg-item .msg-admin:hover,
+.msg-item .msg-admin:focus-visible{color:var(--card-text)}
+.msg-item::before{display:none}
+.msg-item[data-theme="glow"]{
+  box-shadow:0 8px 22px color-mix(in srgb, var(--card-bg) 46%, transparent);
+}
+.msg-item[data-theme="glow"]::after{
+  background:var(--card-text);
+  opacity:.07;
+}
+.msg-item[data-theme="letter"]{
+  border-style:dashed;
+  background-image:repeating-linear-gradient(to bottom,transparent 0 28px,var(--card-line) 28px 29px);
+}
+.msg-item[data-theme="code"]{
+  border-style:solid;
+  background-image:linear-gradient(var(--card-line) 1px,transparent 1px),linear-gradient(90deg,var(--card-line) 1px,transparent 1px);
+  background-size:22px 22px;
+}
+.msg-item[data-theme="code"] .msg-body::before{opacity:.55}
+.message-sticker{color:var(--sticker-color)}
+.sticker-option[data-sticker="paw"]{color:var(--coral)}
+.sticker-option[data-sticker="paw"] svg{color:currentColor}
+.color-dot[data-color="coral"]{background:#d95d68;border-color:#d95d68;color:#d95d68}
+.color-dot[data-color="cream"]{background:#ffe19a;border-color:#ffe19a;color:#064865}
+.color-dot[data-color="ivory"]{background:#fff8ef;border-color:#d8d0c8;color:#064865}
+.color-dot[data-color="teal"]{background:#6bb0bb;border-color:#6bb0bb;color:#6bb0bb}
+.color-dot[data-color="navy"]{background:#064865;border-color:#064865;color:#064865}
+[data-theme="dark"] .msg-item[data-theme]{
+  background-color:color-mix(in srgb, var(--card-bg) 78%, var(--msg-bg));
+  border-color:rgba(255,255,255,.16);
+  box-shadow:0 8px 22px rgba(0,0,0,.2);
+}

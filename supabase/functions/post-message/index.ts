@@ -1,6 +1,6 @@
 // Supabase Edge Function: post-message
 // 留言板统一写入口：服务端校验 + 原子限流 + service_role 写库。
-// 上线前需先执行 supabase/chat_rate.sql，再部署本函数。
+// 上线前需先执行 supabase/chat_rate.sql 和 supabase/messages_theme_sticker.sql，再部署本函数。
 
 const CORS = {
   'Access-Control-Allow-Origin': '*',
@@ -10,8 +10,21 @@ const CORS = {
 
 const LIMIT_PER_MINUTE = 3;
 const LIMIT_PER_DAY = 20;
-const COLORS = new Set(['coral', 'amber', 'sky', 'mint', 'lilac']);
+const COLORS: Record<string, string> = {
+  coral: 'coral',
+  cream: 'cream',
+  ivory: 'ivory',
+  teal: 'teal',
+  navy: 'navy',
+  amber: 'cream',
+  mint: 'ivory',
+  sky: 'teal',
+  lilac: 'navy',
+  rose: 'coral'
+};
 const RELATIONS = new Set(['classmate', 'friend', 'family', 'teacher', 'other']);
+const THEMES = new Set(['minimal', 'glow', 'letter', 'code']);
+const STICKERS = new Set(['none', 'flower', 'star', 'cloud', 'paw', 'coffee', 'rocket', 'code', 'orange']);
 
 function json(body: unknown, status = 200, headers: Record<string, string> = {}) {
   return new Response(JSON.stringify(body), {
@@ -45,7 +58,7 @@ Deno.serve(async (req: Request) => {
   const contentLength = Number(req.headers.get('content-length') || 0);
   if (contentLength > 4096) { return json({ error: 'payload too large' }, 413); }
 
-  let payload: { nickname?: string; content?: string; color?: string; relation?: string } = {};
+  let payload: { nickname?: string; content?: string; color?: string; relation?: string; theme?: string; sticker?: string } = {};
   try { payload = await req.json(); } catch { return json({ error: 'bad json' }, 400); }
 
   const content = String(payload.content || '').trim();
@@ -54,8 +67,10 @@ Deno.serve(async (req: Request) => {
   if (content.length > 500) { return json({ error: 'content too long' }, 400); }
   if (nickname.length > 20) { return json({ error: 'nickname too long' }, 400); }
 
-  const color = COLORS.has(String(payload.color || '')) ? String(payload.color) : 'coral';
+  const color = COLORS[String(payload.color || '')] || 'ivory';
   const relation = RELATIONS.has(String(payload.relation || '')) ? String(payload.relation) : '';
+  const theme = THEMES.has(String(payload.theme || '')) ? String(payload.theme) : 'minimal';
+  const sticker = STICKERS.has(String(payload.sticker || '')) ? String(payload.sticker) : 'none';
 
   const ip = clientIp(req);
   const rateSalt = Deno.env.get('RATE_LIMIT_SALT') || SERVICE_KEY;
@@ -88,10 +103,14 @@ Deno.serve(async (req: Request) => {
     body: JSON.stringify(body)
   });
 
-  let inserted = await writeMessage({ nickname, content, color, relation });
+  let inserted = await writeMessage({ nickname, content, color, relation, theme, sticker });
   if (!inserted.ok) {
-    const errorText = await inserted.text();
-    // 兼容尚未添加 color / relation 字段的旧数据库。
+    let errorText = await inserted.text();
+    // 兼容尚未添加新字段的旧数据库：逐层降级
+    if (errorText.includes('theme') || errorText.includes('sticker')) {
+      inserted = await writeMessage({ nickname, content, color, relation });
+      if (!inserted.ok) { errorText = await inserted.text(); }
+    }
     if (errorText.includes('color') || errorText.includes('relation')) {
       inserted = await writeMessage({ nickname, content });
     }

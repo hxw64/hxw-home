@@ -30,6 +30,77 @@
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
+  <svg class="sticker-sprite" aria-hidden="true" focusable="false">
+    <!-- 小花 -->
+      <symbol id="sticker-flower" viewBox="0 0 64 64">
+        <path d="M32 36v20" fill="none" stroke="#69A88D" stroke-width="3" stroke-linecap="round"/>
+        <path d="M32 46c-8-2-12 2-13 6 6 2 12 0 13-6Z" fill="#BDE2D1" stroke="#69A88D" stroke-width="2" stroke-linejoin="round"/>
+        <g fill="#FFD0D5" stroke="#FF8A80" stroke-width="2.4" stroke-linejoin="round">
+          <circle cx="32" cy="14" r="8"/>
+          <circle cx="46" cy="24" r="8"/>
+          <circle cx="41" cy="40" r="8"/>
+          <circle cx="23" cy="40" r="8"/>
+          <circle cx="18" cy="24" r="8"/>
+        </g>
+        <circle cx="32" cy="28" r="7" fill="#FFD978" stroke="#E5A94B" stroke-width="2.2"/>
+      </symbol>
+
+      <!-- 星星 -->
+      <symbol id="sticker-star" viewBox="0 0 64 64">
+        <path d="M32 8l7.4 15.4L56 26l-12 11.4L47 54l-15-8-15 8 3-16.6L8 26l16.6-2.6Z"
+              fill="#FFE18B" stroke="#E7A84F" stroke-width="2.5" stroke-linejoin="round"/>
+        <path d="M24 26c4-3 9-4 14-2" fill="none" stroke="#FFF6D6" stroke-width="2.6" stroke-linecap="round"/>
+      </symbol>
+
+      <!-- 云朵 -->
+      <symbol id="sticker-cloud" viewBox="0 0 64 64">
+        <path d="M20 47c-8 0-13-5-13-11 0-6 5-10 10-10 1-9 9-14 17-12 7 2 11 7 12 14 6 0 10 4 10 9 0 6-5 10-11 10Z"
+              fill="#D8E8FF" stroke="#7797C5" stroke-width="2.5" stroke-linejoin="round"/>
+        <path d="M20 26c3-4 7-5 11-4" fill="none" stroke="#F6FAFF" stroke-width="2.6" stroke-linecap="round"/>
+      </symbol>
+
+      <!-- 狗爪 -->
+      <symbol id="sticker-paw" viewBox="0 0 64 64">
+        <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <ellipse cx="32" cy="42" rx="14" ry="12" stroke-width="3"/>
+          <ellipse cx="16" cy="27" rx="6" ry="8" stroke-width="3"/>
+          <ellipse cx="28" cy="19" rx="6" ry="8" stroke-width="3"/>
+          <ellipse cx="42" cy="20" rx="6" ry="8" stroke-width="3"/>
+          <ellipse cx="51" cy="30" rx="6" ry="8" stroke-width="3"/>
+        </g>
+      </symbol>
+
+      <!-- 咖啡 -->
+      <symbol id="sticker-coffee" viewBox="0 0 64 64">
+        <path d="M18 26h28v12a12 12 0 0 1-12 12h-4a12 12 0 0 1-12-12Z"
+              fill="#F3E3D3" stroke="#B58C63" stroke-width="2.5" stroke-linejoin="round"/>
+        <path d="M46 30h4a6 6 0 0 1 0 12h-4" fill="none" stroke="#B58C63" stroke-width="2.5"/>
+        <path d="M25 19c0-4 4-4 4-8M34 19c0-4 4-4 4-8" fill="none" stroke="#D8BFA6" stroke-width="2.5" stroke-linecap="round"/>
+      </symbol>
+
+      <!-- 小火箭 -->
+      <symbol id="sticker-rocket" viewBox="0 0 64 64">
+        <path d="M32 6c8 6 12 15 12 24v10H20V30c0-9 4-18 12-24Z"
+              fill="#EAF2FF" stroke="#7C93B8" stroke-width="2.5" stroke-linejoin="round"/>
+        <circle cx="32" cy="27" r="5.5" fill="#D8E8FF" stroke="#7C93B8" stroke-width="2.2"/>
+        <path d="M20 32l-8 10h8M44 32l8 10h-8" fill="#FFD9CF" stroke="#D98B7C" stroke-width="2.2" stroke-linejoin="round"/>
+        <path d="M27 44c1 5 3 8 5 10 2-2 4-5 5-10" fill="#FFE18B" stroke="#E7A84F" stroke-width="2.2" stroke-linejoin="round"/>
+      </symbol>
+
+      <!-- 代码 -->
+      <symbol id="sticker-code" viewBox="0 0 64 64">
+        <rect x="8" y="14" width="48" height="36" rx="8" fill="#EFF6FF" stroke="#7797C5" stroke-width="2.5"/>
+        <path d="M25 26l-6 6 6 6M39 26l6 6-6 6M34 22l-4 20"
+              fill="none" stroke="#5B7FB0" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </symbol>
+
+      <!-- 小橘子 -->
+      <symbol id="sticker-orange" viewBox="0 0 64 64">
+        <circle cx="32" cy="36" r="17" fill="#FFD9A8" stroke="#E08A4B" stroke-width="2.5"/>
+        <path d="M32 19c0-6 5-9 10-9-1 6-5 9-10 9Z" fill="#BDE2D1" stroke="#69A88D" stroke-width="2.2" stroke-linejoin="round"/>
+        <path d="M22 32c3-3 7-4 10-4" fill="none" stroke="#FFF1DC" stroke-width="2.6" stroke-linecap="round"/>
+      </symbol>
+  </svg>
   <header class="topbar">
     <a class="brand" href="#top">何欣蔚</a>
     <nav class="nav" aria-label="Main navigation">
@@ -144,14 +215,50 @@
           <div id="msgMore" class="msg-more" hidden>
             <label for="msgNick" data-i18n="nickLabel">昵称</label>
             <input id="msgNick" type="text" maxlength="20" />
+            <fieldset class="msg-theme">
+              <legend data-i18n="msgThemeLabel">留言主题</legend>
+              <div class="theme-row" id="themeRow">
+                <button type="button" class="chip theme-chip is-on" data-msg-theme="minimal" data-i18n="themeMinimal">简约</button>
+                <button type="button" class="chip theme-chip" data-msg-theme="glow" data-i18n="themeGlow">柔光</button>
+                <button type="button" class="chip theme-chip" data-msg-theme="letter" data-i18n="themeLetter">信纸</button>
+                <button type="button" class="chip theme-chip" data-msg-theme="code" data-i18n="themeCode">代码</button>
+              </div>
+            </fieldset>
             <fieldset class="msg-color">
               <legend data-i18n="msgColorLabel">气泡颜色</legend>
               <div class="color-row" id="colorRow">
-                <button type="button" class="color-dot" data-color="coral" aria-label="珊瑚红" aria-pressed="true" data-i18n-aria="colorCoral"></button>
-                <button type="button" class="color-dot" data-color="amber" aria-label="暖橙" aria-pressed="false" data-i18n-aria="colorAmber"></button>
-                <button type="button" class="color-dot" data-color="sky" aria-label="天蓝" aria-pressed="false" data-i18n-aria="colorSky"></button>
-                <button type="button" class="color-dot" data-color="mint" aria-label="薄荷绿" aria-pressed="false" data-i18n-aria="colorMint"></button>
-                <button type="button" class="color-dot" data-color="lilac" aria-label="淡紫" aria-pressed="false" data-i18n-aria="colorLilac"></button>
+                <button type="button" class="color-dot" data-color="coral" aria-label="珊瑚红" aria-pressed="false" data-i18n-aria="colorCoral"></button>
+                <button type="button" class="color-dot" data-color="cream" aria-label="奶油黄" aria-pressed="false" data-i18n-aria="colorCream"></button>
+                <button type="button" class="color-dot" data-color="ivory" aria-label="暖米白" aria-pressed="true" data-i18n-aria="colorIvory"></button>
+                <button type="button" class="color-dot" data-color="teal" aria-label="青绿色" aria-pressed="false" data-i18n-aria="colorTeal"></button>
+                <button type="button" class="color-dot" data-color="navy" aria-label="深海蓝" aria-pressed="false" data-i18n-aria="colorNavy"></button>
+              </div>
+            </fieldset>
+            <div class="msg-preview">
+              <p class="preview-title" data-i18n="previewLabel">留言预览</p>
+              <article id="messagePreview" class="msg-item color-ivory has-sticker" data-theme="minimal">
+                <div class="msg-head">
+                  <span class="msg-name" id="previewName">匿名</span>
+                  <time class="msg-time" data-i18n="previewJustNow">刚刚</time>
+                </div>
+                <p class="msg-body" id="previewBody" data-i18n="previewPlaceholder">你的留言会显示在这里…</p>
+                <svg id="previewSticker" class="message-sticker" viewBox="0 0 64 64" data-sticker="paw" aria-hidden="true">
+                  <use id="previewStickerUse" href="#sticker-paw"></use>
+                </svg>
+              </article>
+            </div>
+            <fieldset class="msg-sticker">
+              <legend data-i18n="msgStickerLabel">贴纸</legend>
+              <div class="sticker-row" id="stickerRow" role="radiogroup" aria-label="选择贴纸" data-i18n-aria="msgStickerLabel">
+                <button type="button" class="sticker-option" data-sticker="none" role="radio" aria-checked="false"><span class="no-sticker" data-i18n="stickerNone">无</span></button>
+                <button type="button" class="sticker-option" data-sticker="flower" role="radio" aria-checked="false" data-i18n-aria="stickerFlower"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#sticker-flower"></use></svg></button>
+                <button type="button" class="sticker-option" data-sticker="star" role="radio" aria-checked="false" data-i18n-aria="stickerStar"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#sticker-star"></use></svg></button>
+                <button type="button" class="sticker-option" data-sticker="cloud" role="radio" aria-checked="false" data-i18n-aria="stickerCloud"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#sticker-cloud"></use></svg></button>
+                <button type="button" class="sticker-option is-active" data-sticker="paw" role="radio" aria-checked="true" data-i18n-aria="stickerPaw"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#sticker-paw"></use></svg></button>
+                <button type="button" class="sticker-option" data-sticker="coffee" role="radio" aria-checked="false" data-i18n-aria="stickerCoffee"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#sticker-coffee"></use></svg></button>
+                <button type="button" class="sticker-option" data-sticker="rocket" role="radio" aria-checked="false" data-i18n-aria="stickerRocket"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#sticker-rocket"></use></svg></button>
+                <button type="button" class="sticker-option" data-sticker="code" role="radio" aria-checked="false" data-i18n-aria="stickerCode"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#sticker-code"></use></svg></button>
+                <button type="button" class="sticker-option" data-sticker="orange" role="radio" aria-checked="false" data-i18n-aria="stickerOrange"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#sticker-orange"></use></svg></button>
               </div>
             </fieldset>
             <fieldset class="msg-rel">
